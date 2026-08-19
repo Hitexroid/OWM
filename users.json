@@ -1,4 +1,25 @@
 {
-  "rev": 0,
-  "users": []
+ "rev": 1,
+ "users": [
+  {
+   "id": "root-mrnami",
+   "name": "مدیر کل",
+   "username": "MrNami",
+   "passHash": "0b7bc0c5031026a7740238ebcb4941b2c80a9ca32d0b20912e8b0a3af9b28232",
+   "role": "admin",
+   "active": true,
+   "isRoot": true,
+   "createdAt": 1787170808831
+  },
+  {
+   "id": "mt0jf7p6vmvwx9",
+   "name": "خانم رهبری",
+   "username": "MsRahbari",
+   "passHash": "0c76875bf1034629783007097bebd25c604b616e5b07a7584a6085e9aba85354",
+   "role": "accountant",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787170920378
+  }
+ ]
 }
