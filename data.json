@@ -27,6 +27,16 @@
    "active": true,
    "isRoot": false,
    "createdAt": 1787159681304
+  },
+  {
+   "id": "mt0cyoei8vq5xz",
+   "name": "خانم رستمی",
+   "username": "MsRostami",
+   "passHash": "56ddbdc082911ff090f76778028f6846ca08793294ec9394a273732c4e494428",
+   "role": "sales",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787160071178
   }
  ],
  "orders": []
