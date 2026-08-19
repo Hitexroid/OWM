@@ -1,12 +1,23 @@
 {
-  "settings": {
-    "owner": "",
-    "repo": "",
-    "branch": "main",
-    "token": "",
-    "pollSec": 8,
-    "salesDefaultScope": "own"
-  },
-  "users": [],
-  "orders": []
+ "settings": {
+  "owner": "",
+  "repo": "",
+  "branch": "main",
+  "token": "",
+  "pollSec": 8,
+  "salesDefaultScope": "own"
+ },
+ "users": [
+  {
+   "id": "root-mrnami",
+   "name": "مدیر کل",
+   "username": "MrNami",
+   "passHash": "0b7bc0c5031026a7740238ebcb4941b2c80a9ca32d0b20912e8b0a3af9b28232",
+   "role": "admin",
+   "active": true,
+   "isRoot": true,
+   "createdAt": 1787158618019
+  }
+ ],
+ "orders": []
 }
