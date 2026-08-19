@@ -1,5 +1,5 @@
 {
- "rev": 2,
+ "rev": 3,
  "users": [
   {
    "id": "root-mrnami",
@@ -30,6 +30,16 @@
    "active": true,
    "isRoot": false,
    "createdAt": 1787172613332
+  },
+  {
+   "id": "mt0lpuejs7muw0",
+   "name": "خانم رستمی",
+   "username": "MsRostami",
+   "passHash": "b79b588c388187b09e583210f7a0a29fb5c8ab471184b6fca1593752d854b73c",
+   "role": "sales",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787174775596
   }
  ]
 }
