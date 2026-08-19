@@ -1,10 +1,11 @@
 {
-  "rev": 0,
-  "settings": {
-    "owner": "",
-    "repo": "",
-    "branch": "main",
-    "token": "",
-    "pollSec": 6
-  }
+ "rev": 1,
+ "settings": {
+  "owner": "",
+  "repo": "",
+  "branch": "main",
+  "token": "",
+  "pollSec": 6,
+  "accountantApproval": true
+ }
 }
