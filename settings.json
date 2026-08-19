@@ -1,0 +1,10 @@
+{
+  "rev": 0,
+  "settings": {
+    "owner": "",
+    "repo": "",
+    "branch": "main",
+    "token": "",
+    "pollSec": 6
+  }
+}
