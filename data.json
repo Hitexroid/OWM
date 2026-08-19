@@ -17,6 +17,16 @@
    "active": true,
    "isRoot": true,
    "createdAt": 1787158698981
+  },
+  {
+   "id": "mt0cjs3mn91dbb",
+   "name": "خانم نامی",
+   "username": "MrsNami",
+   "passHash": "adf71b59ce53d0eca9a251938b211cf335cf77a97dcc870b784d1a9cd8270739",
+   "role": "sales",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787159376130
   }
  ],
  "orders": []
