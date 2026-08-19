@@ -27,8 +27,18 @@
    "active": true,
    "isRoot": false,
    "createdAt": 1787159681304
+  },
+  {
+   "id": "mt0i5vxe532gis",
+   "name": "خانم رهبری",
+   "username": "MsRahbari",
+   "passHash": "703a44bf139e5411727be8251a615f7245695e745a102223865c3378792ce0ad",
+   "role": "accountant",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787168805602
   }
  ],
  "orders": [],
- "rev": 7
+ "rev": 9
 }
