@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>OWM — سامانه مدیریت سفارش‌ها</title>
+<style>
+/* ===================== پایه ===================== */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --txt:#eef4fb; --txt2:rgba(228,238,248,.62); --txt3:rgba(228,238,248,.38);
+  --stroke:rgba(255,255,255,.14); --stroke-soft:rgba(255,255,255,.08);
+  --teal:#2dd4bf; --teal-soft:rgba(45,212,191,.14);
+  --gold:#f6b73c; --sky:#5bc8f5;
+  --green:#4ade80; --amber:#fbbf24; --red:#fb7185;
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:Vazirmatn,"Segoe UI",Tahoma,Arial,sans-serif;background:#0b1220;color:var(--txt);min-height:100dvh;line-height:1.8;font-size:14.5px;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+svg{display:block}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:9px}
+:focus-visible{outline:2px solid rgba(45,212,191,.7);outline-offset:2px}
+.hide{display:none!important}
+
+/* ===================== پس‌زمینه زنده ===================== */
+.bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(155deg,#0a1120 0%,#0d1b2e 45%,#0a2330 100%);overflow:hidden}
+.bg::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1.3px);background-size:26px 26px}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);display:block}
+.b1{width:52vmax;height:52vmax;background:radial-gradient(circle,rgba(20,184,166,.42),transparent 62%);top:-16vmax;inset-inline-end:-12vmax;animation:fl1 26s ease-in-out infinite alternate}
+.b2{width:44vmax;height:44vmax;background:radial-gradient(circle,rgba(246,183,60,.22),transparent 62%);bottom:-14vmax;inset-inline-start:-10vmax;animation:fl2 32s ease-in-out infinite alternate}
+.b3{width:38vmax;height:38vmax;background:radial-gradient(circle,rgba(56,152,224,.28),transparent 62%);top:32%;inset-inline-start:28%;animation:fl3 38s ease-in-out infinite alternate}
+@keyframes fl1{to{transform:translate(-6vmax,8vmax) scale(1.12)}}
+@keyframes fl2{to{transform:translate(7vmax,-6vmax) scale(1.15)}}
+@keyframes fl3{to{transform:translate(-8vmax,-5vmax) scale(.9)}}
+
+/* ===================== شیشه ===================== */
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));-webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--stroke);border-radius:var(--r);box-shadow:0 16px 40px rgba(2,8,23,.45),inset 0 1px 0 rgba(255,255,255,.13)}
+
+/* ===================== ورود / راه‌اندازی ===================== */
+.auth{min-height:100dvh;display:grid;place-items:center;padding:20px}
+.auth-card{width:min(430px,100%);padding:30px 24px;animation:rise .6s cubic-bezier(.2,.9,.3,1.1) both}
+.logo{display:flex;align-items:center;gap:13px;justify-content:center;margin-bottom:8px}
+.logo-mark{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-weight:900;font-size:14px;letter-spacing:1.5px;color:#032522;background:linear-gradient(135deg,#5eead4,#0d9488 70%);box-shadow:0 12px 30px rgba(45,212,191,.35),inset 0 1px 0 rgba(255,255,255,.5);transform:rotate(-4deg)}
+.brand-name{font-size:38px;font-weight:900;line-height:1;letter-spacing:2px}
+.brand-sub{color:var(--txt2);font-size:12.5px;margin-bottom:6px}
+.auth-hint{background:var(--teal-soft);border:1px solid rgba(45,212,191,.35);color:#9ef0e2;border-radius:12px;padding:10px 14px;font-size:12.5px;margin:12px 0 4px}
+
+/* ===================== فرم‌ها ===================== */
+.frow{margin-top:14px}
+.frow label{display:block;font-size:12.5px;font-weight:700;color:var(--txt2);margin-bottom:6px}
+.inp{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:12px;padding:11px 14px;color:var(--txt);transition:.2s;min-height:48px;font-size:15px}
+.inp::placeholder{color:var(--txt3)}
+.inp:focus{outline:none;border-color:rgba(45,212,191,.7);box-shadow:0 0 0 4px rgba(45,212,191,.14);background:rgba(255,255,255,.09)}
+select.inp option{background:#0e1a2b;color:var(--txt)}
+textarea.inp{resize:vertical;min-height:90px}
+.pwd{position:relative}
+.pwd .inp{padding-inline-end:52px}
+.pwd button{position:absolute;top:5px;bottom:5px;inset-inline-end:6px;width:40px;border:none;background:none;color:var(--txt3);display:grid;place-items:center;border-radius:10px}
+.pwd button:hover{color:var(--txt)}
+.ferr{font-size:12.5px;margin-top:10px;text-align:center;min-height:20px;font-weight:700}
+.ferr.on{color:var(--red);animation:shake .4s}
+.fnote{font-size:11.5px;color:var(--txt3);margin-top:5px}
+.dsel{display:flex;gap:8px}
+.dsel select{flex:1;min-width:0;padding:11px 8px}
+.dsel-lbl{font-size:11.5px;color:var(--txt3);margin:8px 0 4px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(6px)}75%{transform:translateX(-6px)}}
+
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:14px}
+.switch-row>span:first-child{font-weight:700;font-size:13.5px}
+.switch{position:relative;width:52px;height:30px;flex:none}
+.switch input{position:absolute;opacity:0;inset:0;z-index:2;margin:0;cursor:pointer}
+.switch i{position:absolute;inset:0;background:rgba(255,255,255,.12);border:1px solid var(--stroke);border-radius:99px;transition:.25s}
+.switch i::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#cbd5e1;top:3px;inset-inline-start:3px;transition:.25s}
+.switch input:checked+i{background:rgba(45,212,191,.35);border-color:rgba(45,212,191,.6)}
+.switch input:checked+i::after{inset-inline-start:25px;background:var(--teal)}
+.switch input:disabled+i{opacity:.4}
+
+.filebox{display:block;border:1.5px dashed rgba(255,255,255,.28);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:.2s;background:rgba(255,255,255,.03)}
+.filebox:hover{border-color:var(--teal);background:var(--teal-soft)}
+.filebox svg{margin:0 auto 8px;color:var(--teal)}
+.filebox b{display:block;font-size:14px}
+.filebox small{color:var(--txt3);font-size:11.5px}
+.filebox .fmeta{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.filebox.has{border-style:solid;border-color:rgba(45,212,191,.55);background:var(--teal-soft)}
+
+/* ===================== دکمه‌ها ===================== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:12px;padding:11px 18px;font-weight:800;font-size:14px;transition:.2s;min-height:48px;text-decoration:none}
+.btn:active{transform:scale(.96)}
+.btn svg{width:18px;height:18px}
+.btn-p{background:linear-gradient(135deg,#2dd4bf,#0e9f9a);color:#04211f;box-shadow:0 8px 22px rgba(45,212,191,.28)}
+.btn-p:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ok{background:linear-gradient(135deg,#4ade80,#16a34a);color:#05240f;box-shadow:0 8px 20px rgba(74,222,128,.25)}
+.btn-ok:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-dng{background:linear-gradient(135deg,#fb7185,#e11d48);color:#fff;box-shadow:0 8px 20px rgba(225,29,72,.3)}
+.btn-dng:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn-gh{background:rgba(255,255,255,.07);border:1px solid var(--stroke);color:var(--txt)}
+.btn-gh:hover{background:rgba(255,255,255,.13)}
+.btn-blk{width:100%}
+.btn-sm{min-height:40px;padding:7px 13px;font-size:12.5px;border-radius:10px;gap:6px}
+.btn-sm svg{width:15px;height:15px}
+.btn:disabled{opacity:.45;pointer-events:none}
+
+/* ===================== بج‌ها ===================== */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:800;border:1px solid;white-space:nowrap}
+.b-pending{color:#fcd34d;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35)}
+.b-approved{color:#86efac;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.35)}
+.b-rejected{color:#fda4af;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+.b-sample{color:#aee9fb;background:rgba(91,200,245,.12);border-color:rgba(91,200,245,.42)}
+.b-ver{color:var(--txt2);background:rgba(255,255,255,.07);border-color:var(--stroke)}
+.b-lock{color:var(--txt3);background:transparent;border-color:transparent}
+.r-admin{color:#ffd98a;background:rgba(246,183,60,.13);border-color:rgba(246,183,60,.4)}
+.r-accountant{color:#aee9fb;background:rgba(91,200,245,.12);border-color:rgba(91,200,245,.4)}
+.r-sales{color:#86efac;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.35)}
+.r-active{color:#86efac;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.35)}
+.r-inactive{color:var(--txt3);background:rgba(255,255,255,.05);border-color:var(--stroke)}
+
+/* ===================== برنامه ===================== */
+#view-app{display:none;min-height:100dvh}
+.topbar{position:sticky;top:10px;z-index:30;display:flex;align-items:center;gap:10px;margin:10px 12px 0;padding:9px 14px}
+.tb-logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:900;font-size:10.5px;letter-spacing:1px;color:#032522;background:linear-gradient(135deg,#5eead4,#0d9488);box-shadow:0 6px 16px rgba(45,212,191,.3);flex:none;user-select:none;cursor:pointer}
+.tb-title{font-size:16.5px;font-weight:900;line-height:1.2}
+.tb-user{margin-inline-start:auto;text-align:start;line-height:1.4;min-width:0}
+.tb-user b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
+.tb-user span{font-size:10.5px;color:var(--txt2)}
+.tb-out{width:42px;height:42px;flex:none;border-radius:12px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);display:grid;place-items:center;transition:.2s}
+.tb-out:hover{color:#fff;background:rgba(225,29,72,.35);border-color:rgba(225,29,72,.5)}
+
+main{padding:16px 14px 120px;max-width:1100px;margin:0 auto}
+.page{display:none}
+.page.active{display:block;animation:rise .45s cubic-bezier(.2,.9,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+
+.sidenav{display:none}
+@media(min-width:920px){
+  .bottomnav{display:none!important}
+  .sidenav{display:flex;flex-direction:column;gap:6px;position:fixed;top:82px;inset-inline-start:18px;width:216px;padding:12px;z-index:30}
+  main{margin-inline-start:250px;padding-bottom:40px}
+  .topbar{margin:12px 18px 0}
+}
+.bn-btn,.sn-btn{display:flex;align-items:center;gap:10px;border:none;background:none;color:var(--txt3);font-weight:800;font-size:12px;border-radius:14px;transition:.22s}
+.bn-btn{flex-direction:column;gap:3px;padding:7px 16px;font-size:11px}
+.bn-btn svg,.sn-btn svg{width:22px;height:22px}
+.sn-btn{padding:11px 14px;font-size:13.5px;width:100%;text-align:start}
+.bn-btn.on,.sn-btn.on{color:#7ff5e6;background:var(--teal-soft);box-shadow:inset 0 0 0 1px rgba(45,212,191,.35)}
+.bottomnav{position:fixed;bottom:10px;left:10px;right:10px;z-index:40;display:flex;justify-content:space-around;padding:7px 6px calc(7px + env(safe-area-inset-bottom))}
+
+/* ===================== داشبورد ===================== */
+.welcome{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:18px 20px;margin-bottom:16px}
+.welcome h2{font-size:19px;font-weight:900}
+.welcome p{font-size:12.5px;color:var(--txt2)}
+.welcome .btn{margin-inline-start:auto}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px}
+@media(min-width:760px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+.stat{display:flex;gap:12px;align-items:center;padding:15px 16px;transition:.25s}
+.stat:hover{transform:translateY(-2px)}
+.s-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.s-ic svg{width:22px;height:22px}
+.s-num{font-size:23px;font-weight:900;line-height:1.3}
+.s-lbl{font-size:11.5px;color:var(--txt2)}
+.subhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
+.subhead h3{font-size:15.5px;font-weight:900}
+.subhead button{border:none;background:none;color:#7ff5e6;font-size:12.5px;font-weight:800}
+
+/* ===================== کارت سفارش ===================== */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:3px 1px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);color:var(--txt2);font-size:12.5px;font-weight:700;transition:.2s;min-height:40px}
+.chip:hover{color:var(--txt)}
+.chip.on{background:linear-gradient(135deg,rgba(45,212,191,.28),rgba(45,212,191,.08));color:#7ff5e6;border-color:rgba(45,212,191,.55)}
+.custom-range{margin-top:12px;padding:14px;display:grid;gap:4px}
+.custom-range .cr-row{display:grid;grid-template-columns:86px 1fr;gap:8px;align-items:center}
+.custom-range .cr-row>span{font-size:12.5px;font-weight:800;color:var(--txt2)}
+.search{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:13px;padding:0 14px;min-height:48px;margin-top:12px;transition:.2s}
+.search:focus-within{border-color:rgba(45,212,191,.6)}
+.search svg{color:var(--txt3);flex:none}
+.search input{flex:1;background:none;border:none;outline:none;color:var(--txt);min-height:46px;font-size:14px}
+.ocount{font-size:12px;color:var(--txt3);margin:12px 2px 8px}
+.olist{display:flex;flex-direction:column;gap:12px}
+.ocard{padding:16px;transition:.25s;animation:rise .4s both}
+.ocard:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.26)}
+.ocard-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:9px}
+.ono{font-weight:900;font-size:14px;background:rgba(255,255,255,.08);padding:3px 12px;border-radius:10px;border:1px solid var(--stroke)}
+.ocust{font-size:16.5px;font-weight:800;margin-bottom:10px}
+.oinfo{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12.5px;color:var(--txt2);margin-bottom:13px}
+@media(min-width:640px){.oinfo{grid-template-columns:repeat(4,1fr)}}
+.oinfo span{display:inline-flex;align-items:center;gap:6px}
+.oinfo svg{width:15px;height:15px;color:var(--txt3);flex:none}
+.oacts{display:flex;gap:8px;flex-wrap:wrap}
+
+.empty{padding:46px 20px;text-align:center;color:var(--txt3)}
+.empty svg{width:46px;height:46px;margin:0 auto 12px;opacity:.45}
+.empty b{display:block;color:var(--txt2);font-size:15px;margin-bottom:4px}
+.empty.sm{padding:26px 16px}
+
+/* ===================== اعضا ===================== */
+.mcard{display:flex;align-items:center;gap:12px;padding:14px 16px;flex-wrap:wrap;animation:rise .4s both}
+.m-ava{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:17px;color:#04211f;background:linear-gradient(135deg,#5eead4,#0d9488);flex:none}
+.m-info{min-width:110px}
+.m-info b{display:block;font-size:14.5px}
+.m-info span{font-size:11.5px;color:var(--txt3);direction:ltr;display:inline-block}
+.m-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.m-date{font-size:11px;color:var(--txt3)}
+.m-acts{display:flex;gap:7px;margin-inline-start:auto}
+.ibtn{width:40px;height:40px;border-radius:11px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);display:grid;place-items:center;transition:.2s}
+.ibtn:hover{color:#fff;background:rgba(255,255,255,.14)}
+.ibtn.danger:hover{background:rgba(225,29,72,.35);border-color:rgba(225,29,72,.5)}
+.ibtn svg{width:17px;height:17px}
+
+/* ===================== مودال ===================== */
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(4,10,20,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0}}
+.modal{width:100%;max-width:620px;max-height:93dvh;overflow-y:auto;background:linear-gradient(180deg,rgba(24,36,56,.92),rgba(15,25,42,.94));-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);border:1px solid var(--stroke);border-bottom:none;border-radius:24px 24px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -10px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12);animation:sheetUp .38s cubic-bezier(.2,.9,.3,1)}
+@keyframes sheetUp{from{transform:translateY(70px);opacity:0}}
+@media(min-width:720px){
+  .overlay{align-items:center;padding:24px}
+  .modal{border-radius:24px;border-bottom:1px solid var(--stroke);animation:popIn .3s cubic-bezier(.2,.9,.3,1.1)}
+}
+@keyframes popIn{from{transform:scale(.94) translateY(16px);opacity:0}}
+.m-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.m-title{font-size:16.5px;font-weight:900;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.m-x{width:38px;height:38px;flex:none;border-radius:11px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);font-size:15px}
+.drow{display:flex;justify-content:space-between;gap:12px;padding:9px 2px;border-bottom:1px solid var(--stroke-soft);font-size:13.5px}
+.drow span{color:var(--txt2);flex:none}
+.drow b{font-weight:800;text-align:start}
+.rbox{border-radius:13px;padding:13px 15px;margin-top:14px;font-size:13px;border:1px solid;line-height:2}
+.rbox.ok{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.3)}
+.rbox.bad{background:rgba(244,63,94,.09);border-color:rgba(244,63,94,.35)}
+.rbox b{display:inline-block;min-width:104px;color:var(--txt2);font-weight:700}
+.rbox .reason{background:rgba(0,0,0,.22);border-radius:9px;padding:8px 12px;margin-top:6px}
+.locknote{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:12px;color:var(--txt2);background:rgba(255,255,255,.05);border:1px dashed var(--stroke);border-radius:11px;padding:9px 13px}
+.locknote svg{width:16px;height:16px;flex:none;color:var(--gold)}
+.ver-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.ver-row{display:flex;align-items:center;gap:10px;justify-content:space-between;background:rgba(255,255,255,.05);border:1px solid var(--stroke);border-radius:12px;padding:9px 13px;font-size:13px}
+.ver-row.cur{border-color:rgba(45,212,191,.55);background:var(--teal-soft)}
+.m-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.m-actions .btn{flex:1;min-width:118px}
+.sec-title{font-size:13px;font-weight:900;color:var(--txt2);margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+.sec-title::after{content:"";flex:1;height:1px;background:var(--stroke-soft)}
+.pdf-prev{width:100%;height:min(60vh,540px);border:none;border-radius:13px;background:#fff;margin-top:10px}
+
+.tline{position:relative;padding-inline-start:20px;margin-top:10px}
+.tline::before{content:"";position:absolute;inset-inline-start:6px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.12);border-radius:2px}
+.tl-item{position:relative;padding:7px 14px 7px 0}
+.tl-item::before{content:"";position:absolute;inset-inline-start:-19px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.18)}
+.tl-item.c-approved::before{background:var(--green);box-shadow:0 0 0 3px rgba(74,222,128,.18)}
+.tl-item.c-rejected::before{background:var(--red);box-shadow:0 0 0 3px rgba(251,113,133,.18)}
+.tl-item.c-resubmitted::before{background:var(--gold);box-shadow:0 0 0 3px rgba(246,183,60,.18)}
+.tl-item b{display:block;font-size:13px}
+.tl-item span{font-size:11.5px;color:var(--txt3)}
+
+/* ===================== توست ===================== */
+#toastRoot{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;width:min(400px,calc(100vw - 24px))}
+@media(min-width:920px){#toastRoot{bottom:26px}}
+.toast{display:flex;gap:10px;align-items:center;padding:13px 16px;border-radius:14px;font-size:13.5px;font-weight:700;background:rgba(13,23,38,.94);border:1px solid var(--stroke);box-shadow:0 14px 34px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);animation:tIn .35s cubic-bezier(.2,.9,.3,1.1)}
+.toast svg{width:19px;height:19px;flex:none}
+.toast.ok{border-inline-start:4px solid var(--green)}.toast.ok svg{color:var(--green)}
+.toast.error{border-inline-start:4px solid var(--red)}.toast.error svg{color:var(--red)}
+.toast.out{animation:tOut .3s forwards}
+@keyframes tIn{from{opacity:0;transform:translateY(16px) scale(.95)}}
+@keyframes tOut{to{opacity:0;transform:translateY(10px) scale(.96)}}
+body.modal-open{overflow:hidden}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+
+<!-- ============ ورود ============ -->
+<section id="view-login" class="auth">
+  <div class="auth-card glass">
+    <div class="logo"><div class="logo-mark">OWM</div><div><div class="brand-name">OWM</div><div class="brand-sub">سامانه مدیریت سفارش‌ها</div></div></div>
+    <form id="loginForm" novalidate>
+      <div class="frow"><label for="loginUser">نام کاربری</label><input class="inp" id="loginUser" autocomplete="username" placeholder="نام کاربری خود را وارد کنید"></div>
+      <div class="frow"><label for="loginPass">رمز عبور</label>
+        <div class="pwd"><input class="inp" id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••"><button type="button" data-pwd="loginPass" aria-label="نمایش رمز">👁</button></div>
+      </div>
+      <div class="frow"><button class="btn btn-p btn-blk" type="submit">ورود به سیستم</button></div>
+      <div id="loginErr" class="ferr"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ راه‌اندازی اولیه ============ -->
+<section id="view-setup" class="auth" style="display:none">
+  <div class="auth-card glass">
+    <div class="logo"><div class="logo-mark">OWM</div><div><div class="brand-name">OWM</div><div class="brand-sub">راه‌اندازی اولیه سیستم</div></div></div>
+    <div class="auth-hint">هیچ کاربری در سیستم وجود ندارد. نخستین حساب به‌عنوان <b>مدیر اصلی</b> ایجاد می‌شود و قابل حذف یا تغییر نقش نخواهد بود.</div>
+    <form id="setupForm" novalidate>
+      <div class="frow"><label for="sName">نام و نام خانوادگی</label><input class="inp" id="sName" placeholder="مثلاً: نام مدیر"></div>
+      <div class="frow"><label for="sUser">نام کاربری</label><input class="inp" id="sUser" dir="ltr" autocomplete="off" placeholder="admin"></div>
+      <div class="frow"><label for="sPass">رمز عبور</label>
+        <div class="pwd"><input class="inp" id="sPass" type="password" autocomplete="new-password"><button type="button" data-pwd="sPass" aria-label="نمایش رمز">👁</button></div>
+      </div>
+      <div class="frow"><label for="sPass2">تکرار رمز عبور</label><input class="inp" id="sPass2" type="password" autocomplete="new-password"></div>
+      <div class="frow"><button class="btn btn-p btn-blk" type="submit">ایجاد حساب مدیر اصلی</button></div>
+      <div id="setupErr" class="ferr"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ برنامه ============ -->
+<div id="view-app">
+  <header class="topbar glass">
+    <div class="tb-logo" id="logoTap" title="OWM">OWM</div>
+    <div class="tb-title" id="pageTitle">داشبورد</div>
+    <div class="tb-user"><b id="hdrName"></b><span id="hdrRole"></span></div>
+    <button class="tb-out" id="btnLogout" title="خروج از سیستم"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg></button>
+  </header>
+
+  <nav class="sidenav glass" id="sideNav" aria-label="منوی اصلی"></nav>
+
+  <main>
+    <section class="page" id="page-dashboard"></section>
+    <section class="page" id="page-orders"></section>
+    <section class="page" id="page-newOrder"></section>
+    <section class="page" id="page-myOrders"></section>
+    <section class="page" id="page-members"></section>
+  </main>
+
+  <nav class="bottomnav glass" id="bottomNav" aria-label="منوی اصلی"></nav>
+</div>
+
+<div id="modalRoot"></div>
+<div id="toastRoot" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* ============================================================
+   OWM — سامانه مدیریت سفارش‌ها | تک‌فایلی
+   بخش‌ها: Utils/Date(Jalali) — Storage — Auth — RBAC — Users
+   Orders — Versions — History — DateFilters — Search — Render
+   Navigation — Modals — Toast — PDF
+============================================================ */
+
+/* ---------- خطاها ---------- */
+class AppError extends Error{ constructor(m){ super(m); this.name='AppError'; } }
+
+/* ---------- ثابت‌ها ---------- */
+const ROLE_FA = { admin:'مدیر', accountant:'حسابدار', sales:'مدیر فروش' };
+const STATUS_FA = { pending:'در انتظار بررسی', approved:'تأیید شده', rejected:'رد شده' };
+const MONTHS_FA = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const WEEKDAYS_FA = ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+const PAGE_ACCESS = { admin:['dashboard','orders','members'], accountant:['dashboard','orders'], sales:['dashboard','newOrder','myOrders'] };
+const PAGE_TITLE = { dashboard:'داشبورد', orders:'سفارش‌ها', newOrder:'ثبت سفارش', myOrders:'سفارش‌های من', members:'مدیریت اعضا' };
+const NAV_ITEMS = {
+  admin:[['dashboard','داشبورد','grid'],['orders','سفارش‌ها','clipboard'],['members','مدیریت اعضا','users']],
+  accountant:[['dashboard','داشبورد','grid'],['orders','سفارش‌ها','clipboard']],
+  sales:[['dashboard','داشبورد','grid'],['newOrder','ثبت سفارش','plus'],['myOrders','سفارش‌های من','box']]
+};
+const PRESETS = [['today','امروز'],['yesterday','دیروز'],['thisWeek','این هفته'],['lastWeek','هفته گذشته'],['thisMonth','این ماه'],['lastMonth','ماه گذشته'],['custom','بازه دلخواه'],['all','همه']];
+const MAX_PDF = 1.5*1024*1024; /* ۱٫۵ مگابایت */
+
+/* ---------- آیکون‌ها ---------- */
+const _ic=(p,w)=>`<svg viewBox="0 0 24 24" ${w||'width="18"'} fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const I={
+  grid:_ic('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+  clipboard:_ic('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0"/><path d="M9 11h6M9 15h6"/>'),
+  users:_ic('<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c.7-3.2 3.3-5 6.5-5s5.8 1.8 6.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 6.4"/><path d="M17.8 15.3c2 .6 3.3 2 3.7 4.7"/>'),
+  plus:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'),
+  box:_ic('<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"/>'),
+  logout:_ic('<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/>'),
+  search:_ic('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'),
+  x:_ic('<path d="M18 6L6 18M6 6l12 12"/>'),
+  check:_ic('<path d="M20 6L9 17l-5-5"/>'),
+  eye:_ic('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  download:_ic('<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/>'),
+  file:_ic('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'),
+  refresh:_ic('<path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/>'),
+  edit:_ic('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>'),
+  trash:_ic('<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/>'),
+  shield:_ic('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>'),
+  calendar:_ic('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>'),
+  clock:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>'),
+  coin:_ic('<rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/>'),
+  user:_ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c.9-3.7 4-6 8-6s7.1 2.3 8 6"/>'),
+  lock:_ic('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),
+  alert:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/>'),
+  flask:_ic('<path d="M10 2v6.3L4.6 17.6A2 2 0 0 0 6.4 21h11.2a2 2 0 0 0 1.8-3.4L14 8.3V2"/><path d="M8.5 2h7"/><path d="M7.5 15h9"/>'),
+  history:_ic('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/>')
+};
+
+/* ---------- ابزار عمومی ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad2=n=>String(n).padStart(2,'0');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const faNum=n=>Number(n).toLocaleString('fa-IR');
+const faDigits=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const parseAmount=v=>Number(String(faDigits(v??'')).replace(/[,،\s]/g,''));
+const displayNo=no=>/^\d+$/.test(no)?faNum(no):no;
+const fmtTimeFa=t=>{const p=String(t).split(':');return faNum(p[0])+':'+faNum(p[1])};
+const fmtJDateFa=jd=>{const p=jd.split('/');return faNum(+p[2])+' '+MONTHS_FA[+p[1]-1]+' '+faNum(+p[0])};
+const fmtTsFull=ts=>{const d=new Date(ts);const j=toJalaali(d);return faNum(j.jd)+' '+MONTHS_FA[j.jm-1]+' '+faNum(j.jy)+' · '+faNum(d.getHours())+':'+faNum(pad2(d.getMinutes()))};
+
+/* ============================================================
+   تاریخ جلالی — بدون وابستگی خارجی (الگوریتم jalaali-js)
+============================================================ */
+function _div(a,b){return ~~(a/b)} function _mod(a,b){return a-~~(a/b)*b}
+function jalCal(jy){
+  const breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+  const bl=breaks.length, gy=jy+621; let leapJ=-14, jp=breaks[0], jm, jump, leap, leapG, march, n, i;
+  for(i=1;i<bl;i+=1){ jm=breaks[i]; jump=jm-jp; if(jy<jm)break;
+    leapJ=leapJ+_div(jump,33)*8+_div(_mod(jump,33),4); jp=jm; }
+  n=jy-jm;
+  leapJ=leapJ+_div(n,33)*8+_div(_mod(n,33)+3,4);
+  if(_mod(jump,33)===4&&jump-n===4)leapJ+=1;
+  leapG=_div(gy,4)-_div((_div(gy,100)+1)*3,4)-150;
+  march=20+leapJ-leapG;
+  if(jump-n<6)n=n-jump+_div(jump+4,33)*33;
+  leap=_mod(_mod(n+1,33)-1,4); if(leap===-1)leap=4;
+  return {leap,gy,march};
+}
+function g2d(gy,gm,gd){
+  let d=_div((gy+_div(gm-8,6)+100100)*1461,4)+_div(153*_mod(gm+9,12)+2,5)+gd-34840408;
+  d=d-_div(_div(gy+100100+_div(gm-8,6),100)*3,4)+752; return d;
+}
+function d2g(jdn){
+  let j=4*jdn+139361631;
+  j=j+_div(_div(4*jdn+183187720,146097)*3,4)*4-3908;
+  const i=_div(_mod(j,1461),4)*5+308;
+  const gd=_div(_mod(i,153),5)+1, gm=_mod(_div(i,153),12)+1, gy=_div(j,1461)-100100+_div(8-gm,6);
+  return {gy,gm,gd};
+}
+function j2d(jy,jm,jd){const r=jalCal(jy);return g2d(r.gy,3,r.march)+(jm-1)*31-_div(jm,7)*(jm-7)+jd-1}
+function d2j(jdn){
+  const gy=d2g(jdn).gy; let jy=gy-621; const r=jalCal(jy), jdn1f=g2d(gy,3,r.march); let k=jdn-jdn1f, jd, jm;
+  if(k>=0){ if(k<=185){ jm=1+_div(k,31); jd=_mod(k,31)+1; return {jy,jm,jd}; } k-=186; }
+  else { jy-=1; k+=179; if(r.leap===1)k+=1; }
+  jm=7+_div(k,30); jd=_mod(k,30)+1; return {jy,jm,jd};
+}
+function toJalaali(date){return d2j(g2d(date.getFullYear(),date.getMonth()+1,date.getDate()))}
+function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}
+function isLeapJY(jy){return jalCal(jy).leap===0}
+function jalaliMonthLen(jy,jm){ if(jm<=6)return 31; if(jm<=11)return 30; return isLeapJY(jy)?30:29; }
+function todayJ(){return toJalaali(new Date())}
+function jISO(jy,jm,jd){return jy+'/'+pad2(jm)+'/'+pad2(jd)}
+function pWeek(d){return (d.getDay()+1)%7} /* شنبه = ۰ */
+function addDays(d,n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n)}
+function jOfDate(d){const j=toJalaali(d);return jISO(j.jy,j.jm,j.jd)}
+
+/* ---------- فیلترهای تاریخ (شمسی) ---------- */
+function presetRange(p){
+  const now=new Date(), t=todayJ(), tISO=jISO(t.jy,t.jm,t.jd);
+  switch(p){
+    case 'today': return {from:tISO,to:tISO};
+    case 'yesterday': {const s=jOfDate(addDays(now,-1)); return {from:s,to:s};}
+    case 'thisWeek': return {from:jOfDate(addDays(now,-pWeek(now))),to:tISO};
+    case 'lastWeek': return {from:jOfDate(addDays(now,-pWeek(now)-7)),to:jOfDate(addDays(now,-pWeek(now)-1))};
+    case 'thisMonth': return {from:jISO(t.jy,t.jm,1),to:tISO};
+    case 'lastMonth': {let jy=t.jy,jm=t.jm-1; if(jm<1){jm=12;jy--;} return {from:jISO(jy,jm,1),to:jISO(jy,jm,jalaliMonthLen(jy,jm))};}
+    default: return null;
+  }
+}
+
+/* ============================================================
+   Storage — لایه جدا از منطق؛ آماده برای اتصال به Backend
+============================================================ */
+const DB={
+  get(k,f){try{const v=localStorage.getItem('owm.'+k);return v?JSON.parse(v):f}catch(e){return f}},
+  set(k,v){try{localStorage.setItem('owm.'+k,JSON.stringify(v));return true}
+    catch(e){toast('حافظه مرورگر پر شده است؛ برخی فایل‌های PDF قدیمی را حذف کنید','error');return false}},
+  del(k){localStorage.removeItem('owm.'+k)},
+  clearAll(){['users','orders','session','settings'].forEach(k=>this.del(k))}
+};
+const getUsers=()=>DB.get('users',[]);   const saveUsers=u=>DB.set('users',u);
+const getOrders=()=>DB.get('orders',[]); const saveOrders=o=>DB.set('orders',o);
+const getSession=()=>DB.get('session',null); const saveSession=s=>DB.set('session',s);
+function ensureSettings(){ if(!DB.get('settings',null)) DB.set('settings',{version:'1.0.0',createdAt:Date.now()}); }
+
+/* ============================================================
+   Authentication
+============================================================ */
+let session=null; /* کاربر جاری در حافظه */
+async function hashPassword(pw){
+  const s='owm::'+pw;
+  try{
+    if(window.crypto&&crypto.subtle){
+      const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+  }catch(e){}
+  let h1=0xdeadbeef^7,h2=0x41c6ce57^7;
+  for(let i=0;i<s.length;i++){const ch=s.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}
+  h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+  h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+  return (4294967296*(2097151&h2)+(h1>>>0)).toString(16);
+}
+function validateSession(){
+  const s=getSession(); if(!s||!s.userId) return null;
+  const u=getUsers().find(x=>x.id===s.userId);
+  if(!u||!u.active) return null;
+  return {userId:u.id,username:u.username,name:u.name,role:u.role,loginAt:s.loginAt};
+}
+
+/* ============================================================
+   Authorization (RBAC) — بررسی نقش داخل هر تابع عملیات
+============================================================ */
+function requireAuth(){ if(!session) throw new AppError('نشست شما معتبر نیست؛ لطفاً دوباره وارد شوید'); return session; }
+function requireRole(roles){ const u=requireAuth(); if(!roles.includes(u.role)) throw new AppError('دسترسی شما به این عملیات مجاز نیست'); return u; }
+function safe(fn){ return (async()=>{ try{ await fn(); } catch(e){ if(e instanceof AppError) toast(e.message,'error'); else { console.error(e); toast('خطای غیرمنتظره‌ای رخ داد','error'); } } })(); }
+
+/* ============================================================
+   Users — فقط مدیر
+============================================================ */
+async function addUser({name,username,password,role}){
+  requireRole(['admin']);
+  name=(name||'').trim(); username=(username||'').trim();
+  if(!name) throw new AppError('نام کاربر را وارد کنید');
+  if(!username) throw new AppError('نام کاربری را وارد کنید');
+  if(!password) throw new AppError('رمز عبور را وارد کنید');
+  if(!ROLE_FA[role]) throw new AppError('نقش انتخاب‌شده معتبر نیست');
+  const users=getUsers();
+  if(users.some(u=>u.username.toLowerCase()===username.toLowerCase())) throw new AppError('این نام کاربری قبلاً ثبت شده است');
+  users.push({id:uid(),name,username,passHash:await hashPassword(password),role,active:true,isRoot:false,createdAt:Date.now()});
+  saveUsers(users); toast('کاربر ایجاد شد');
+}
+async function updateUser(id,{name,username,password,role,active}){
+  requireRole(['admin']);
+  const users=getUsers(); const u=users.find(x=>x.id===id);
+  if(!u) throw new AppError('کاربر یافت نشد');
+  name=(name||'').trim(); username=(username||'').trim();
+  if(!name) throw new AppError('نام کاربر را وارد کنید');
+  if(!username) throw new AppError('نام کاربری را وارد کنید');
+  if(u.isRoot){
+    if(role&&role!=='admin') throw new AppError('نقش مدیر اصلی قابل تغییر نیست');
+    if(username!==u.username) throw new AppError('نام کاربری مدیر اصلی قابل تغییر نیست');
+    if(active===false) throw new AppError('مدیر اصلی قابل غیرفعال کردن نیست');
+  }
+  if(users.some(x=>x.id!==id&&x.username.toLowerCase()===username.toLowerCase())) throw new AppError('این نام کاربری قبلاً ثبت شده است');
+  if(role) u.role=role;
+  u.name=name; u.username=username;
+  if(active!==undefined) u.active=active;
+  if(password) u.passHash=await hashPassword(password);
+  saveUsers(users); toast('تغییرات ذخیره شد');
+}
+function deleteUser(id){
+  requireRole(['admin']);
+  const users=getUsers(); const u=users.find(x=>x.id===id);
+  if(!u) throw new AppError('کاربر یافت نشد');
+  if(u.isRoot) throw new AppError('مدیر اصلی قابل حذف نیست');
+  saveUsers(users.filter(x=>x.id!==id)); toast('کاربر حذف شد');
+  if(session&&session.userId===id) doLogout();
+}
+
+/* ============================================================
+   Orders + Versions + History
+============================================================ */
+function ev(type,text,u){ return {type,text,user:u.username,userName:u.name,ts:Date.now()}; }
+function parseJDate(jy,jm,jd){
+  jy=+jy; jm=+jm; jd=+jd;
+  if(!jy||!jm||!jd||jm<1||jm>12) throw new AppError('تاریخ نامعتبر است');
+  if(jd<1||jd>jalaliMonthLen(jy,jm)) throw new AppError('تاریخ نامعتبر است (روز خارج از محدوده ماه)');
+  const g=toGregorian(jy,jm,jd);
+  return {jy,jm,jd,gISO:g.gy+'-'+pad2(g.gm)+'-'+pad2(g.gd),jISOv:jISO(jy,jm,jd),g};
+}
+async function readPdf(file){
+  if(!file) throw new AppError('فایل PDF انتخاب نشده است');
+  const ok=file.type==='application/pdf'||/\.pdf$/i.test(file.name);
+  if(!ok) throw new AppError('فایل انتخابی PDF نیست');
+  if(file.size>MAX_PDF) throw new AppError('حجم فایل بیشتر از حد مجاز (۱٫۵ مگابایت) است');
+  const dataUrl=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(new AppError('خواندن فایل ناموفق بود'));r.readAsDataURL(file)});
+  return {name:file.name,size:file.size,type:'application/pdf',dataUrl};
+}
+function suggestNo(){
+  const ns=getOrders().map(o=>parseInt(o.orderNo,10)).filter(Number.isFinite);
+  return String(ns.length?Math.max(...ns)+1:1001);
+}
+function createOrder(data){
+  const u=requireRole(['sales']);
+  const orderNo=String(data.orderNo||'').trim();
+  if(!orderNo) throw new AppError('شماره سفارش را وارد کنید');
+  if(getOrders().some(o=>o.orderNo===orderNo)) throw new AppError('شماره سفارش تکراری است');
+  const customer=(data.customer||'').trim();
+  if(!customer) throw new AppError('نام مشتری را وارد کنید');
+  const amount=parseAmount(data.amount);
+  if(!Number.isFinite(amount)||amount<=0) throw new AppError('مبلغ معتبر وارد کنید');
+  if(!data.file) throw new AppError('فایل PDF انتخاب نشده است');
+  const d=parseJDate(data.jy,data.jm,data.jd);
+  const now=new Date(), time=pad2(now.getHours())+':'+pad2(now.getMinutes());
+  const ts=new Date(d.g.gy,d.g.gm-1,d.g.gd,now.getHours(),now.getMinutes()).getTime();
+  const order={id:uid(),orderNo,version:1,baseId:null,prevId:null,customer,amount,desc:(data.desc||'').trim(),
+    isSample:!!data.isSample,dateISO:d.gISO,jdate:d.jISOv,time,ts,
+    createdBy:u.username,creatorName:u.name,status:'pending',file:data.file,review:null,createdAt:Date.now(),history:[]};
+  order.baseId=order.id;
+  order.history.push(ev('created','سفارش ایجاد و برای بررسی ارسال شد',u));
+  const orders=getOrders(); orders.push(order); saveOrders(orders);
+  toast('سفارش ثبت شد'); return order;
+}
+function approveOrder(id){
+  const u=requireRole(['accountant']);
+  const orders=getOrders(); const o=orders.find(x=>x.id===id);
+  if(!o) throw new AppError('سفارش یافت نشد');
+  if(o.status!=='pending') throw new AppError('این سفارش قبلاً بررسی شده است');
+  const now=new Date(), t=todayJ();
+  o.status='approved';
+  o.review={by:u.username,byName:u.name,ts:Date.now(),time:pad2(now.getHours())+':'+pad2(now.getMinutes()),jdate:jISO(t.jy,t.jm,t.jd),reason:null};
+  o.history.push(ev('approved','سفارش تأیید شد',u));
+  saveOrders(orders); toast('سفارش تأیید شد');
+}
+function rejectOrder(id,reason){
+  const u=requireRole(['accountant']);
+  reason=(reason||'').trim();
+  if(!reason) throw new AppError('دلیل رد سفارش الزامی است');
+  const orders=getOrders(); const o=orders.find(x=>x.id===id);
+  if(!o) throw new AppError('سفارش یافت نشد');
+  if(o.status!=='pending') throw new AppError('این سفارش قبلاً بررسی شده است');
+  const now=new Date(), t=todayJ();
+  o.status='rejected';
+  o.review={by:u.username,byName:u.name,ts:Date.now(),time:pad2(now.getHours())+':'+pad2(now.getMinutes()),jdate:jISO(t.jy,t.jm,t.jd),reason};
+  o.history.push(ev('rejected','سفارش رد شد و دلیل رد ثبت شد',u));
+  saveOrders(orders); toast('سفارش رد شد');
+}
+function resubmitOrder(id,data){
+  const u=requireRole(['sales']);
+  const orders=getOrders(); const o=orders.find(x=>x.id===id);
+  if(!o) throw new AppError('سفارش یافت نشد');
+  if(o.createdBy!==u.username) throw new AppError('فقط ثبت‌کننده سفارش می‌تواند نسخه جدید ارسال کند');
+  if(o.status!=='rejected') throw new AppError('فقط سفارش رد شده قابل ارسال مجدد است');
+  const customer=(data.customer||'').trim();
+  if(!customer) throw new AppError('نام مشتری را وارد کنید');
+  const amount=parseAmount(data.amount);
+  if(!Number.isFinite(amount)||amount<=0) throw new AppError('مبلغ معتبر وارد کنید');
+  const d=parseJDate(data.jy,data.jm,data.jd);
+  const file=data.file||o.file;
+  if(!file) throw new AppError('فایل PDF برای نسخه جدید انتخاب نشده است');
+  const version=Math.max(...orders.filter(x=>x.baseId===o.baseId).map(x=>x.version))+1;
+  const now=new Date(), time=pad2(now.getHours())+':'+pad2(now.getMinutes());
+  const ts=new Date(d.g.gy,d.g.gm-1,d.g.gd,now.getHours(),now.getMinutes()).getTime();
+  const nv={id:uid(),orderNo:o.orderNo,version,baseId:o.baseId,prevId:o.id,customer,amount,desc:(data.desc||'').trim(),
+    isSample:!!data.isSample,dateISO:d.gISO,jdate:d.jISOv,time,ts,
+    createdBy:u.username,creatorName:u.name,status:'pending',file,review:null,createdAt:Date.now(),history:[]};
+  nv.history.push(ev('created','نسخه '+version+' ایجاد و برای بررسی ارسال شد',u));
+  o.history.push(ev('resubmitted','نسخه جدید (نسخه '+version+') توسط ثبت‌کننده ارسال شد',u));
+  orders.push(nv); saveOrders(orders);
+  toast('نسخه جدید سفارش ارسال شد'); return nv;
+}
+const groupVersions=o=>getOrders().filter(x=>x.baseId===o.baseId).sort((a,b)=>a.version-b.version);
+const findOrder=id=>getOrders().find(x=>x.id===id);
+
+/* ============================================================
+   Toast
+============================================================ */
+function toast(msg,type='ok'){
+  const el=document.createElement('div'); el.className='toast '+type;
+  el.innerHTML=(type==='error'?I.alert:I.check)+'<span>'+esc(msg)+'</span>';
+  $('#toastRoot').appendChild(el);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),320)},3400);
+}
+
+/* ============================================================
+   Modals
+============================================================ */
+function openModal(html,opts={}){
+  const root=$('#modalRoot');
+  const ov=document.createElement('div'); ov.className='overlay';
+  const md=document.createElement('div'); md.className='modal glass';
+  md.style.maxWidth=(opts.wide?700:560)+'px'; md.innerHTML=html;
+  ov.appendChild(md); root.appendChild(ov); document.body.classList.add('modal-open');
+  if(!opts.static) ov.addEventListener('click',e=>{if(e.target===ov)closeModal()});
+  md.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeModal));
+  return {ov,md};
+}
+function closeModal(){
+  const root=$('#modalRoot'); const last=root.lastElementChild;
+  if(last) last.remove();
+  if(!root.children.length) document.body.classList.remove('modal-open');
+}
+function confirmBox({title,text,okText='تأیید',danger=false}){
+  return new Promise(res=>{
+    const {md}=openModal(`
+      <div class="m-head"><div class="m-title">${esc(title)}</div><button class="m-x" data-close>✕</button></div>
+      <p style="color:var(--txt2);font-size:13.5px">${esc(text)}</p>
+      <div class="m-actions">
+        <button class="btn ${danger?'btn-dng':'btn-ok'}" id="cfOk">${esc(okText)}</button>
+        <button class="btn btn-gh" id="cfNo">انصراف</button>
+      </div>`);
+    md.querySelector('#cfOk').onclick=()=>{closeModal();res(true)};
+    md.querySelector('#cfNo').onclick=()=>{closeModal();res(false)};
+  });
+}
+
+/* ============================================================
+   PDF — مشاهده / دانلود (ساختار آماده برای Backend)
+============================================================ */
+function dataUrlToBlob(du){
+  const [h,d]=du.split(','); const mime=(h.match(/:(.*?);/)||[])[1]||'application/pdf';
+  const bin=atob(d); const arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type:mime});
+}
+function openPdfModal(id){
+  const o=findOrder(id); if(!o||!o.file) throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  const url=URL.createObjectURL(dataUrlToBlob(o.file.dataUrl));
+  openModal(`
+    <div class="m-head"><div class="m-title">${I.file} پیش‌نمایش PDF</div><button class="m-x" data-close>✕</button></div>
+    <div style="font-size:12.5px;color:var(--txt2)">${esc(o.file.name)} · ${faNum(Math.round(o.file.size/1024))} کیلوبایت</div>
+    <iframe class="pdf-prev" src="${url}" title="پیش‌نمایش PDF"></iframe>
+    <div class="fnote" style="text-align:center;margin-top:8px">اگر پیش‌نمایش نمایش داده نشد، از دکمه دانلود استفاده کنید.</div>
+    <div class="m-actions">
+      <button class="btn btn-p" id="pdfDl">${I.download} دانلود فایل</button>
+      <button class="btn btn-gh" id="pdfTab">${I.eye} باز کردن در تب جدید</button>
+    </div>`,{wide:true}).md.addEventListener('click',e=>{
+      if(e.target.closest('#pdfDl')) downloadPdf(id);
+      if(e.target.closest('#pdfTab')) window.open(url,'_blank');
+    });
+}
+function downloadPdf(id){
+  const o=findOrder(id); if(!o||!o.file) throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(dataUrlToBlob(o.file.dataUrl));
+  a.download=o.file.name; document.body.appendChild(a); a.click(); a.remove();
+  toast('دانلود شروع شد');
+}
+
+/* ============================================================
+   اجزای مشترک رابط سفارش
+============================================================ */
+function statusBadge(st){
+  const icon=st==='approved'?I.check:st==='rejected'?I.x:I.clock;
+  return `<span class="badge b-${st}">${icon} ${STATUS_FA[st]}</span>`;
+}
+function orderBadges(o){
+  let h=`<span class="ono">#${displayNo(o.orderNo)}</span>${statusBadge(o.status)}`;
+  if(o.isSample) h+=`<span class="badge b-sample">${I.flask} نمونه</span>`;
+  if(groupVersions(o).length>1||o.version>1) h+=`<span class="badge b-ver">نسخه ${faNum(o.version)}</span>`;
+  if(o.status==='rejected') h+=`<span class="badge b-lock">${I.lock} قفل شده</span>`;
+  return h;
+}
+function actionBtns(o){
+  const b=[];
+  b.push(`<button class="btn btn-gh btn-sm" data-act="detail" data-id="${o.id}">${I.eye} جزئیات</button>`);
+  if(o.file){
+    b.push(`<button class="btn btn-gh btn-sm" data-act="viewpdf" data-id="${o.id}">${I.file} مشاهده PDF</button>`);
+    b.push(`<button class="btn btn-gh btn-sm" data-act="dlpdf" data-id="${o.id}">${I.download} دانلود</button>`);
+  }
+  if(session.role==='accountant'&&o.status==='pending'){
+    b.push(`<button class="btn btn-ok btn-sm" data-act="approve" data-id="${o.id}">${I.check} تأیید</button>`);
+    b.push(`<button class="btn btn-dng btn-sm" data-act="reject" data-id="${o.id}">${I.x} رد</button>`);
+  }
+  if(session.role==='sales'&&o.createdBy===session.username&&o.status==='rejected'){
+    b.push(`<button class="btn btn-p btn-sm" data-act="resubmit" data-id="${o.id}">${I.refresh} ارسال مجدد</button>`);
+  }
+  return b.join('');
+}
+function orderCardHTML(o,i){
+  return `<article class="ocard glass" style="animation-delay:${Math.min(i*45,360)}ms">
+    <div class="ocard-top">${orderBadges(o)}</div>
+    <div class="ocust">${esc(o.customer)}</div>
+    <div class="oinfo">
+      <span>${I.calendar} ${fmtJDateFa(o.jdate)}</span>
+      <span>${I.clock} ساعت ${fmtTimeFa(o.time)}</span>
+      <span>${I.coin} ${faNum(o.amount)} تومان</span>
+      <span>${I.user} ${esc(o.creatorName)}</span>
+    </div>
+    <div class="oacts">${actionBtns(o)}</div>
+  </article>`;
+}
+function emptyHTML(title,sub){
+  return `<div class="empty glass">${I.clipboard}<b>${esc(title)}</b>${sub?esc(sub):''}</div>`;
+}
+
+/* ============================================================
+   لیست سفارش‌ها — فیلتر تاریخ + جستجو + مرتب‌سازی قدیمی→جدید
+============================================================ */
+function dateSelectsHTML(side,val){
+  const t=todayJ(); const jy=val?val.jy:t.jy, jm=val?val.jm:t.jm, jd=val?val.jd:t.jd;
+  let yo=''; for(let y=t.jy-4;y<=t.jy+1;y++) yo+=`<option value="${y}" ${y===jy?'selected':''}>${faNum(y)}</option>`;
+  let mo=''; for(let m=1;m<=12;m++) mo+=`<option value="${m}" ${m===jm?'selected':''}>${MONTHS_FA[m-1]}</option>`;
+  const len=jalaliMonthLen(jy,jm); let dOp='';
+  for(let d=1;d<=len;d++) dOp+=`<option value="${d}" ${d===jd?'selected':''}>${faNum(d)}</option>`;
+  return `<div class="dsel" data-side="${side}">
+    <select class="inp ov-dsel" data-k="y" aria-label="سال">${yo}</select>
+    <select class="inp ov-dsel" data-k="m" aria-label="ماه">${mo}</select>
+    <select class="inp ov-dsel" data-k="d" aria-label="روز">${dOp}</select>
+  </div>`;
+}
+function makeOrdersView(opts){
+  const mount=$(opts.mount);
+  const t=todayJ();
+  const st={preset:'today',query:'',cf:{jy:t.jy,jm:t.jm,jd:1},ct:{jy:t.jy,jm:t.jm,jd:t.jd}};
+  function range(){
+    if(st.preset==='all') return null;
+    if(st.preset==='custom') return {from:jISO(st.cf.jy,st.cf.jm,st.cf.jd),to:jISO(st.ct.jy,st.ct.jm,st.ct.jd)};
+    return presetRange(st.preset);
+  }
+  function filtered(){
+    let os=getOrders();
+    if(opts.scope==='mine') os=os.filter(o=>o.createdBy===session.username);
+    const r=range(); if(r) os=os.filter(o=>o.jdate>=r.from&&o.jdate<=r.to);
+    const q=st.query.trim().toLowerCase();
+    if(q) os=os.filter(o=>o.orderNo.toLowerCase().includes(q)||o.customer.toLowerCase().includes(q)||o.creatorName.toLowerCase().includes(q));
+    /* مرتب‌سازی: قدیمی‌ترین → جدیدترین (تاریخ، سپس ساعت ثبت) */
+    return os.sort((a,b)=>a.ts-b.ts||a.createdAt-b.createdAt);
+  }
+  function renderToolbar(){
+    const tb=mount.querySelector('.ov-toolbar');
+    tb.innerHTML=`<div class="chips">${PRESETS.map(([k,l])=>`<button class="chip ${st.preset===k?'on':''}" data-preset="${k}">${l}</button>`).join('')}</div>
+      ${st.preset==='custom'?`<div class="custom-range glass">
+        <div class="cr-row"><span>از تاریخ</span>${dateSelectsHTML('from',st.cf)}</div>
+        <div class="cr-row"><span>تا تاریخ</span>${dateSelectsHTML('to',st.ct)}</div>
+      </div>`:''}`;
+    tb.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{st.preset=c.dataset.preset;renderToolbar();renderList()}));
+  }
+  function renderSearch(){
+    mount.querySelector('.ov-search').innerHTML=
+      `<label class="search">${I.search}<input placeholder="جستجو: شماره سفارش، نام مشتری، ثبت‌کننده…" value="${esc(st.query)}"></label>`;
+    mount.querySelector('.ov-search input').addEventListener('input',e=>{st.query=e.target.value;renderList()});
+  }
+  function syncGroup(g){
+    const y=+g.querySelector('[data-k=y]').value, m=+g.querySelector('[data-k=m]').value;
+    const dSel=g.querySelector('[data-k=d]'); const cur=+dSel.value||1; const len=jalaliMonthLen(y,m);
+    dSel.innerHTML=''; for(let d=1;d<=len;d++){const op=document.createElement('option');op.value=d;op.textContent=faNum(d);dSel.appendChild(op);}
+    dSel.value=Math.min(cur,len);
+  }
+  function renderList(){
+    const items=filtered();
+    const listEl=mount.querySelector('.ov-list');
+    const hasAny=getOrders().length>0;
+    listEl.innerHTML=(items.length?items.map(orderCardHTML).join('')
+      : emptyHTML(hasAny?'سفارشی با این فیلتر یافت نشد':'هنوز سفارشی ثبت نشده است',hasAny?'بازه تاریخ یا عبارت جستجو را تغییر دهید':'اولین سفارش از بخش ثبت سفارش ایجاد کنید'));
+    mount.querySelector('.ocount').textContent=items.length?faNum(items.length)+' سفارش':'';
+  }
+  function render(){
+    mount.innerHTML=`<div class="ov-toolbar"></div><div class="ov-search"></div><div class="ocount"></div><div class="ov-list olist"></div>`;
+    renderToolbar(); renderSearch(); renderList();
+  }
+  mount.addEventListener('change',e=>{
+    if(!e.target.classList.contains('ov-dsel')) return;
+    const g=e.target.closest('.dsel'); syncGroup(g);
+    const v={jy:+g.querySelector('[data-k=y]').value,jm:+g.querySelector('[data-k=m]').value,jd:+g.querySelector('[data-k=d]').value};
+    if(g.dataset.side==='from') st.cf=v; else st.ct=v;
+    renderList();
+  });
+  return {render,refresh:renderList};
+}
+let ordersView=null, myOrdersView=null;
+
+/* ============================================================
+   فرم سفارش (ثبت جدید / نسخه مجدد)
+============================================================ */
+function orderFormHTML(o,mode){
+  const v={orderNo:o.orderNo||(mode==='create'?suggestNo():''),customer:o.customer||'',amount:o.amount||'',desc:o.desc||'',isSample:!!o.isSample};
+  const tj=todayJ();
+  return `
+  ${mode==='create'?`<div class="frow"><label>شماره سفارش *</label><input class="inp" name="orderNo" value="${esc(v.orderNo)}" inputmode="numeric" placeholder="مثلاً: 1001"><div class="fnote">شماره سفارش باید یکتا باشد.</div></div>`:''}
+  <div class="frow"><label>نام مشتری *</label><input class="inp" name="customer" value="${esc(v.customer)}" placeholder="نام مشتری"></div>
+  <div class="frow"><label>تاریخ سفارش *</label>${dateSelectsHTML('order',mode==='create'?tj:{jy:+o.jdate.split('/')[0],jm:+o.jdate.split('/')[1],jd:+o.jdate.split('/')[2]})}</div>
+  <div class="frow"><label>مبلغ (تومان) *</label><input class="inp" name="amount" value="${esc(v.amount)}" inputmode="numeric" placeholder="مثلاً: 2500000"></div>
+  <div class="frow"><label>توضیحات</label><textarea class="inp" name="desc" placeholder="توضیحات اختیاری…">${esc(v.desc)}</textarea></div>
+  <label class="switch-row"><span>🧪 این سفارش نمونه است</span><span class="switch"><input type="checkbox" name="isSample" ${v.isSample?'checked':''}><i></i></span></label>
+  <div class="frow"><label>${mode==='create'?'فایل PDF *':'فایل PDF'}</label>
+    <label class="filebox" id="ofBox">
+      <input type="file" accept="application/pdf,.pdf" hidden id="ofFile">
+      <div class="fmeta" id="ofMeta">${I.file}<div><b>${mode==='create'?'انتخاب فایل PDF':'انتخاب فایل جدید (اختیاری)'}</b><small>${mode==='create'?'حداکثر ۱٫۵ مگابایت':'در صورت عدم انتخاب، فایل نسخه قبل حفظ می‌شود'}</small></div></div>
+    </label>
+  </div>`;
+}
+function bindOrderForm(mount,onSubmit){
+  let picked=null;
+  const fileInp=mount.querySelector('#ofFile'), box=mount.querySelector('#ofBox'), meta=mount.querySelector('#ofMeta');
+  fileInp.addEventListener('change',()=>{
+    const f=fileInp.files[0]; fileInp.value='';
+    if(!f) return;
+    if(!(f.type==='application/pdf'||/\.pdf$/i.test(f.name))){toast('فقط فایل PDF مجاز است','error');return;}
+    if(f.size>MAX_PDF){toast('حجم فایل بیشتر از حد مجاز (۱٫۵ مگابایت) است','error');return;}
+    picked=f; box.classList.add('has');
+    meta.innerHTML=I.check+'<div><b>'+esc(f.name)+'</b><small>'+faNum(Math.round(f.size/1024))+' کیلوبایت · برای تغییر، دوباره کلیک کنید</small></div>';
+  });
+  mount.querySelector('form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const f=e.target, g=f.querySelector('.dsel');
+    onSubmit({
+      orderNo:f.orderNo?f.orderNo.value:'',
+      customer:f.customer.value, amount:f.amount.value, desc:f.desc.value,
+      isSample:f.isSample.checked,
+      jy:g.querySelector('[data-k=y]').value, jm:g.querySelector('[data-k=m]').value, jd:g.querySelector('[data-k=d]').value,
+      file:picked
+    });
+  });
+}
+function renderNewOrder(){
+  const page=$('#page-newOrder');
+  page.innerHTML=`<div class="glass" style="padding:22px 18px;max-width:640px">
+    <div class="subhead" style="margin-top:0"><h3>${I.plus} ثبت سفارش جدید</h3></div>
+    <form id="newOrderForm" novalidate>${orderFormHTML({},'create')}</form>
+    <div class="fnote">ساعت ثبت به‌صورت خودکار در لحظه ثبت ذخیره می‌شود و سفارش با وضعیت «در انتظار بررسی» برای حسابدار ارسال می‌گردد.</div>
+  </div>`;
+  bindOrderForm(page,async d=>{
+    try{
+      const file=await readPdf(d.file);
+      const o=createOrder({...d,file});
+      renderNewOrder(); /* پاک شدن فرم + شماره پیشنهادی جدید */
+      if(myOrdersView) myOrdersView.refresh();
+      void o;
+    }catch(e){ toast(e instanceof AppError?e.message:'خطا در ثبت سفارش','error'); }
+  });
+}
+
+/* ============================================================
+   جزئیات سفارش / رد / ارسال مجدد
+============================================================ */
+function openDetail(id){
+  const o=findOrder(id); if(!o){toast('سفارش یافت نشد','error');return;}
+  const g=groupVersions(o);
+  const tl=g.flatMap(x=>x.history).sort((a,b)=>a.ts-b.ts);
+  let reviewBox='';
+  if(o.status==='approved'&&o.review) reviewBox=`<div class="rbox ok">${I.check} <b>تأیید شده توسط:</b> ${esc(o.review.byName)}<br><b>تاریخ تأیید:</b> ${fmtJDateFa(o.review.jdate)}<br><b>ساعت تأیید:</b> ${fmtTimeFa(o.review.time)}</div>`;
+  if(o.status==='rejected'&&o.review) reviewBox=`<div class="rbox bad">${I.x} <b>رد شده توسط:</b> ${esc(o.review.byName)}<br><b>تاریخ رد:</b> ${fmtJDateFa(o.review.jdate)} · ساعت ${fmtTimeFa(o.review.time)}<div class="reason"><b style="min-width:auto;color:#fda4af">دلیل رد:</b><br>${esc(o.review.reason)}</div></div>
+    <div class="locknote">${I.lock}<span>این سفارش قفل شده و قابل ویرایش نیست.${session.role==='sales'&&o.createdBy===session.username?' برای اصلاح، از دکمه «ارسال مجدد» استفاده کنید تا نسخه جدید ایجاد شود.':''}</span></div>`;
+  const vers=g.length>1?`<div class="sec-title">نسخه‌های سفارش</div><div class="ver-list">${g.map(v=>`
+    <div class="ver-row ${v.id===o.id?'cur':''}"><span><b>نسخه ${faNum(v.version)}</b> · ${fmtJDateFa(v.jdate)}</span>
+    <span style="display:flex;gap:8px;align-items:center">${statusBadge(v.status)}${v.id!==o.id?`<button class="btn btn-gh btn-sm" data-act="openver" data-id="${v.id}">مشاهده</button>`:''}</span></div>`).join('')}</div>`:'';
+  openModal(`
+    <div class="m-head"><div class="m-title">جزئیات سفارش #${displayNo(o.orderNo)}</div><button class="m-x" data-close>✕</button></div>
+    <div class="ocard-top" style="margin-bottom:12px">${orderBadges(o)}</div>
+    <div class="drow"><span>نام مشتری</span><b>${esc(o.customer)}</b></div>
+    <div class="drow"><span>تاریخ سفارش</span><b>${fmtJDateFa(o.jdate)}</b></div>
+    <div class="drow"><span>ساعت ثبت</span><b>${fmtTimeFa(o.time)}</b></div>
+    <div class="drow"><span>مبلغ</span><b>${faNum(o.amount)} تومان</b></div>
+    <div class="drow"><span>ثبت‌کننده</span><b>${esc(o.creatorName)}</b></div>
+    <div class="drow"><span>نوع سفارش</span><b>${o.isSample?'🧪 نمونه':'عادی'}</b></div>
+    <div class="drow"><span>وضعیت</span><b>${statusBadge(o.status)}</b></div>
+    ${o.desc?`<div class="drow"><span>توضیحات</span><b>${esc(o.desc)}</b></div>`:''}
+    ${o.file?`<div class="drow"><span>فایل PDF</span><b>${esc(o.file.name)} · ${faNum(Math.round(o.file.size/1024))} کیلوبایت</b></div>`:''}
+    ${reviewBox}${vers}
+    <div class="sec-title">${I.history} تاریخچه سفارش</div>
+    <div class="tline">${tl.map(h=>`<div class="tl-item c-${h.type}"><b>${esc(h.text)}</b><span>${esc(h.userName)} · ${fmtTsFull(h.ts)}</span></div>`).join('')}</div>
+    <div class="m-actions">${actionBtns(o)}</div>`,{wide:true});
+}
+function openRejectModal(id){
+  const o=findOrder(id); if(!o) return;
+  const {md}=openModal(`
+    <div class="m-head"><div class="m-title">${I.x} رد سفارش #${displayNo(o.orderNo)}</div><button class="m-x" data-close>✕</button></div>
+    <p style="color:var(--txt2);font-size:13px;margin-bottom:10px">پس از رد، سفارش قفل می‌شود و ثبت‌کننده برای اصلاح باید نسخه جدید ارسال کند.</p>
+    <label style="font-size:12.5px;font-weight:700;color:var(--txt2)">دلیل رد سفارش *</label>
+    <textarea class="inp" id="rejReason" style="margin-top:8px" placeholder="دلیل رد را بنویسید…"></textarea>
+    <div id="rejErr" class="ferr"></div>
+    <div class="m-actions"><button class="btn btn-dng" id="rejOk">${I.x} ثبت رد سفارش</button><button class="btn btn-gh" data-close>انصراف</button></div>`);
+  md.querySelector('#rejOk').addEventListener('click',()=>safe(async()=>{
+    const reason=md.querySelector('#rejReason').value;
+    if(!reason.trim()){ const er=md.querySelector('#rejErr'); er.textContent='دلیل رد الزامی است'; er.classList.remove('on'); void er.offsetWidth; er.classList.add('on'); return; }
+    rejectOrder(id,reason); closeModal(); rerenderAll();
+  }));
+}
+function openResubmitModal(id){
+  const o=findOrder(id); if(!o) return;
+  const {md}=openModal(`
+    <div class="m-head"><div class="m-title">${I.refresh} ارسال مجدد سفارش #${displayNo(o.orderNo)}</div><button class="m-x" data-close>✕</button></div>
+    <div class="locknote" style="margin:0 0 12px">${I.lock}<span>نسخه ${faNum(o.version)} رد و قفل شده است؛ با ثبت این فرم، <b>نسخه ${faNum(o.version+1)}</b> ایجاد و برای بررسی ارسال می‌شود. نسخه‌های قبلی حذف نمی‌شوند.</span></div>
+    <form id="reForm" novalidate>${orderFormHTML(o,'resubmit')}</form>
+    <div class="m-actions"><button class="btn btn-p" id="reOk" style="flex:1">${I.refresh} ثبت نسخه جدید</button><button class="btn btn-gh" data-close>انصراف</button></div>`,{wide:true});
+  bindOrderForm(md,async d=>{
+    try{
+      const file=d.file?await readPdf(d.file):null;
+      resubmitOrder(id,{...d,file}); closeModal(); rerenderAll();
+    }catch(e){ toast(e instanceof AppError?e.message:'خطا در ارسال نسخه جدید','error'); }
+  });
+  md.querySelector('#reOk').addEventListener('click',()=>md.querySelector('form').requestSubmit());
+}
+
+/* ============================================================
+   مدیریت اعضا — فقط مدیر
+============================================================ */
+function renderMembers(){
+  requireRole(['admin']);
+  const page=$('#page-members'); const users=getUsers();
+  page.innerHTML=`<div class="subhead" style="margin-top:0"><h3>${I.users} کاربران سیستم (${faNum(users.length)})</h3>
+    <button class="btn btn-p btn-sm" data-act="adduser">${I.plus} افزودن کاربر</button></div>
+  <div class="olist">${users.length?users.map(u=>`
+    <div class="mcard glass">
+      <div class="m-ava">${esc(u.name.charAt(0)||'؟')}</div>
+      <div class="m-info"><b>${esc(u.name)}${u.isRoot?' 🛡️':''}</b><span>@${esc(u.username)}</span></div>
+      <div class="m-meta">
+        <span class="badge r-${u.role}">${ROLE_FA[u.role]}</span>
+        <span class="badge ${u.active?'r-active':'r-inactive'}">${u.active?'فعال':'غیرفعال'}</span>
+        <span class="m-date">ایجاد: ${fmtJDateFa(jOfDate(new Date(u.createdAt)))}</span>
+      </div>
+      <div class="m-acts">
+        <button class="ibtn" title="ویرایش" data-act="edituser" data-id="${u.id}">${I.edit}</button>
+        ${u.isRoot?'':`<button class="ibtn" title="${u.active?'غیرفعال کردن':'فعال کردن'}" data-act="toggleuser" data-id="${u.id}">${u.active?I.lock:I.check}</button>
+        <button class="ibtn danger" title="حذف" data-act="deluser" data-id="${u.id}">${I.trash}</button>`}
+      </div>
+    </div>`).join(''):emptyHTML('هیچ کاربری ثبت نشده است','از دکمه «افزودن کاربر» اولین کاربر را بسازید')}</div>`;
+}
+function openUserModal(u){
+  const isEdit=!!u;
+  const {md}=openModal(`
+    <div class="m-head"><div class="m-title">${isEdit?'ویرایش کاربر':'افزودن کاربر جدید'}</div><button class="m-x" data-close>✕</button></div>
+    ${u&&u.isRoot?`<div class="auth-hint" style="margin:0 0 6px">🛡️ این حساب، مدیر اصلی سیستم است؛ نقش و نام کاربری آن قابل تغییر و حذف آن ممکن نیست.</div>`:''}
+    <form id="uForm" novalidate>
+      <div class="frow"><label>نام و نام خانوادگی *</label><input class="inp" name="uname" value="${esc(u?u.name:'')}"></div>
+      <div class="frow"><label>نام کاربری *</label><input class="inp" name="uuser" dir="ltr" value="${esc(u?u.username:'')}" ${u&&u.isRoot?'disabled':''}></div>
+      <div class="frow"><label>رمز عبور ${isEdit?'':'*'}</label>
+        <div class="pwd"><input class="inp" name="upass" type="password" autocomplete="new-password" placeholder="${isEdit?'برای تغییر نکردن خالی بگذارید':''}"><button type="button" class="pu" aria-label="نمایش رمز">👁</button></div></div>
+      <div class="frow"><label>نقش *</label><select class="inp" name="urole" ${u&&u.isRoot?'disabled':''}>
+        ${Object.keys(ROLE_FA).map(r=>`<option value="${r}" ${u&&u.role===r?'selected':''}>${ROLE_FA[r]}</option>`).join('')}
+      </select></div>
+      <label class="switch-row"><span>حساب فعال است</span><span class="switch"><input type="checkbox" name="uactive" ${!u||u.active?'checked':''} ${u&&u.isRoot?'disabled':''}><i></i></span></label>
+      <div class="m-actions"><button class="btn btn-p" type="submit" style="flex:1">${isEdit?'ذخیره تغییرات':'ایجاد کاربر'}</button><button class="btn btn-gh" type="button" data-close>انصراف</button></div>
+    </form>`);
+  md.querySelector('.pu').addEventListener('click',()=>{const i=md.querySelector('[name=upass]');i.type=i.type==='password'?'text':'password'});
+  md.querySelector('#uForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const f=e.target;
+    safe(async()=>{
+      const data={name:f.uname.value,username:f.uuser.value,password:f.upass.value,role:f.urole.value,active:f.uactive.checked};
+      if(isEdit) await updateUser(u.id,data); else await addUser(data);
+      closeModal(); renderMembers();
+    });
+  });
+}
+
+/* ============================================================
+   داشبورد — بر اساس نقش
+============================================================ */
+function statTile(icon,color,num,lbl){
+  return `<div class="stat glass"><div class="s-ic" style="color:${color};background:${color}1f;border:1px solid ${color}44">${icon}</div><div><div class="s-num">${faNum(num)}</div><div class="s-lbl">${lbl}</div></div></div>`;
+}
+function renderDashboard(){
+  const page=$('#page-dashboard');
+  const all=getOrders(), role=session.role;
+  const base=role==='sales'?all.filter(o=>o.createdBy===session.username):all;
+  const cnt=st=>base.filter(o=>o.status===st).length;
+  const t=todayJ(), todayISO=jISO(t.jy,t.jm,t.jd);
+  const wk=presetRange('thisWeek'), mo=presetRange('thisMonth');
+  const todayJ_=new Date(); const wd=WEEKDAYS_FA[todayJ_.getDay()];
+  const isMgr=role!=='sales';
+  const pendingQ=base.filter(o=>o.status==='pending').sort((a,b)=>a.ts-b.ts);
+  const rejectedMine=role==='sales'?base.filter(o=>o.status==='rejected').sort((a,b)=>a.ts-b.ts):[];
+
+  page.innerHTML=`
+  <div class="welcome glass">
+    <div><h2>سلام، ${esc(session.name)} 👋</h2>
+    <p>${wd}، ${faNum(t.jd)} ${MONTHS_FA[t.jm-1]} ${faNum(t.jy)} · نقش: ${ROLE_FA[role]}</p></div>
+    ${role==='sales'?`<button class="btn btn-p" data-navpage="newOrder">${I.plus} ثبت سفارش جدید</button>`:''}
+  </div>
+  <div class="stat-grid">
+    ${statTile(I.clipboard,'#5bc8f5',base.length,isMgr?'کل سفارش‌ها':'سفارش‌های من')}
+    ${statTile(I.clock,'#fbbf24',cnt('pending'),'در انتظار بررسی')}
+    ${statTile(I.check,'#4ade80',cnt('approved'),'تأیید شده')}
+    ${statTile(I.x,'#fb7185',cnt('rejected'),'رد شده')}
+  </div>
+  ${isMgr?`<div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+    ${statTile(I.calendar,'#2dd4bf',base.filter(o=>o.jdate===todayISO).length,'امروز')}
+    ${statTile(I.calendar,'#2dd4bf',base.filter(o=>o.jdate>=wk.from&&o.jdate<=wk.to).length,'این هفته')}
+    ${statTile(I.calendar,'#2dd4bf',base.filter(o=>o.jdate>=mo.from&&o.jdate<=mo.to).length,'این ماه')}
+  </div>`:''}
+
+  ${role==='sales'&&rejectedMine.length?`<div class="subhead"><h3>${I.alert} نیازمند اقدام — رد شده‌ها</h3><button data-navpage="myOrders">مشاهده همه</button></div>
+    <div class="olist">${rejectedMine.slice(0,5).map(orderCardHTML).join('')}</div>`:''}
+
+  ${isMgr?`<div class="subhead"><h3>${I.clock} صف بررسی — در انتظار (قدیمی‌ترین ابتدا)</h3><button data-navpage="orders">مشاهده همه</button></div>
+    <div class="olist">${pendingQ.length?pendingQ.slice(0,6).map(orderCardHTML).join(''):emptyHTML('سفارشی در انتظار بررسی نیست','بازه نمایش امروز است؛ از بخش سفارش‌ها سایر بازه‌ها را ببینید')}</div>`
+  :`<div class="subhead"><h3>${I.clock} سفارش‌های در انتظار بررسی</h3><button data-navpage="myOrders">مشاهده همه</button></div>
+    <div class="olist">${pendingQ.length?pendingQ.slice(0,5).map(orderCardHTML).join(''):emptyHTML('سفارشی در انتظار بررسی ندارید','')}</div>`}
+  `;
+}
+
+/* ============================================================
+   Navigation + Rendering
+============================================================ */
+let curPage='dashboard';
+function showView(name){
+  $('#view-login').style.display=name==='login'?'':'none';
+  $('#view-setup').style.display=name==='setup'?'':'none';
+  $('#view-app').style.display=name==='app'?'':'none';
+}
+function renderNav(){
+  const items=NAV_ITEMS[session.role];
+  const html=items.map(([p,l,ic])=>`<button class="bn-btn ${curPage===p?'on':''}" data-navpage="${p}">${I[ic]}<span>${l}</span></button>`).join('');
+  $('#bottomNav').innerHTML=html;
+  $('#sideNav').innerHTML=items.map(([p,l,ic])=>`<button class="sn-btn ${curPage===p?'on':''}" data-navpage="${p}">${I[ic]}<span>${l}</span></button>`).join('');
+}
+function goTo(p){
+  if(!session){showView('login');return;}
+  if(!PAGE_ACCESS[session.role].includes(p)){toast('دسترسی شما به این بخش مجاز نیست','error');return;}
+  curPage=p;
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  $('#page-'+p).classList.add('active');
+  $('#pageTitle').textContent=PAGE_TITLE[p];
+  renderNav();
+  if(p==='dashboard') renderDashboard();
+  else if(p==='orders') ordersView.render();
+  else if(p==='myOrders') myOrdersView.render();
+  else if(p==='newOrder') renderNewOrder();
+  else if(p==='members'){try{renderMembers()}catch(e){toast(e.message,'error');curPage='dashboard';goTo('dashboard')}}
+  window.scrollTo({top:0});
+}
+function rerenderAll(){ if(curPage==='dashboard')renderDashboard(); else if(curPage==='orders')ordersView.refresh(); else if(curPage==='myOrders')myOrdersView.refresh(); else if(curPage==='members'){try{renderMembers()}catch(e){}} }
+function renderHeader(){ $('#hdrName').textContent=session.name; $('#hdrRole').textContent=ROLE_FA[session.role]; }
+function enterApp(){
+  showView('app'); renderHeader();
+  ordersView=makeOrdersView({mount:'#page-orders',scope:'all'});
+  myOrdersView=makeOrdersView({mount:'#page-myOrders',scope:'mine'});
+  goTo('dashboard');
+}
+function doLogout(){
+  DB.del('session'); session=null; closeModal();
+  $('#loginPass').value='';
+  showView(getUsers().length?'login':'setup');
+}
+
+/* ============================================================
+   رویدادهای سراسری
+============================================================ */
+document.addEventListener('click',e=>{
+  const pwd=e.target.closest('[data-pwd]');
+  if(pwd){const i=$('#'+pwd.dataset.pwd);i.type=i.type==='password'?'text':'password';return;}
+  const nav=e.target.closest('[data-navpage]');
+  if(nav){goTo(nav.dataset.navpage);return;}
+  const b=e.target.closest('[data-act]');
+  if(!b) return;
+  const {act,id}=b.dataset;
+  safe(async()=>{
+    switch(act){
+      case 'detail': openDetail(id); break;
+      case 'openver': closeModal(); openDetail(id); break;
+      case 'viewpdf': openPdfModal(id); break;
+      case 'dlpdf': downloadPdf(id); break;
+      case 'approve':{
+        const o=findOrder(id); if(!o) break;
+        const ok=await confirmBox({title:'تأیید سفارش',text:'سفارش #'+o.orderNo+' به نام «'+o.customer+'» تأیید شود؟',okText:'تأیید سفارش'});
+        if(ok){approveOrder(id); closeModal(); rerenderAll();} break;}
+      case 'reject': openRejectModal(id); break;
+      case 'resubmit': openResubmitModal(id); break;
+      case 'adduser': openUserModal(null); break;
+      case 'edituser': openUserModal(getUsers().find(u=>u.id===id)); break;
+      case 'toggleuser':{
+        const u=getUsers().find(x=>x.id===id); if(!u) break;
+        if(u.active){const ok=await confirmBox({title:'غیرفعال کردن کاربر',text:'کاربر «'+u.name+'» غیرفعال شود؟ این کاربر دیگر نمی‌تواند وارد سیستم شود.',okText:'غیرفعال کن',danger:true}); if(!ok)break;}
+        await updateUser(id,{name:u.name,username:u.username,active:!u.active}); renderMembers(); break;}
+      case 'deluser':{
+        const u=getUsers().find(x=>x.id===id); if(!u) break;
+        const ok=await confirmBox({title:'حذف کاربر',text:'کاربر «'+u.name+'» برای همیشه حذف شود؟ سفارش‌های ثبت‌شده توسط او باقی می‌مانند.',okText:'حذف کاربر',danger:true});
+        if(ok){deleteUser(id); renderMembers();} break;}
+    }
+  });
+});
+$('#btnLogout').addEventListener('click',()=>safe(async()=>{
+  const ok=await confirmBox({title:'خروج از سیستم',text:'آیا می‌خواهید از سیستم خارج شوید؟',okText:'خروج',danger:true});
+  if(ok) doLogout();
+}));
+$('#loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  safe(async()=>{
+    const errEl=$('#loginErr'); errEl.classList.remove('on'); errEl.textContent='';
+    const un=$('#loginUser').value.trim(), pw=$('#loginPass').value;
+    if(!un||!pw){errEl.textContent='نام کاربری و رمز عبور را وارد کنید';errEl.classList.add('on');return;}
+    const u=getUsers().find(x=>x.username.toLowerCase()===un.toLowerCase());
+    if(!u){errEl.textContent='نام کاربری یا رمز عبور نادرست است';errEl.classList.add('on');return;}
+    if(!u.active){errEl.textContent='حساب شما غیرفعال شده است؛ با مدیر تماس بگیرید';errEl.classList.add('on');return;}
+    const h=await hashPassword(pw);
+    if(h!==u.passHash){errEl.textContent='نام کاربری یا رمز عبور نادرست است';errEl.classList.add('on');return;}
+    session={userId:u.id,username:u.username,name:u.name,role:u.role,loginAt:Date.now()};
+    saveSession({userId:u.id,loginAt:session.loginAt});
+    $('#loginPass').value=''; enterApp(); toast('خوش آمدید، '+u.name);
+  });
+});
+$('#setupForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  safe(async()=>{
+    const errEl=$('#setupErr'); errEl.classList.remove('on'); errEl.textContent='';
+    const fail=m=>{errEl.textContent=m;errEl.classList.add('on')};
+    const name=$('#sName').value.trim(), un=$('#sUser').value.trim(), p1=$('#sPass').value, p2=$('#sPass2').value;
+    if(!name) return fail('نام را وارد کنید');
+    if(!un) return fail('نام کاربری را وارد کنید');
+    if(p1.length<4) return fail('رمز عبور باید حداقل ۴ کاراکتر باشد');
+    if(p1!==p2) return fail('تکرار رمز عبور مطابقت ندارد');
+    if(getUsers().length) return fail('سیستم قبلاً راه‌اندازی شده است');
+    const u={id:uid(),name,username:un,passHash:await hashPassword(p1),role:'admin',active:true,isRoot:true,createdAt:Date.now()};
+    saveUsers([u]); ensureSettings();
+    session={userId:u.id,username:u.username,name:u.name,role:'admin',loginAt:Date.now()};
+    saveSession({userId:u.id,loginAt:session.loginAt});
+    enterApp(); toast('حساب مدیر اصلی ایجاد شد؛ به OWM خوش آمدید');
+  });
+});
+/* Debug مخفی — فقط مدیر: ۵ بار کلیک روی لوگو → پاک‌سازی LocalStorage */
+let _tap=0,_tapT=null;
+$('#logoTap').addEventListener('click',()=>{
+  _tap++; clearTimeout(_tapT); _tapT=setTimeout(()=>_tap=0,1600);
+  if(_tap>=5){ _tap=0; safe(async()=>{
+    if(!session||session.role!=='admin') return;
+    const ok=await confirmBox({title:'پاک‌سازی کامل (Debug)',text:'تمام داده‌های LocalStorage شامل کاربران، سفارش‌ها و نشست جاری حذف می‌شود. ادامه می‌دهید؟',okText:'پاک‌سازی کامل',danger:true});
+    if(ok){DB.clearAll();doLogout();toast('حافظه سیستم پاک شد');}
+  });}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+window.addEventListener('storage',()=>{ if(session) rerenderAll(); });
+
+/* ============================================================
+   راه‌اندازی
+============================================================ */
+(function init(){
+  ensureSettings();
+  if(!getUsers().length){ showView('setup'); return; }
+  const s=validateSession();
+  if(s){ session=s; enterApp(); } else { DB.del('session'); showView('login'); }
+})();
+</script>
+</body>
+</html>
