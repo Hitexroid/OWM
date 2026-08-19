@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "owner": "",
+    "repo": "",
+    "branch": "main",
+    "token": "",
+    "pollSec": 8,
+    "salesDefaultScope": "own"
+  },
+  "users": [],
+  "orders": []
+}
