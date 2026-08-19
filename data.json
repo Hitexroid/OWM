@@ -32,7 +32,7 @@
    "id": "mt0i5vxe532gis",
    "name": "خانم رهبری",
    "username": "MsRahbari",
-   "passHash": "703a44bf139e5411727be8251a615f7245695e745a102223865c3378792ce0ad",
+   "passHash": "aeda9df10f8e25db94995f55128c73fee35a64ecd39f9559fe1d4ccae0d9c13e",
    "role": "accountant",
    "active": true,
    "isRoot": false,
@@ -40,5 +40,5 @@
   }
  ],
  "orders": [],
- "rev": 9
+ "rev": 13
 }
