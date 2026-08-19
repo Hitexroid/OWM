@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سفارش‌یار | سامانه مدیریت سفارش</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1) BASE & DESIGN TOKENS
+============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+:root{
+  --bg0:#060d16; --bg1:#0a1a29;
+  --ink:#e9f4fd; --mut:#9db4c6; --dim:#6d8296;
+  --line:rgba(255,255,255,.13);
+  --aqua:#3be0d0; --azure:#4da3ff; --gold:#ffc24d;
+  --ok:#3ddc97; --warn:#ffb02e; --bad:#ff5d73; --violet:#b78cff;
+  --grad:linear-gradient(135deg,#4da3ff,#3be0d0);
+  --r:18px;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Vazirmatn","Segoe UI",Tahoma,Arial,sans-serif;
+  color:var(--ink); min-height:100dvh; overflow-x:hidden;
+  background:
+    radial-gradient(1100px 750px at 88% -12%, rgba(77,163,255,.17), transparent 62%),
+    radial-gradient(900px 700px at -12% 28%, rgba(255,93,115,.09), transparent 60%),
+    radial-gradient(1000px 850px at 50% 112%, rgba(59,224,208,.13), transparent 62%),
+    linear-gradient(160deg,#050d16,#081826 46%,#0a1120);
+  background-attachment:fixed;
+  -webkit-tap-highlight-color:transparent;
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+body.lock{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none;touch-action:manipulation}
+::selection{background:rgba(59,224,208,.35)}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+::-webkit-scrollbar-track{background:transparent}
+
+.orb{position:fixed;border-radius:50%;filter:blur(72px);z-index:0;pointer-events:none;opacity:.5}
+.o1{width:44vw;height:44vw;min-width:260px;min-height:260px;background:radial-gradient(circle,#2a7bd4,transparent 65%);top:-10%;left:-8%;animation:float1 16s ease-in-out infinite alternate}
+.o2{width:36vw;height:36vw;min-width:220px;min-height:220px;background:radial-gradient(circle,#1fb8a6,transparent 65%);bottom:-12%;right:-6%;animation:float2 19s ease-in-out infinite alternate}
+.o3{width:26vw;height:26vw;min-width:160px;min-height:160px;background:radial-gradient(circle,#c25a7a,transparent 65%);top:38%;left:52%;opacity:.3;animation:float3 22s ease-in-out infinite alternate}
+@keyframes float1{to{transform:translate(9vw,7vh) scale(1.12)}}
+@keyframes float2{to{transform:translate(-7vw,-6vh) scale(1.08)}}
+@keyframes float3{to{transform:translate(-9vw,6vh) scale(.9)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+.glass{
+  background:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.045) 45%,rgba(255,255,255,.075));
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid var(--line);
+  box-shadow:0 18px 44px -20px rgba(2,8,20,.75), inset 0 1px 0 rgba(255,255,255,.16);
+  border-radius:var(--r);
+}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:46px;padding:10px 20px;border-radius:14px;font-weight:700;font-size:14.5px;
+  transition:transform .16s ease, box-shadow .2s ease, filter .2s ease, background .2s;
+  user-select:none;-webkit-user-select:none;white-space:nowrap;
+}
+.btn:active{transform:scale(.965)}
+.btn:disabled{opacity:.6;pointer-events:none}
+.btn:focus-visible{outline:2px solid rgba(59,224,208,.55);outline-offset:2px}
+.btn-sm{min-height:38px;padding:7px 14px;font-size:13px;border-radius:12px}
+.btn-primary{
+  background:var(--grad);color:#04262b;position:relative;overflow:hidden;
+  box-shadow:0 10px 26px -10px rgba(59,224,208,.55), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn-primary::after{
+  content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);transition:left .5s ease;
+}
+.btn-primary:hover::after{left:130%}
+.btn-ghost{
+  background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--ink);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-danger{background:linear-gradient(135deg,#ff5d73,#ff8a5c);color:#33060d;box-shadow:0 10px 24px -10px rgba(255,93,115,.55)}
+.btn-ok{background:linear-gradient(135deg,#3ddc97,#2bb673);color:#04301c;box-shadow:0 10px 24px -10px rgba(61,220,151,.5)}
+.btn-bad-o{background:rgba(255,93,115,.1);border:1px solid rgba(255,93,115,.5);color:#ffb0bc}
+.btn-bad-o:hover{background:rgba(255,93,115,.2)}
+.btn-block{width:100%}
+.icon-btn{
+  width:42px;height:42px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--mut);transition:.2s;flex:none;
+}
+.icon-btn:hover{color:var(--ink);background:rgba(255,255,255,.13)}
+
+.fld{display:block;margin-bottom:14px}
+.fld>span{display:block;font-size:12.5px;font-weight:700;color:var(--mut);margin-bottom:7px}
+.req{color:var(--bad);font-style:normal}
+.inp{
+  display:flex;align-items:center;gap:9px;padding:0 14px;min-height:48px;border-radius:14px;
+  background:rgba(5,17,28,.55);border:1px solid var(--line);
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.3);transition:border-color .2s, box-shadow .2s;
+}
+.inp:focus-within{border-color:rgba(59,224,208,.65);box-shadow:inset 0 2px 8px rgba(0,0,0,.3),0 0 0 3px rgba(59,224,208,.16)}
+.inp input,.inp textarea,.inp select{flex:1;background:none;border:none;outline:none;color:var(--ink);font-size:15px;min-width:0;padding:12px 0}
+.inp textarea{resize:vertical}
+.inp select option{background:#0b1c2b;color:var(--ink)}
+.inp>svg{color:var(--dim);flex:none}
+.inp.bad{border-color:rgba(255,93,115,.7)}
+.fld-err{color:#ffb0bc;font-size:12.5px;margin:-6px 0 12px;display:flex;gap:6px;align-items:center}
+textarea.standalone{
+  width:100%;background:rgba(5,17,28,.55);border:1px solid var(--line);border-radius:14px;
+  padding:12px 14px;outline:none;font-size:15px;box-shadow:inset 0 2px 8px rgba(0,0,0,.3);
+}
+textarea.standalone:focus{border-color:rgba(59,224,208,.65)}
+
+.badge{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:99px;
+  font-size:12px;font-weight:800;line-height:1;white-space:nowrap;
+}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st-pending{background:rgba(255,176,46,.14);color:#ffcf7d;border:1px solid rgba(255,176,46,.4)}
+.st-approved{background:rgba(61,220,151,.13);color:#7df0bd;border:1px solid rgba(61,220,151,.4)}
+.st-rejected{background:rgba(255,93,115,.13);color:#ff9fae;border:1px solid rgba(255,93,115,.42)}
+.badge.sample{background:rgba(183,140,255,.15);color:#d4bcff;border:1px solid rgba(183,140,255,.45)}
+.badge.sample::before{display:none}
+.badge.ver{background:rgba(77,163,255,.14);color:#a3cdff;border:1px solid rgba(77,163,255,.42)}
+.badge.ver::before{display:none}
+.badge.r-admin{background:rgba(255,194,77,.14);color:#ffd98f;border:1px solid rgba(255,194,77,.42)}
+.badge.r-accountant{background:rgba(183,140,255,.14);color:#d4bcff;border:1px solid rgba(183,140,255,.42)}
+.badge.r-sales{background:rgba(59,224,208,.12);color:#8feee3;border:1px solid rgba(59,224,208,.4)}
+.badge.r-admin::before,.badge.r-accountant::before,.badge.r-sales::before{display:none}
+.badge.muted{background:rgba(255,255,255,.07);color:var(--mut);border:1px solid var(--line)}
+.badge.muted::before{display:none}
+
+/* ============================================================
+   LOGIN
+============================================================ */
+#screen-login{min-height:100dvh;display:grid;place-items:center;padding:24px 16px;position:relative;z-index:1}
+.login-wrap{width:min(430px,100%)}
+.login-card{padding:30px 24px 24px;text-align:center;animation:pop .5s cubic-bezier(.2,.9,.3,1.2) both}
+.logo-big{
+  width:74px;height:74px;margin:0 auto 14px;border-radius:24px;display:grid;place-items:center;color:#04262b;
+  background:var(--grad);box-shadow:0 14px 34px -10px rgba(59,224,208,.6), inset 0 2px 0 rgba(255,255,255,.55);
+  position:relative;
+}
+.logo-big::before{
+  content:"";position:absolute;inset:-14px;border-radius:32px;z-index:-1;
+  background:radial-gradient(circle,rgba(59,224,208,.4),transparent 70%);filter:blur(12px);
+}
+.login-card h1{font-size:27px;font-weight:900;letter-spacing:-.5px}
+.login-card .sub{color:var(--mut);font-size:13px;margin:5px 0 22px}
+.login-card form{text-align:right}
+.l-err{
+  background:rgba(255,93,115,.12);border:1px solid rgba(255,93,115,.45);color:#ffb0bc;
+  border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:14px;display:flex;gap:8px;align-items:center;
+  animation:shake .4s ease;
+}
+.demo-box{margin-top:20px;background:rgba(5,17,28,.4);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:right}
+.demo-t{font-size:12px;color:var(--dim);font-weight:700;margin-bottom:8px;text-align:center}
+.demo-row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:11px;cursor:pointer;transition:.18s}
+.demo-row:hover,.demo-row:active{background:rgba(255,255,255,.07)}
+.demo-row code{color:var(--mut);font-size:12px;direction:ltr;font-family:inherit}
+.dr-use{margin-inline-start:auto;font-size:11.5px;color:var(--aqua);font-weight:800}
+.login-foot{text-align:center;color:var(--dim);font-size:11.5px;margin-top:18px;line-height:1.9}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+
+/* ============================================================
+   APP SHELL / HEADER / NAV
+============================================================ */
+#screen-app{position:relative;z-index:1;min-height:100dvh}
+.app-header{
+  position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;
+  padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));
+  background:rgba(8,18,30,.6);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);
+  border-bottom:1px solid var(--line);box-shadow:0 12px 30px -22px rgba(0,0,0,.8);
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-logo{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#04262b;flex:none;
+  background:var(--grad);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 16px -6px rgba(59,224,208,.6);
+}
+.brand-t b{display:block;font-size:16px;font-weight:900;line-height:1.1}
+.brand-t span{font-size:10.5px;color:var(--dim)}
+.h-left{margin-inline-start:auto;display:flex;align-items:center;gap:9px}
+.user-chip{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:13px;padding:5px 11px 5px 7px}
+.avatar{
+  width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-weight:900;font-size:15px;color:#04262b;flex:none;
+  background:var(--grad);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+}
+.u-meta b{display:block;font-size:13px;line-height:1.15}
+.u-meta span{font-size:10.5px;color:var(--aqua);font-weight:700}
+
+#mainNav{
+  position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));inset-inline:12px;z-index:40;
+  display:flex;gap:6px;padding:8px;border-radius:20px;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px 7px;
+  border-radius:14px;color:var(--mut);font-size:11px;font-weight:700;transition:.22s;min-width:0;
+}
+.nav-item svg{transition:transform .22s}
+.nav-item.active{background:var(--grad);color:#04262b;box-shadow:0 8px 20px -8px rgba(59,224,208,.6), inset 0 1px 0 rgba(255,255,255,.45)}
+.nav-item.active svg{transform:translateY(-1px) scale(1.08)}
+.nav-item:not(.active):hover{color:var(--ink);background:rgba(255,255,255,.06)}
+
+#main{padding:18px 14px 120px;max-width:1080px;margin:0 auto}
+.page{animation:fadeUp .38s ease both}
+.page-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.page-head h1{font-size:22px;font-weight:900}
+.pg-sub{color:var(--mut);font-size:12.5px;margin-top:4px}
+.page-head .btn{margin-inline-start:auto}
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+.kpi{padding:16px 15px;position:relative;overflow:hidden;transition:transform .2s, box-shadow .25s}
+.kpi:hover{transform:translateY(-3px)}
+.kpi::before{content:"";position:absolute;top:-34px;left:-34px;width:110px;height:110px;border-radius:50%;filter:blur(28px);opacity:.5;background:currentColor}
+.kpi-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.09);border:1px solid var(--line);margin-bottom:10px;position:relative}
+.kpi-num{font-size:clamp(26px,6vw,33px);font-weight:900;line-height:1;position:relative}
+.kpi-lb{color:var(--mut);font-size:12px;font-weight:700;margin-top:6px;position:relative}
+.k-pending{color:var(--warn)} .k-approved{color:var(--ok)} .k-rejected{color:var(--bad)}
+.k-total{color:var(--azure)} .k-today{color:var(--aqua)} .k-week{color:var(--violet)} .k-month{color:var(--gold)} .k-sample{color:#d4bcff}
+.kpi .kpi-num{color:var(--ink)}
+.sec-t{font-size:13.5px;font-weight:800;color:var(--mut);margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+.hero{display:flex;align-items:center;gap:14px;padding:20px;margin-bottom:14px;flex-wrap:wrap}
+.hero h2{font-size:18px;font-weight:900}
+.hero p{color:var(--mut);font-size:12.5px;margin-top:4px}
+.hero .btn{margin-inline-start:auto}
+.act-list{padding:6px 0}
+.act-item{display:flex;gap:10px;align-items:flex-start;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.act-item:last-child{border-bottom:none}
+.act-item .a-t{color:var(--dim);font-size:11px;flex:none;min-width:86px;text-align:left}
+.act-item b{color:var(--aqua);font-weight:800}
+
+/* ============================================================
+   ORDERS LIST
+============================================================ */
+.toolbar{padding:14px;margin-bottom:14px;display:grid;gap:12px}
+.chip-row{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.chip-row::-webkit-scrollbar{display:none}
+.chip{
+  flex:none;padding:9px 16px;border-radius:99px;font-size:12.5px;font-weight:800;color:var(--mut);
+  background:rgba(255,255,255,.06);border:1px solid var(--line);transition:.2s;user-select:none;-webkit-user-select:none;
+}
+.chip:hover{color:var(--ink)}
+.chip.on{background:var(--grad);color:#04262b;border-color:transparent;box-shadow:0 6px 16px -6px rgba(59,224,208,.55)}
+.range-box{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.range-box .inp{min-height:42px;flex:1;min-width:130px}
+.range-box .inp input{padding:8px 0;font-size:14px}
+.list-head{display:flex;align-items:center;gap:10px;margin:0 2px 12px;font-size:13.5px}
+.list-head b{font-weight:900}
+.flt-tag{font-size:11.5px;color:var(--aqua);background:rgba(59,224,208,.1);border:1px solid rgba(59,224,208,.3);padding:4px 10px;border-radius:99px;font-weight:800}
+.olist{display:grid;gap:12px}
+
+.order-card{padding:16px;border-inline-start:4px solid var(--dim);transition:transform .2s, box-shadow .25s;animation:fadeUp .4s ease both}
+.order-card:hover{transform:translateY(-3px);box-shadow:0 24px 48px -22px rgba(2,8,20,.85), inset 0 1px 0 rgba(255,255,255,.16)}
+.order-card.pending{border-inline-start-color:var(--warn)}
+.order-card.approved{border-inline-start-color:var(--ok)}
+.order-card.rejected{border-inline-start-color:var(--bad)}
+.oc-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+.oc-id{font-size:15px;font-weight:900;color:var(--azure);letter-spacing:.3px}
+.oc-top .badge{margin-inline-start:auto}
+.oc-cust{font-size:16.5px;font-weight:800;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+.oc-meta{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px;margin-bottom:12px}
+.oc-meta>div{min-width:0}
+.oc-meta span{display:block;font-size:10.5px;color:var(--dim);font-weight:700;margin-bottom:2px}
+.oc-meta b{font-size:13px;font-weight:700;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oc-reject{
+  display:flex;gap:7px;align-items:center;font-size:12px;color:#ff9fae;background:rgba(255,93,115,.09);
+  border:1px dashed rgba(255,93,115,.4);border-radius:11px;padding:8px 12px;margin-bottom:12px;
+}
+.oc-reject span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oc-actions{display:flex;gap:8px;flex-wrap:wrap}
+.empty{padding:44px 20px;text-align:center;color:var(--mut)}
+.empty svg{color:var(--dim);margin-bottom:12px;opacity:.7}
+.empty b{display:block;font-size:15px;margin-bottom:5px;color:var(--ink)}
+
+/* ============================================================
+   FORM (NEW ORDER)
+============================================================ */
+.form{padding:20px 18px}
+.form-grid{display:grid;gap:0 14px}
+.ver-banner{
+  display:flex;gap:9px;align-items:center;background:rgba(77,163,255,.1);border:1px solid rgba(77,163,255,.4);
+  color:#a3cdff;border-radius:13px;padding:11px 14px;font-size:13px;font-weight:700;margin-bottom:16px;
+}
+.file-zone{
+  border:1.6px dashed rgba(255,255,255,.24);border-radius:14px;padding:18px 14px;text-align:center;
+  cursor:pointer;transition:.2s;background:rgba(5,17,28,.35);
+}
+.file-zone:hover,.file-zone.has{border-color:rgba(59,224,208,.55);background:rgba(59,224,208,.05)}
+.file-zone .fz-t{font-size:13.5px;font-weight:800;margin-top:8px}
+.file-zone .fz-s{font-size:11.5px;color:var(--dim);margin-top:3px}
+.file-zone svg{color:var(--aqua)}
+.file-meta{display:flex;align-items:center;gap:10px;text-align:right}
+.file-meta .fm-x{margin-inline-start:auto}
+.switch-row{
+  display:flex;align-items:center;gap:12px;background:rgba(183,140,255,.08);border:1px solid rgba(183,140,255,.3);
+  border-radius:14px;padding:13px 15px;cursor:pointer;user-select:none;-webkit-user-select:none;
+}
+.switch-row .sw-t{font-size:14px;font-weight:800}
+.switch-row .sw-s{font-size:11px;color:var(--mut);margin-top:2px}
+.switch{position:relative;width:48px;height:27px;flex:none;margin-inline-start:auto}
+.switch input{opacity:0;position:absolute;inset:0;margin:0;cursor:pointer}
+.switch i{
+  position:absolute;inset:0;border-radius:99px;background:rgba(255,255,255,.12);border:1px solid var(--line);transition:.25s;pointer-events:none;
+}
+.switch i::after{
+  content:"";position:absolute;top:2.5px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;
+  background:#c9d9e6;transition:.25s;box-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+.switch input:checked+i{background:linear-gradient(135deg,#a06bff,#d1a6ff);border-color:transparent}
+.switch input:checked+i::after{transform:translateX(-21px);background:#fff}
+.quick-date{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;color:var(--aqua);background:rgba(59,224,208,.1);border:1px solid rgba(59,224,208,.32);border-radius:99px;padding:5px 11px;margin-bottom:7px}
+
+/* ============================================================
+   MEMBERS
+============================================================ */
+.member-card{padding:15px 16px;display:grid;grid-template-columns:auto 1fr;gap:6px 13px;align-items:center;animation:fadeUp .4s ease both}
+.mc-av{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:18px;color:#04262b;background:var(--grad);grid-row:span 2;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.mc-info b{font-size:14.5px;font-weight:800;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mc-info span{font-size:12px;color:var(--dim);direction:ltr;display:inline-block}
+.mc-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;grid-column:2}
+.mc-meta .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.on{background:var(--ok);box-shadow:0 0 8px rgba(61,220,151,.8)}
+.dot.off{background:var(--dim)}
+.mc-date{font-size:11px;color:var(--dim)}
+.mc-actions{grid-column:1/-1;display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}
+
+/* ============================================================
+   MODALS
+============================================================ */
+#modalRoot{position:fixed;inset:0;z-index:80}
+.m-back{
+  position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:14px;
+  background:rgba(4,10,18,.6);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);animation:fade .25s ease both;
+}
+.m-panel{
+  width:min(600px,100%);max-height:88dvh;overflow-y:auto;position:relative;
+  background:linear-gradient(160deg,rgba(16,32,48,.95),rgba(9,20,33,.96));
+  -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%);
+  border:1px solid rgba(255,255,255,.16);border-radius:22px;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.14);
+  animation:pop .32s cubic-bezier(.2,.9,.3,1.15) both;
+}
+.m-close{
+  position:absolute;top:12px;inset-inline-start:12px;width:38px;height:38px;border-radius:12px;z-index:2;
+  display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--mut);transition:.2s;
+}
+.m-close:hover{color:var(--ink);background:rgba(255,255,255,.15)}
+.m-head{padding:18px 60px 14px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.m-head h3{font-size:17px;font-weight:900;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.m-body{padding:18px 20px 22px}
+.m-foot{display:flex;gap:10px;margin-top:18px}
+.m-foot .btn{flex:1}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 14px;margin-bottom:14px}
+.det-grid>div{background:rgba(5,17,28,.4);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 12px;min-width:0}
+.det-grid span{display:block;font-size:10.5px;color:var(--dim);font-weight:700;margin-bottom:3px}
+.det-grid b{font-size:13.5px;font-weight:800;word-break:break-word}
+.info-box{border-radius:13px;padding:12px 15px;font-size:13px;margin-bottom:13px;line-height:1.9}
+.info-box.ok{background:rgba(61,220,151,.09);border:1px solid rgba(61,220,151,.38)}
+.info-box.bad{background:rgba(255,93,115,.09);border:1px solid rgba(255,93,115,.4)}
+.info-box.neutral{background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.ib-sub{display:flex;gap:7px;align-items:center;color:var(--mut);font-size:11.5px;margin-top:4px}
+.chain-item{
+  width:100%;display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:12px;
+  background:rgba(255,255,255,.05);border:1px solid var(--line);margin-bottom:8px;transition:.2s;font-size:13px;font-weight:700;
+}
+.chain-item:hover{background:rgba(255,255,255,.1)}
+.chain-item.cur{border-color:rgba(59,224,208,.6);background:rgba(59,224,208,.08)}
+.chain-item .badge{margin-inline-start:auto}
+.pdf-frame{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#0a141f;margin-bottom:10px}
+.pdf-frame iframe{width:100%;height:62dvh;border:none;display:block}
+.hint{font-size:11.5px;color:var(--dim);text-align:center;margin-bottom:12px}
+.cf-text{font-size:14px;line-height:2;color:var(--mut)}
+
+/* ============================================================
+   TOAST
+============================================================ */
+#toastRoot{position:fixed;top:calc(14px + env(safe-area-inset-top));inset-inline:0;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:100;pointer-events:none;padding:0 14px}
+.toast{
+  display:flex;align-items:center;gap:9px;max-width:min(480px,100%);padding:12px 18px;border-radius:15px;font-size:13.5px;font-weight:700;
+  background:rgba(10,22,34,.92);border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 16px 40px -14px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.14);
+  animation:toastIn .35s cubic-bezier(.2,.9,.3,1.2) both;pointer-events:auto;
+}
+.toast.out{animation:toastOut .3s ease both}
+.toast.t-success{border-color:rgba(61,220,151,.5)} .toast.t-success svg{color:var(--ok)}
+.toast.t-error{border-color:rgba(255,93,115,.55)} .toast.t-error svg{color:var(--bad)}
+.toast.t-info{border-color:rgba(77,163,255,.5)} .toast.t-info svg{color:var(--azure)}
+.toast.t-warn{border-color:rgba(255,176,46,.55)} .toast.t-warn svg{color:var(--warn)}
+
+@keyframes fade{from{opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes toastIn{from{opacity:0;transform:translateY(-18px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-14px) scale(.95)}}
+
+@media (min-width:640px){
+  .m-back{align-items:center}
+  .oc-meta{grid-template-columns:repeat(3,1fr)}
+  .det-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:980px){
+  #screen-app{display:grid;grid-template-columns:236px minmax(0,1fr);grid-template-rows:auto 1fr}
+  .app-header{grid-column:1/-1}
+  #mainNav{position:sticky;top:76px;flex-direction:column;inset:auto;margin:16px 12px;padding:10px;align-self:start;gap:5px}
+  .nav-item{flex-direction:row;justify-content:flex-start;gap:11px;padding:12px 16px;font-size:13.5px}
+  .nav-item.active svg{transform:none}
+  #main{grid-column:2;padding-bottom:40px}
+  .kpi-grid{grid-template-columns:repeat(4,1fr)}
+  .kpi-grid.second{grid-template-columns:repeat(3,1fr)}
+  .form-grid{grid-template-columns:1fr 1fr}
+  .member-card{grid-template-columns:auto 1fr auto;grid-template-rows:auto}
+  .mc-av{grid-row:auto}
+  .mc-meta{grid-column:auto}
+  .mc-actions{grid-column:auto;grid-row:1;margin:0}
+}
+</style>
+</head>
+<body>
+
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+
+<noscript>
+  <div style="padding:30px;text-align:center;font-family:Tahoma;background:#122;color:#fff">
+    جاوااسکریپت غیرفعال است. لطفاً فایل را در مرورگر Chrome باز کنید.
+  </div>
+</noscript>
+
+<!-- ======================= LOGIN ======================= -->
+<section id="screen-login">
+  <div class="login-wrap">
+    <div class="login-card glass">
+      <div class="logo-big" id="logoBig"></div>
+      <h1>سفارش‌یار</h1>
+      <p class="sub">سامانه مدیریت و گردش سفارش شرکت</p>
+      <form id="loginForm" novalidate>
+        <label class="fld"><span>نام کاربری</span>
+          <div class="inp"><input id="lUser" autocomplete="username" placeholder="مثلاً admin"></div>
+        </label>
+        <label class="fld"><span>رمز عبور</span>
+          <div class="inp"><input id="lPass" type="password" autocomplete="current-password" placeholder="••••">
+            <button type="button" id="lEye" style="color:var(--dim);display:grid;place-items:center"></button>
+          </div>
+        </label>
+        <div id="lErr" class="l-err" hidden></div>
+        <button class="btn btn-primary btn-block" id="lBtn" type="submit">ورود به سامانه</button>
+      </form>
+      <div class="demo-box">
+        <div class="demo-t">حساب‌های آزمایشی — با یک لمس مستقیم وارد می‌شوید</div>
+        <div class="demo-row" data-u="admin" data-p="1234"><span class="badge r-admin">مدیر</span><code>admin / 1234</code><span class="dr-use">ورود</span></div>
+        <div class="demo-row" data-u="accountant" data-p="1234"><span class="badge r-accountant">حسابدار</span><code>accountant / 1234</code><span class="dr-use">ورود</span></div>
+        <div class="demo-row" data-u="sales" data-p="1234"><span class="badge r-sales">مدیر فروش</span><code>sales / 1234</code><span class="dr-use">ورود</span></div>
+      </div>
+      <div class="login-foot" id="loginFoot">نسخه ۱.۱ · داده‌ها در مرورگر همین دستگاه ذخیره می‌شوند<br>اگر صفحه با File Manager باز نمی‌شود، آن را با Chrome باز کنید</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= APP ======================= -->
+<section id="screen-app" hidden>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo" id="brandLogo"></div>
+      <div class="brand-t"><b>سفارش‌یار</b><span>سامانه مدیریت سفارش</span></div>
+    </div>
+    <div class="h-left">
+      <div class="user-chip">
+        <div class="avatar" id="hAv">م</div>
+        <div class="u-meta"><b id="hName"></b><span id="hRole"></span></div>
+      </div>
+      <button class="icon-btn" id="btnLogout" title="خروج از حساب"></button>
+    </div>
+  </header>
+
+  <nav id="mainNav" class="glass"></nav>
+  <main id="main"></main>
+</section>
+
+<div id="modalRoot" hidden></div>
+<div id="toastRoot"></div>
+
+<script>
+"use strict";
+/* ═══════════════════ ۱) ابزارهای عمومی ═══════════════════ */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const FA = "۰۱۲۳۴۵۶۷۸۹";
+const fa = s => String(s).replace(/\d/g, d => FA[d]);
+const normalizeDigits = s => String(s).replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+function fmtNum(n){
+  n = Math.round(Number(n) || 0);
+  const s = String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "٬");
+  return (n < 0 ? "−" : "") + fa(s);
+}
+function fmtSize(b){
+  if (b == null) return "—";
+  if (b < 1024) return fa(b) + " بایت";
+  if (b < 1048576) return fa(Math.round(b / 1024)) + " کیلوبایت";
+  return fa((b / 1048576).toFixed(1)) + " مگابایت";
+}
+const ICONS = {
+  home:'<path d="M3.5 10.8 12 3.8l8.5 7"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.8 21v-6h4.4v6"/>',
+  box:'<path d="M12 3 3.5 7.5v9L12 21l8.5-4.5v-9L12 3Z"/><path d="M3.5 7.5 12 12l8.5-4.5"/><path d="M12 12v9"/>',
+  users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19.5c.6-3 2.8-4.7 5.5-4.7s4.9 1.7 5.5 4.7"/><circle cx="17" cy="9.5" r="2.5"/><path d="M16.5 14.9c2.2.4 3.6 1.8 4 4"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  logout:'<path d="M14 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2"/><path d="M9 12h11"/><path d="m16.5 8.5 3.5 3.5-3.5 3.5"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>',
+  calendar:'<rect x="4" y="5.5" width="16" height="15" rx="2.5"/><path d="M8 3.5v4M16 3.5v4M4 10.5h16"/>',
+  eye:'<path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>',
+  eyeOff:'<path d="M2.5 12S6 5.8 12 5.8c1.6 0 3 .4 4.3 1.1M21.5 12s-1.3 2.3-3.6 4.1M4 4l16 16"/><path d="M9.9 9.9a2.8 2.8 0 0 0 4 4"/>',
+  download:'<path d="M12 4v11"/><path d="m7.5 11 4.5 4.5L16.5 11"/><path d="M4.5 20h15"/>',
+  check:'<path d="m4.5 12.8 5 5L19.5 6.5"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>',
+  trash:'<path d="M4.5 7h15"/><path d="M9.5 7V4.8h5V7"/><path d="M6.5 7 7.4 20h9.2l.9-13"/><path d="M10 11v5.5M14 11v5.5"/>',
+  pencil:'<path d="m14.5 5.5 4 4L8 20l-4.6 1L4 16.4 14.5 5.5Z"/><path d="m13 7 4 4"/>',
+  lock:'<rect x="5.5" y="10.5" width="13" height="9.5" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
+  flask:'<path d="M9.5 3.5h5"/><path d="M10.5 3.5v5.2L4.8 18.9a1.6 1.6 0 0 0 1.4 2.4h11.6a1.6 1.6 0 0 0 1.4-2.4L13.5 8.7V3.5"/><path d="M7.5 14.5h9"/>',
+  file:'<path d="M13.5 3H7a1.5 1.5 0 0 0-1.5 1.5v15A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V8L13.5 3Z"/><path d="M13.5 3v5h5"/>',
+  refresh:'<path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 3.5V9h-5.5"/>',
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  alert:'<path d="M12 4 2.8 19.5h18.4L12 4Z"/><path d="M12 10v4M12 16.8v.4"/>',
+  shield:'<path d="M12 3 5 5.8v5.4c0 4.4 3 7.9 7 9.3 4-1.4 7-4.9 7-9.3V5.8L12 3Z"/><path d="m9 11.7 2.1 2.1 3.9-4.1"/>',
+  user:'<circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.2c.8-3.6 3.9-5.6 7.5-5.6s6.7 2 7.5 5.6"/>',
+  info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 7.8v.4"/>',
+  power:'<path d="M12 3v8"/><path d="M6.3 6.5a8 8 0 1 0 11.4 0"/>'
+};
+const ic = (n, s = 20) => '<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + "</svg>";
+
+/* ═══════════════════ ۲) تقویم جلالی ═══════════════════ */
+const MONTHS = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+const WEEKDAYS = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنجشنبه","جمعه"];
+const div = (a, b) => ~~(a / b);
+const mod = (a, b) => a - ~~(a / b) * b;
+function jalCal(jy){
+  const breaks = [-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+  const bl = breaks.length, gy = jy + 621;
+  let leapJ = -14, jp = breaks[0], jm, jump, i;
+  for (i = 1; i < bl; i++){ jm = breaks[i]; jump = jm - jp; if (jy < jm) break;
+    leapJ = leapJ + div(jump,33)*8 + div(mod(jump,33),4); jp = jm; }
+  let n = jy - jp;
+  leapJ = leapJ + div(n,33)*8 + div(mod(n,33)+3,4);
+  if (mod(jump,33) === 4 && jump - n === 4) leapJ += 1;
+  const leapG = div(gy,4) - div((div(gy,100)+1)*3,4) - 150;
+  const march = 20 + leapJ - leapG;
+  if (jump - n < 6) n = n - jump + div(jump+4,33)*33;
+  let leap = mod(mod(n+1,33)-1,4);
+  if (leap === -1) leap = 4;
+  return {leap, gy, march};
+}
+function g2d(gy, gm, gd){
+  let d = div((gy + div(gm-8,6) + 100100)*1461,4) + div(153*mod(gm+9,12)+2,5) + gd - 34840408;
+  d = d - div(div(gy+100100+div(gm-8,6),100)*3,4) + 752;
+  return d;
+}
+function d2g(jdn){
+  let j = 4*jdn + 139361631;
+  j = j + div(div(4*jdn+183187720,146097)*3,4)*4 - 3908;
+  const i = div(mod(j,1461),4)*5 + 308;
+  const gd = div(mod(i,153),5)+1, gm = mod(div(i,153),12)+1, gy = div(j,1461)-100100+div(8-gm,6);
+  return {gy, gm, gd};
+}
+function j2d(jy, jm, jd){ const r = jalCal(jy); return g2d(r.gy,3,r.march) + (jm-1)*31 - div(jm,7)*(jm-7) + jd - 1; }
+function d2j(jdn){
+  const gy = d2g(jdn).gy; let jy = gy - 621;
+  const r = jalCal(jy), jdn1f = g2d(gy,3,r.march);
+  let k = jdn - jdn1f, jm, jd;
+  if (k >= 0){
+    if (k <= 185){ jm = 1 + div(k,31); jd = mod(k,31)+1; return {jy, jm, jd}; }
+    k -= 186;
+  } else { jy -= 1; k += 179; if (r.leap === 1) k += 1; }
+  jm = 7 + div(k,30); jd = mod(k,30)+1;
+  return {jy, jm, jd};
+}
+const isLeapJ = jy => jalCal(jy).leap === 0;
+function jMonthLen(jy, jm){ return jm <= 6 ? 31 : (jm <= 11 ? 30 : (isLeapJ(jy) ? 30 : 29)); }
+function jdnToday(){ const n = new Date(); return g2d(n.getFullYear(), n.getMonth()+1, n.getDate()); }
+function fmtJ(j){ return fa(j.jd) + " " + MONTHS[j.jm-1] + " " + fa(j.jy); }
+function fmtJFull(jdn){ const j = d2j(jdn); return WEEKDAYS[(jdn+2)%7] + "، " + fmtJ(j); }
+function timeOf(ts){ const d = new Date(ts); return fa(String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0")); }
+function jOfTs(ts){ const d = new Date(ts); return d2j(g2d(d.getFullYear(), d.getMonth()+1, d.getDate())); }
+function tsOf(j, hh, mm){ const g = d2g(j2d(j.jy, j.jm, j.jd)); return new Date(g.gy, g.gm-1, g.gd, hh||0, mm||0).getTime(); }
+function parseJStr(str){
+  const s = normalizeDigits(String(str||"")).trim();
+  const m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/);
+  if (!m) return null;
+  const jy = +m[1], jm = +m[2], jd = +m[3];
+  if (jy < 1350 || jy > 1500 || jm < 1 || jm > 12 || jd < 1 || jd > jMonthLen(jy, jm)) return null;
+  return {jy, jm, jd, jdn: j2d(jy, jm, jd)};
+}
+const todayJStr = () => { const j = d2j(jdnToday()); return fa(j.jy + "/" + String(j.jm).padStart(2,"0") + "/" + String(j.jd).padStart(2,"0")); };
+
+/* ═══════════════════ ۳) Storage Manager (با پشتیبان حافظه موقت) ═══════════════════ */
+const Store = {
+  ns: "sy1.",
+  mem: {},
+  available: (function(){ try { localStorage.setItem("__sy_t","1"); localStorage.removeItem("__sy_t"); return true; } catch(e){ return false; } })(),
+  get(k, fb){
+    try {
+      const v = localStorage.getItem(this.ns + k);
+      if (v == null) return (k in this.mem) ? this.mem[k] : fb;
+      return JSON.parse(v);
+    } catch(e){ return (k in this.mem) ? this.mem[k] : fb; }
+  },
+  set(k, v){
+    this.mem[k] = v;
+    try { localStorage.setItem(this.ns + k, JSON.stringify(v)); return true; }
+    catch(e){ console.warn("LocalStorage unavailable:", e); return false; }
+  },
+  del(k){ delete this.mem[k]; try { localStorage.removeItem(this.ns + k); } catch(e){} },
+  clearAll(){
+    this.mem = {};
+    try { Object.keys(localStorage).filter(k => k.startsWith(this.ns)).forEach(k => localStorage.removeItem(k)); } catch(e){}
+  }
+};
+const DB = {
+  users:      ()  => Store.get("users", []),
+  saveUsers:  (u) => Store.set("users", u),
+  orders:     ()  => Store.get("orders", []),
+  saveOrders: (o) => Store.set("orders", o),
+  session:    ()  => Store.get("session", null),
+  setSession: (s) => s ? Store.set("session", s) : Store.del("session"),
+  activity:   ()  => Store.get("activity", []),
+};
+
+/* ═══════════════════ ۴) دسترسی‌ها (RBAC) ═══════════════════ */
+const ROLE_FA = { admin: "مدیر", accountant: "حسابدار", sales: "مدیر فروش" };
+const ROLE_PERMS = {
+  admin:      ["ordersAll","review","create","members","reset","deleteOrder"],
+  accountant: ["ordersAll","review"],
+  sales:      ["create"],
+};
+const state = { user:null, tab:"dash", sessionAt:0, filters:{}, pendingFile:null, draft:null };
+const can = p => !!state.user && (ROLE_PERMS[state.user.role] || []).includes(p);
+function denied(){ toast("⛔ دسترسی غیرمجاز.", "error"); return false; }
+function canSeeOrder(o){
+  const u = state.user; if (!u || !o) return false;
+  if (u.role === "sales") return o.createdBy === u.id;
+  return true;
+}
+const NAVS = {
+  admin:      [["dash","داشبورد","home"], ["orders","سفارش‌ها","box"], ["members","مدیریت اعضا","users"]],
+  accountant: [["dash","داشبورد","home"], ["orders","سفارش‌ها","box"]],
+  sales:      [["dash","داشبورد","home"], ["new","ثبت سفارش","plus"], ["my","سفارش‌های من","file"]],
+};
+
+/* ═══════════════════ ۵) Toast و Modal ═══════════════════ */
+function toast(msg, type = "success"){
+  const t = document.createElement("div");
+  const iconName = {success:"check", error:"alert", info:"info", warn:"alert"}[type] || "info";
+  t.className = "toast t-" + type;
+  t.innerHTML = ic(iconName, 18) + "<span>" + esc(msg) + "</span>";
+  $("#toastRoot").appendChild(t);
+  setTimeout(() => { t.classList.add("out"); setTimeout(() => t.remove(), 320); }, 3300);
+}
+function openModal(html){
+  const r = $("#modalRoot");
+  r.innerHTML = '<div class="m-back" id="mBack"><div class="m-panel" role="dialog" aria-modal="true">' +
+    '<button class="m-close" id="mClose" aria-label="بستن">' + ic("x", 18) + "</button>" + html + "</div></div>";
+  r.hidden = false;
+  document.body.classList.add("lock");
+  $("#mClose").onclick = closeModal;
+  $("#mBack").addEventListener("click", e => { if (e.target.id === "mBack") closeModal(); });
+}
+function closeModal(){ const r = $("#modalRoot"); r.hidden = true; r.innerHTML = ""; document.body.classList.remove("lock"); }
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#modalRoot").hidden) closeModal(); });
+function confirmModal(title, text, okLabel, cb){
+  openModal('<div class="m-head"><h3>' + ic("alert", 19) + " " + esc(title) + '</h3></div>' +
+    '<div class="m-body"><p class="cf-text">' + esc(text) + '</p><div class="m-foot">' +
+    '<button class="btn btn-ghost" id="cfNo">انصراف</button>' +
+    '<button class="btn btn-danger" id="cfYes">' + esc(okLabel) + "</button></div></div>");
+  $("#cfNo").onclick = closeModal;
+  $("#cfYes").onclick = () => { closeModal(); cb(); };
+}
+
+/* ═══════════════════ ۶) PDF نمونه ═══════════════════ */
+function makeDemoPdf(title, sub){
+  const e = s => s.replace(/[\\()]/g, c => "\\" + c);
+  const content = "BT /F1 20 Tf 72 760 Td (" + e(title) + ") Tj 0 -30 Td /F1 12 Tf (" + e(sub) + ") Tj 0 -20 Td (Generated by Order Management System - Demo) Tj ET";
+  const objs = [];
+  objs[1] = "<< /Type /Catalog /Pages 2 0 R >>";
+  objs[2] = "<< /Type /Pages /Kids [3 0 R] /Count 1 >>";
+  objs[3] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>";
+  objs[4] = "<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream";
+  objs[5] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
+  let pdf = "%PDF-1.4\n"; const offs = [];
+  for (let i = 1; i <= 5; i++){ offs[i] = pdf.length; pdf += i + " 0 obj\n" + objs[i] + "\nendobj\n"; }
+  const xref = pdf.length;
+  pdf += "xref\n0 6\n0000000000 65535 f \n";
+  for (let i = 1; i <= 5; i++) pdf += String(offs[i]).padStart(10, "0") + " 00000 n \n";
+  pdf += "trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+  return "data:application/pdf;base64," + btoa(pdf);
+}
+
+/* ═══════════════════ ۷) داده‌های آزمایشی ═══════════════════ */
+function defaultUsers(){
+  const day = 86400000, now = Date.now();
+  return [
+    { id:"u-admin",  name:"مدیر سیستم", username:"admin",      password:"1234", role:"admin",      active:true,  primary:true, createdAt: now - 90*day },
+    { id:"u-acc",    name:"رضا حسینی",  username:"accountant", password:"1234", role:"accountant", active:true,  createdAt: now - 80*day },
+    { id:"u-sales",  name:"سارا محمدی", username:"sales",      password:"1234", role:"sales",      active:true,  createdAt: now - 75*day },
+    { id:"u-sales2", name:"مریم کریمی", username:"sales2",     password:"1234", role:"sales",      active:false, createdAt: now - 40*day },
+  ];
+}
+function seed(){
+  const users = defaultUsers();
+  const day = 86400000, now = Date.now();
+  const T = jdnToday(), tj = d2j(T), dow = (T + 2) % 7, wkStart = T - dow;
+  const inWeek = wkStart + Math.max(0, Math.min(dow - 1, 2));
+  let ljy = tj.jy, ljm = tj.jm - 1; if (ljm < 1){ ljm = 12; ljy--; }
+  const spec = [
+    { no:"1016", jdn:j2d(ljy,ljm,8),  hm:[9,12],  cust:"شرکت پارس‌چوب",    amt:185000000, st:"approved", sample:true,  pdf:1 },
+    { no:"1017", jdn:j2d(ljy,ljm,15), hm:[13,40], cust:"فروشگاه البرز",     amt:96000000,  st:"approved", pdf:1 },
+    { no:"1018", jdn:wkStart-5,       hm:[10,5],  cust:"شرکت راهیان نو",    amt:420000000, st:"approved", pdf:1 },
+    { no:"1019", jdn:wkStart-4,       hm:[15,30], cust:"آرمان‌گستر",        amt:75000000,  st:"pending" },
+    { no:"1021", jdn:inWeek,          hm:[11,20], cust:"شرکت نگین‌پاک",     amt:230000000, st:"approved", sample:true, pdf:1 },
+    { no:"1022", jdn:T-1,             hm:[9,45],  cust:"تعاونی مهرگان",     amt:154000000, st:"approved", pdfMissing:1 },
+    { no:"1023", jdn:T-1,             hm:[12,15], cust:"شرکت آریا صنعت",    amt:45000000,  st:"rejected", pdf:1,
+      reason:"مبلغ سفارش اشتباه است؛ با پیش‌فاکتور ارسالی هماهنگ نیست." },
+    { no:"1024", jdn:T,               hm:[9,10],  cust:"شرکت پرتوکار",      amt:320000000, st:"pending", pdf:1 },
+    { no:"1025", jdn:T,               hm:[11,5],  cust:"شرکت نمونه‌پرداز",  amt:58000000,  st:"pending", sample:true, pdf:1 },
+    { no:"1026", jdn:T,               hm:[8,30],  cust:"بازرگانی کیان",     amt:510000000, st:"approved", pdf:1 },
+  ];
+  const orders = spec.map(s => {
+    const j = d2j(s.jdn);
+    const createdAt = tsOf(j, s.hm[0], s.hm[1]);
+    const o = {
+      id: uid("o"), orderNo: s.no, version: 1, parentId: null,
+      customer: s.cust, amount: s.amt, description: "", isSample: !!s.sample,
+      date: { jy:j.jy, jm:j.jm, jd:j.jd, jdn:s.jdn }, createdAt,
+      createdBy:"u-sales", createdByName:"سارا محمدی",
+      status: s.st, review:null, reject:null, locked: s.st !== "pending", pdf: null
+    };
+    if (s.pdf){
+      o.pdf = { name:"order-" + s.no + ".pdf", type:"application/pdf", size:0, dataUrl: makeDemoPdf("ORDER #" + s.no, "Customer: Demo Co. - Status: " + s.st), stored:true };
+      o.pdf.size = Math.round(o.pdf.dataUrl.length * 3 / 4);
+    }
+    if (s.pdfMissing) o.pdf = { name:"order-" + s.no + ".pdf", type:"application/pdf", size:482300, dataUrl:null, stored:false };
+    if (s.st === "approved"){ const at = createdAt + 2*3600000;
+      o.review = { by:"u-acc", byName:"رضا حسینی", at, dateJ: fmtJ(jOfTs(at)), time: timeOf(at) }; }
+    if (s.st === "rejected"){ const at = createdAt + 3*3600000;
+      o.reject = { by:"u-acc", byName:"رضا حسینی", at, dateJ: fmtJ(jOfTs(at)), time: timeOf(at), reason: s.reason }; }
+    return o;
+  });
+  const v1 = orders.find(o => o.orderNo === "1023" && o.status === "rejected");
+  const jv2 = d2j(T), v2 = {
+    id: uid("o"), orderNo:"1023", version:2, parentId: v1.id,
+    customer:"شرکت آریا صنعت", amount:48000000, description:"اصلاح مبلغ طبق پیش‌فاکتور جدید.", isSample:false,
+    date:{ jy:jv2.jy, jm:jv2.jm, jd:jv2.jd, jdn:T }, createdAt: tsOf(jv2, 12, 20),
+    createdBy:"u-sales", createdByName:"سارا محمدی", status:"pending", review:null, reject:null, locked:false,
+    pdf:{ name:"order-1023-v2.pdf", type:"application/pdf", size:0, dataUrl: makeDemoPdf("ORDER #1023 - V2", "Corrected amount - Aria Sanat Co."), stored:true }
+  };
+  v2.pdf.size = Math.round(v2.pdf.dataUrl.length * 3 / 4);
+  orders.push(v2);
+  DB.saveUsers(users);
+  DB.saveOrders(orders);
+  Store.set("activity", [{ ts: now, userName:"سیستم", action:"راه‌اندازی", detail:"داده‌های آزمایشی اولیه ایجاد شد." }]);
+  Store.set("meta", { seeded: 1 });
+}
+function seedIfFirst(){
+  if (!Store.get("meta", null) || !DB.users().length) seed();
+  /* تضمین نهایی: اگر به هر دلیل لیست کاربران خالی بود، کاربران پیش‌فرض در دسترس باشند */
+  if (!DB.users().length) DB.saveUsers(defaultUsers());
+}
+
+/* ═══════════════════ ۸) احراز هویت ═══════════════════ */
+function doLogin(username, password){
+  let users = DB.users();
+  if (!users.length) users = defaultUsers(); /* پشتیبان نهایی */
+  const u = users.find(x => x.username.toLowerCase() === String(username).trim().toLowerCase());
+  if (!u || u.password !== String(password)) return { ok:false, msg:"نام کاربری یا رمز عبور اشتباه است." };
+  if (!u.active) return { ok:false, msg:"حساب شما غیرفعال شده است. با مدیر سیستم تماس بگیرید." };
+  state.user = u; state.sessionAt = Date.now();
+  DB.setSession({ userId: u.id, at: state.sessionAt, tab: "dash" });
+  logAct("ورود به سامانه", "");
+  return { ok:true };
+}
+function persistSession(){ if (state.user) DB.setSession({ userId: state.user.id, at: state.sessionAt, tab: state.tab }); }
+function logout(){
+  DB.setSession(null); state.user = null; state.tab = "dash"; state.draft = null; state.pendingFile = null;
+  closeModal(); showLogin(); toast("از حساب کاربری خود خارج شدید.", "info");
+}
+function showLogin(){
+  $("#screen-app").hidden = true; $("#screen-login").hidden = false;
+  const btn = $("#lBtn"); btn.disabled = false; btn.textContent = "ورود به سامانه";
+}
+function enterApp(){
+  $("#screen-login").hidden = true; $("#screen-app").hidden = false;
+  const u = state.user;
+  $("#hName").textContent = u.name;
+  $("#hRole").textContent = ROLE_FA[u.role];
+  $("#hAv").textContent = u.name.trim().charAt(0);
+  renderNav(); renderMain();
+}
+function logAct(action, detail){
+  const l = DB.activity();
+  l.unshift({ ts: Date.now(), userName: state.user ? state.user.name : "سیستم", action, detail });
+  if (l.length > 120) l.length = 120;
+  Store.set("activity", l);
+}
+
+/* ═══════════════════ ۹) ناوبری ═══════════════════ */
+function renderNav(){
+  const items = NAVS[state.user.role] || [];
+  $("#mainNav").innerHTML = items.map(([id, label, icon]) =>
+    '<button class="nav-item ' + (state.tab === id ? "active" : "") + '" data-tab="' + id + '">' + ic(icon, 21) + "<span>" + label + "</span></button>"
+  ).join("");
+}
+$("#mainNav").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) switchTab(b.dataset.tab); });
+function switchTab(tab){
+  const u = state.user;
+  if (!u){ toast("دسترسی غیرمجاز؛ ابتدا وارد شوید.", "error"); showLogin(); return; }
+  if (!(NAVS[u.role] || []).some(n => n[0] === tab)){ denied(); return; }
+  state.tab = tab;
+  if (tab === "orders" || tab === "my"){
+    state.filters = { preset:"today", q:"", from:null, to:null, fromJStr:"", toJStr:"" };
+  }
+  persistSession();
+  renderNav(); renderMain();
+  window.scrollTo({ top: 0 });
+}
+function renderMain(){
+  const u = state.user;
+  if (!u){ showLogin(); return; }
+  const fresh = DB.users().find(x => x.id === u.id && x.active);
+  if (!fresh){ logout(); toast("حساب شما غیرفعال یا حذف شده است.", "error"); return; }
+  const m = $("#main");
+  if (state.tab === "dash")         m.innerHTML = renderDash();
+  else if (state.tab === "orders")  m.innerHTML = renderOrders("all");
+  else if (state.tab === "my")      m.innerHTML = renderOrders("mine");
+  else if (state.tab === "new")     m.innerHTML = renderNew();
+  else if (state.tab === "members") m.innerHTML = renderMembers();
+  bindPage();
+}
+
+/* ═══════════════════ ۱۰) داشبورد ═══════════════════ */
+const STATUS = {
+  pending:  { label:"در انتظار بررسی", cls:"st-pending",  card:"pending" },
+  approved: { label:"تأیید شده",       cls:"st-approved", card:"approved" },
+  rejected: { label:"رد شده",          cls:"st-rejected", card:"rejected" },
+};
+function statsOf(list){
+  const T = jdnToday(), dow = (T + 2) % 7, tj = d2j(T);
+  const s = { total:list.length, pending:0, approved:0, rejected:0, sample:0, today:0, week:0, month:0 };
+  const wkS = T - dow, moS = j2d(tj.jy, tj.jm, 1);
+  list.forEach(o => {
+    s[o.status]++;
+    if (o.isSample) s.sample++;
+    if (o.date.jdn === T) s.today++;
+    if (o.date.jdn >= wkS && o.date.jdn <= T) s.week++;
+    if (o.date.jdn >= moS && o.date.jdn <= T) s.month++;
+  });
+  return s;
+}
+function kpiCard(color, icon, num, label){
+  return '<div class="kpi glass ' + color + '"><div class="kpi-ic">' + ic(icon, 19) + '</div><div class="kpi-num">' + fa(num) + '</div><div class="kpi-lb">' + label + "</div></div>";
+}
+function renderDash(){
+  const u = state.user, orders = DB.orders();
+  let h = '<div class="page"><div class="page-head"><div><h1>سلام، ' + esc(u.name) + " 👋</h1>" +
+    '<p class="pg-sub">' + fmtJFull(jdnToday()) + "</p></div>" +
+    '<span class="badge r-' + u.role + '" style="margin-inline-start:auto">' + ROLE_FA[u.role] + "</span></div>";
+
+  if (u.role === "sales"){
+    const s = statsOf(orders.filter(o => o.createdBy === u.id));
+    h += '<div class="hero glass"><div><h2>ثبت سفارش جدید</h2><p>مشتری، مبلغ و فایل PDF را وارد و برای بررسی ارسال کنید.</p></div>' +
+      '<button class="btn btn-primary" data-go="new">' + ic("plus", 18) + " ثبت سفارش</button></div>";
+    h += '<div class="sec-t">' + ic("box", 16) + " آمار سفارش‌های من</div>";
+    h += '<div class="kpi-grid">' +
+      kpiCard("k-total","box",s.total,"کل سفارش‌ها") +
+      kpiCard("k-pending","clock",s.pending,"در انتظار بررسی") +
+      kpiCard("k-approved","check",s.approved,"تأیید شده") +
+      kpiCard("k-rejected","x",s.rejected,"رد شده") + "</div>";
+    h += '<div class="kpi-grid second">' +
+      kpiCard("k-today","calendar",s.today,"امروز") +
+      kpiCard("k-week","refresh",s.week,"این هفته") +
+      kpiCard("k-sample","flask",s.sample,"سفارش‌های نمونه") + "</div>";
+    h += '<button class="btn btn-ghost btn-block" data-go="my" style="margin-top:6px">' + ic("file", 18) + " مشاهده سفارش‌های من</button>";
+    return h + "</div>";
+  }
+
+  const s = statsOf(orders);
+  const mineReviewed = orders.filter(o => (o.review && o.review.by === u.id) || (o.reject && o.reject.by === u.id)).length;
+  h += '<div class="kpi-grid">' +
+    kpiCard("k-pending","clock",s.pending,"در انتظار بررسی") +
+    kpiCard("k-approved","check",s.approved,"تأیید شده") +
+    kpiCard("k-rejected","x",s.rejected,"رد شده") +
+    kpiCard("k-total","box",s.total,"کل سفارش‌ها") + "</div>";
+  h += '<div class="kpi-grid second">' +
+    kpiCard("k-today","calendar",s.today,"سفارش‌های امروز") +
+    kpiCard("k-week","refresh",s.week,"این هفته") +
+    kpiCard("k-month","download",s.month,"این ماه") + "</div>";
+
+  if (u.role === "admin"){
+    h += '<div class="sec-t">' + ic("shield", 16) + " دسترسی سریع</div>";
+    h += '<div class="kpi-grid second">' +
+      '<button class="kpi glass k-total" data-go="orders" style="text-align:right"><div class="kpi-ic">' + ic("box",19) + '</div><div class="kpi-lb" style="font-size:13.5px;color:var(--ink)">مدیریت سفارش‌ها</div></button>' +
+      '<button class="kpi glass k-week" data-go="members" style="text-align:right"><div class="kpi-ic">' + ic("users",19) + '</div><div class="kpi-lb" style="font-size:13.5px;color:var(--ink)">مدیریت اعضا</div></button>' +
+      '<button class="kpi glass k-rejected" data-act="reset" style="text-align:right"><div class="kpi-ic">' + ic("refresh",19) + '</div><div class="kpi-lb" style="font-size:13.5px;color:var(--ink)">بازنشانی داده‌های آزمایشی</div></button>' + "</div>";
+    const acts = DB.activity().slice(0, 8);
+    h += '<div class="sec-t">' + ic("clock", 16) + " آخرین فعالیت‌ها</div>";
+    h += '<div class="act-list glass">' + (acts.length ? acts.map(a =>
+      '<div class="act-item"><span class="a-t">' + fmtJ(jOfTs(a.ts)) + "<br>" + timeOf(a.ts) + "</span><span><b>" + esc(a.userName) + "</b> — " + esc(a.action) + (a.detail ? " · " + esc(a.detail) : "") + "</span></div>"
+    ).join("") : '<div class="empty" style="padding:20px">فعالیتی ثبت نشده است.</div>') + "</div>";
+  } else {
+    h += '<div class="info-box neutral" style="margin-top:16px">' + ic("shield",15) + " بررسی‌های انجام‌شده توسط شما: <b>" + fa(mineReviewed) + "</b> سفارش</div>";
+    h += '<button class="btn btn-primary btn-block" data-go="orders" style="margin-top:8px">' + ic("box", 18) + " رفتن به سفارش‌ها</button>";
+  }
+  return h + "</div>";
+}
+
+/* ═══════════════════ ۱۱) لیست سفارش‌ها و فیلتر ═══════════════════ */
+const PRESETS = { today:"امروز", yesterday:"دیروز", thisWeek:"این هفته", lastWeek:"هفته گذشته", thisMonth:"این ماه", lastMonth:"ماه گذشته", custom:"بازه دلخواه" };
+function rangeForPreset(p){
+  const T = jdnToday(), tj = d2j(T), dow = (T + 2) % 7;
+  switch (p){
+    case "today":     return [T, T];
+    case "yesterday": return [T - 1, T - 1];
+    case "thisWeek":  return [T - dow, T];
+    case "lastWeek":  return [T - dow - 7, T - dow - 1];
+    case "thisMonth": return [j2d(tj.jy, tj.jm, 1), T];
+    case "lastMonth": { let jy = tj.jy, jm = tj.jm - 1; if (jm < 1){ jm = 12; jy--; }
+      return [j2d(jy, jm, 1), j2d(jy, jm, jMonthLen(jy, jm))]; }
+    case "custom":    return [state.filters.from ?? 0, state.filters.to ?? 999999999];
+  }
+  return [0, 999999999];
+}
+function filteredOrders(scope){
+  let list = DB.orders();
+  if (scope === "mine") list = list.filter(o => o.createdBy === state.user.id);
+  const [f, t] = rangeForPreset(state.filters.preset);
+  list = list.filter(o => o.date.jdn >= f && o.date.jdn <= t);
+  const qRaw = (state.filters.q || "").trim();
+  if (qRaw){
+    const q = normalizeDigits(qRaw);
+    list = list.filter(o => normalizeDigits(String(o.orderNo)).includes(q) || o.customer.includes(qRaw) || o.createdByName.includes(qRaw));
+  }
+  return list.sort((a, b) => a.date.jdn - b.date.jdn || a.createdAt - b.createdAt);
+}
+function filterLabel(){
+  if (state.filters.preset === "custom" && state.filters.fromJStr)
+    return "از " + state.filters.fromJStr + " تا " + state.filters.toJStr;
+  return PRESETS[state.filters.preset];
+}
+function renderOrders(scope){
+  const title = scope === "mine" ? "سفارش‌های من" : "سفارش‌ها";
+  const f = state.filters;
+  let h = '<div class="page"><div class="page-head"><div><h1>' + title + '</h1><p class="pg-sub">مرتب‌سازی از قدیمی‌ترین به جدیدترین · پیش‌فرض: امروز</p></div></div>';
+  h += '<div class="toolbar glass">' +
+    '<div class="inp">' + ic("search", 18) + '<input id="qInput" value="' + esc(f.q) + '" placeholder="جستجو: شماره سفارش، نام مشتری، ثبت‌کننده…"></div>' +
+    '<div class="chip-row">' + Object.entries(PRESETS).map(([k, l]) =>
+      '<button class="chip ' + (f.preset === k ? "on" : "") + '" data-preset="' + k + '">' + l + "</button>").join("") + "</div>" +
+    '<div class="range-box" id="rangeBox" ' + (f.preset === "custom" ? "" : "hidden") + ">" +
+      '<div class="inp">' + ic("calendar",16) + '<input id="fromInp" inputmode="numeric" placeholder="از: ۱۴۰۵/۰۵/۲۰" value="' + esc(f.fromJStr || "") + '"></div>' +
+      '<div class="inp">' + ic("calendar",16) + '<input id="toInp" inputmode="numeric" placeholder="تا: ۱۴۰۵/۰۵/۲۸" value="' + esc(f.toJStr || "") + '"></div>' +
+      '<button class="btn btn-primary btn-sm" id="applyRange">اعمال بازه</button>' +
+    "</div></div>";
+  h += '<div class="list-head"><b id="cntLine"></b><span class="flt-tag" id="fltTag"></span></div><div id="orderList" class="olist"></div></div>';
+  return h;
+}
+function orderCard(o, idx){
+  const st = STATUS[o.status];
+  const canRev = can("review") && o.status === "pending";
+  const canVer = o.status === "rejected" && can("create") && canSeeOrder(o);
+  let h = '<article class="order-card glass ' + st.card + '" style="animation-delay:' + Math.min(idx * 45, 300) + 'ms">';
+  h += '<div class="oc-top"><span class="oc-id">#' + fa(o.orderNo) + "</span>" +
+    (o.version > 1 ? '<span class="badge ver">نسخه ' + fa(o.version) + "</span>" : "") +
+    '<span class="badge ' + st.cls + '">' + st.label + "</span></div>";
+  h += '<h3 class="oc-cust">' + esc(o.customer) + (o.isSample ? ' <span class="badge sample">🧪 نمونه</span>' : "") + "</h3>";
+  h += '<div class="oc-meta">' +
+    "<div><span>تاریخ سفارش</span><b>" + fmtJ(o.date) + " · " + timeOf(o.createdAt) + "</b></div>" +
+    "<div><span>مبلغ</span><b>" + fmtNum(o.amount) + " تومان</b></div>" +
+    "<div><span>ثبت‌کننده</span><b>" + esc(o.createdByName) + "</b></div>" +
+    "<div><span>نوع</span><b>" + (o.isSample ? "نمونه" : "عادی") + "</b></div>" +
+    "<div><span>وضعیت</span><b>" + st.label + "</b></div>" +
+    "<div><span>PDF</span><b>" + (o.pdf ? (o.pdf.stored ? "دارد ✓" : "بدون فایل") : "ندارد") + "</b></div>" +
+    "</div>";
+  if (o.status === "rejected" && o.reject)
+    h += '<div class="oc-reject">' + ic("lock", 15) + "<span>دلیل رد: " + esc(o.reject.reason) + "</span></div>";
+  h += '<div class="oc-actions">' +
+    '<button class="btn btn-ghost btn-sm" data-act="view" data-id="' + o.id + '">' + ic("eye", 16) + " مشاهده</button>" +
+    (o.pdf ? '<button class="btn btn-ghost btn-sm" data-act="pdf" data-id="' + o.id + '">' + ic("file", 16) + " PDF</button>" : "") +
+    (canRev ? '<button class="btn btn-ok btn-sm" data-act="approve" data-id="' + o.id + '">' + ic("check", 16) + " تأیید</button>" +
+              '<button class="btn btn-bad-o btn-sm" data-act="reject" data-id="' + o.id + '">' + ic("x", 16) + " رد</button>" : "") +
+    (canVer ? '<button class="btn btn-primary btn-sm" data-act="newver" data-id="' + o.id + '">' + ic("refresh", 16) + " ارسال نسخه جدید</button>" : "") +
+    (can("deleteOrder") ? '<button class="btn btn-bad-o btn-sm" data-act="del" data-id="' + o.id + '">' + ic("trash", 15) + "</button>" : "") +
+    "</div></article>";
+  return h;
+}
+function renderList(scope){
+  const list = filteredOrders(scope);
+  $("#cntLine").textContent = "تعداد سفارش‌ها: " + fa(list.length);
+  $("#fltTag").textContent = "فیلتر: " + filterLabel();
+  $("#orderList").innerHTML = list.length
+    ? list.map((o, i) => orderCard(o, i)).join("")
+    : '<div class="empty glass">' + ic("box", 46) + "<b>سفارشی یافت نشد</b>در این بازه یا با این جستجو سفارشی ثبت نشده است.</div>";
+}
+
+/* ═══════════════════ ۱۲) ثبت سفارش ═══════════════════ */
+const MAX_INLINE = 1500000;
+function nextOrderNo(){
+  const ns = DB.orders().map(o => parseInt(o.orderNo, 10)).filter(n => !isNaN(n));
+  return String((ns.length ? Math.max(...ns) : 1026) + 1);
+}
+function renderNew(){
+  const d = state.draft;
+  let h = '<div class="page"><div class="page-head"><div><h1>' + (d ? "ثبت نسخه جدید سفارش" : "ثبت سفارش جدید") + '</h1>' +
+    '<p class="pg-sub">' + (d ? "پس از رد شدن نسخه قبلی، نسخه جدید برای بررسی ارسال می‌شود." : "سفارش پس از ثبت در وضعیت «در انتظار بررسی» قرار می‌گیرد.") + "</p></div></div>";
+  if (d) h += '<div class="ver-banner">' + ic("info", 18) + " این سفارش <b>نسخه " + fa(d.version) + "</b> از سفارش <b>#&nbsp;" + fa(d.orderNo) + "</b> خواهد بود و تاریخچه نسخه‌های قبلی حفظ می‌شود.</div>";
+  h += '<form id="orderForm" class="form glass" novalidate><div class="form-grid">' +
+    '<label class="fld"><span>شماره سفارش <i class="req">*</i></span><div class="inp">' + ic("box",17) + '<input id="fNo" inputmode="numeric" value="' + esc(d ? d.orderNo : nextOrderNo()) + '"' + (d ? " readonly style=\"opacity:.75\"" : "") + "></div></label>" +
+    '<label class="fld"><span>نام مشتری <i class="req">*</i></span><div class="inp">' + ic("user",17) + '<input id="fCust" value="' + esc(d ? d.customer : "") + '" placeholder="مثلاً شرکت آریا صنعت"></div></label>' +
+    '<label class="fld"><span>تاریخ سفارش <i class="req">*</i></span><button type="button" class="quick-date" id="btnToday">' + ic("calendar",13) + " امروز</button>" +
+      '<div class="inp">' + ic("calendar",17) + '<input id="fDate" inputmode="numeric" value="' + todayJStr() + '" placeholder="۱۴۰۵/۰۵/۲۸"></div></label>' +
+    '<label class="fld"><span>مبلغ (تومان) <i class="req">*</i></span><div class="inp">' + ic("download",17) + '<input id="fAmount" inputmode="numeric" value="' + esc(d ? String(d.amount) : "") + '" placeholder="مثلاً 45000000"></div></label>' +
+    '<label class="fld" style="grid-column:1/-1"><span>توضیحات</span><div class="inp"><textarea id="fDesc" rows="2" placeholder="توضیحات اختیاری سفارش…">' + esc(d ? d.description : "") + "</textarea></div></label>" +
+    '<div class="fld" style="grid-column:1/-1"><span>فایل PDF سفارش</span><div class="file-zone" id="fileZone"></div><input type="file" id="pdfFile" accept="application/pdf,.pdf" hidden></div>' +
+    '<label class="switch-row" style="grid-column:1/-1"><span>' + ic("flask", 20) + '</span><span><span class="sw-t">این سفارش نمونه است</span><br><span class="sw-s">سفارش‌های نمونه با نشان 🧪 در لیست مشخص می‌شوند</span></span>' +
+      '<span class="switch"><input type="checkbox" id="fSample"' + (d && d.isSample ? " checked" : "") + "><i></i></span></label>" +
+    "</div>" +
+    (d ? '<button type="button" class="btn btn-ghost btn-block" id="btnCancelVer" style="margin-bottom:10px">انصراف از ثبت نسخه جدید</button>' : "") +
+    '<button class="btn btn-primary btn-block" type="submit">' + ic("check", 18) + (d ? " ثبت و ارسال نسخه جدید" : " ثبت سفارش") + "</button></form></div>";
+  return h;
+}
+function renderFileZone(){
+  const z = $("#fileZone"); if (!z) return;
+  const f = state.pendingFile;
+  z.classList.toggle("has", !!f);
+  z.innerHTML = f
+    ? '<div class="file-meta">' + ic("file", 24) + '<div><div class="fz-t" style="margin:0">' + esc(f.name) + '</div><div class="fz-s">' + fmtSize(f.size) + " · PDF</div></div>" +
+      '<button type="button" class="icon-btn fm-x" id="btnFileRm" title="حذف فایل">' + ic("x", 16) + "</button></div>"
+    : ic("download", 30) + '<div class="fz-t">برای انتخاب فایل PDF لمس کنید</div><div class="fz-s">حداکثر ' + fa(1.5) + " مگابایت برای ذخیره کامل در مرورگر</div>";
+  const rm = $("#btnFileRm");
+  if (rm) rm.onclick = e => { e.stopPropagation(); state.pendingFile = null; renderFileZone(); };
+}
+function readAsDataURL(file){
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+}
+async function submitOrder(ev){
+  ev.preventDefault();
+  if (!can("create")) return denied();
+  const d = state.draft;
+  const no = normalizeDigits($("#fNo").value).trim();
+  const cust = $("#fCust").value.trim();
+  const amount = Number(normalizeDigits($("#fAmount").value).replace(/[،٬,\s]/g, ""));
+  const dateP = parseJStr($("#fDate").value);
+  if (!/^\d{1,12}$/.test(no)){ $("#fNo").focus(); return toast("شماره سفارش باید عدد باشد.", "error"); }
+  if (cust.length < 2){ $("#fCust").focus(); return toast("نام مشتری را وارد کنید.", "error"); }
+  if (!dateP){ $("#fDate").focus(); return toast("تاریخ سفارش معتبر نیست. نمونه درست: ۱۴۰۵/۰۵/۲۸", "error"); }
+  if (!(amount > 0)){ $("#fAmount").focus(); return toast("مبلغ سفارش را به‌درستی وارد کنید.", "error"); }
+  const orders = DB.orders();
+  if (!d && orders.some(o => o.orderNo === no)) return toast("این شماره سفارش قبلاً ثبت شده است.", "error");
+  let pdf = null;
+  if (state.pendingFile){
+    const f = state.pendingFile;
+    if (f.size <= MAX_INLINE){
+      try { pdf = { name:f.name, type:"application/pdf", size:f.size, dataUrl: await readAsDataURL(f), stored:true }; }
+      catch(e){ pdf = { name:f.name, type:"application/pdf", size:f.size, dataUrl:null, stored:false }; }
+    } else {
+      pdf = { name:f.name, type:"application/pdf", size:f.size, dataUrl:null, stored:false };
+      toast("حجم فایل بیشتر از حد ذخیره‌سازی محلی است؛ فقط مشخصات فایل ذخیره می‌شود.", "warn");
+    }
+  }
+  const u = state.user;
+  const order = {
+    id: uid("o"), orderNo: no,
+    version: d ? d.version : 1, parentId: d ? d.parentId : null,
+    customer: cust, amount, description: $("#fDesc").value.trim(), isSample: $("#fSample").checked,
+    date: { jy:dateP.jy, jm:dateP.jm, jd:dateP.jd, jdn:dateP.jdn }, createdAt: Date.now(),
+    createdBy: u.id, createdByName: u.name, status:"pending", review:null, reject:null, locked:false, pdf
+  };
+  orders.push(order);
+  let ok = DB.saveOrders(orders);
+  if (!ok && pdf && pdf.dataUrl){
+    orders.pop(); order.pdf = { name:pdf.name, type:pdf.type, size:pdf.size, dataUrl:null, stored:false };
+    orders.push(order); ok = DB.saveOrders(orders);
+    if (ok) toast("حافظه مرورگر کافی نبود؛ PDF فقط با مشخصات ذخیره شد.", "warn");
+  }
+  if (!ok){ orders.pop(); return toast("خطا در ذخیره‌سازی؛ حافظه مرورگر پر است.", "error"); }
+  logAct(d ? "ثبت نسخه جدید سفارش" : "ثبت سفارش جدید", "#" + no + (d ? " نسخه " + fa(d.version) : ""));
+  toast(d ? "✓ نسخه جدید سفارش ثبت و برای بررسی ارسال شد." : "✓ سفارش با موفقیت ثبت شد.");
+  state.pendingFile = null; state.draft = null;
+  switchTab(u.role === "sales" ? "my" : "orders");
+}
+function startNewVersion(id){
+  if (!can("create")) return denied();
+  const o = DB.orders().find(x => x.id === id);
+  if (!o) return toast("سفارش یافت نشد.", "error");
+  if (o.status !== "rejected") return toast("فقط برای سفارش ردشده می‌توان نسخه جدید ثبت کرد.", "warn");
+  if (!canSeeOrder(o)) return denied();
+  state.draft = { orderNo: o.orderNo, version: chainOf(o).length + 1, parentId: o.id, customer: o.customer, amount: o.amount, description: o.description, isSample: o.isSample };
+  switchTab("new");
+}
+function chainOf(o){ return DB.orders().filter(x => x.orderNo === o.orderNo).sort((a, b) => a.version - b.version); }
+
+/* ═══════════════════ ۱۳) تأیید / رد / PDF ═══════════════════ */
+const byId = id => DB.orders().find(o => o.id === id);
+function approveOrder(id){
+  if (!can("review")) return denied();
+  const orders = DB.orders(), o = orders.find(x => x.id === id);
+  if (!o) return toast("سفارش یافت نشد.", "error");
+  if (o.status !== "pending") return toast("این سفارش قبلاً بررسی شده است.", "warn");
+  const at = Date.now(), u = state.user;
+  o.status = "approved"; o.locked = true;
+  o.review = { by:u.id, byName:u.name, at, dateJ: fmtJ(jOfTs(at)), time: timeOf(at) };
+  DB.saveOrders(orders);
+  logAct("تأیید سفارش", "#" + o.orderNo);
+  toast("✓ سفارش #" + fa(o.orderNo) + " تأیید شد.");
+  closeModal(); renderMain();
+}
+function openReject(id){
+  if (!can("review")) return denied();
+  const o = byId(id);
+  if (!o) return toast("سفارش یافت نشد.", "error");
+  if (o.status !== "pending") return toast("این سفارش قبلاً بررسی شده است.", "warn");
+  openModal('<div class="m-head"><h3>' + ic("x", 19) + ' رد سفارش <span class="oc-id">#' + fa(o.orderNo) + "</span></h3></div>" +
+    '<div class="m-body"><label class="fld"><span>دلیل رد <i class="req">*</i></span></label>' +
+    '<textarea id="rejReason" class="standalone" rows="3" placeholder="مثلاً: مبلغ سفارش اشتباه است…"></textarea>' +
+    '<div id="rejErr" class="fld-err" hidden>' + ic("alert",14) + " لطفاً دلیل رد سفارش را وارد کنید.</div>" +
+    '<div class="m-foot"><button class="btn btn-ghost" id="rejCancel">لغو</button><button class="btn btn-danger" id="rejOk">رد سفارش</button></div></div>');
+  $("#rejCancel").onclick = closeModal;
+  $("#rejOk").onclick = () => {
+    const v = $("#rejReason").value.trim();
+    if (!v){ $("#rejErr").hidden = false; return; }
+    rejectOrder(id, v);
+  };
+}
+function rejectOrder(id, reason){
+  if (!can("review")) return denied();
+  const orders = DB.orders(), o = orders.find(x => x.id === id);
+  if (!o || o.status !== "pending") return toast("امکان رد این سفارش وجود ندارد.", "warn");
+  if (!reason || !reason.trim()) return toast("لطفاً دلیل رد سفارش را وارد کنید.", "error");
+  const at = Date.now(), u = state.user;
+  o.status = "rejected"; o.locked = true;
+  o.reject = { by:u.id, byName:u.name, at, dateJ: fmtJ(jOfTs(at)), time: timeOf(at), reason: reason.trim() };
+  DB.saveOrders(orders);
+  logAct("رد سفارش", "#" + o.orderNo);
+  toast("✓ سفارش #" + fa(o.orderNo) + " رد شد و قفل گردید.");
+  closeModal(); renderMain();
+}
+function deleteOrder(id){
+  if (!can("deleteOrder")) return denied();
+  const o = byId(id); if (!o) return;
+  confirmModal("حذف سفارش", "سفارش #" + o.orderNo + " برای همیشه حذف می‌شود. این عمل قابل بازگشت نیست.", "حذف سفارش", () => {
+    const orders = DB.orders().filter(x => x.id !== id);
+    DB.saveOrders(orders);
+    logAct("حذف سفارش", "#" + o.orderNo);
+    toast("سفارش حذف شد.", "info");
+    closeModal(); renderMain();
+  });
+}
+function openPdf(id){
+  const o = byId(id);
+  if (!o || !canSeeOrder(o)) return denied();
+  if (!o.pdf) return toast("این سفارش فایل PDF ندارد.", "warn");
+  if (!o.pdf.stored || !o.pdf.dataUrl) return toast("فایل PDF در حافظه محلی موجود نیست؛ فقط مشخصات فایل ذخیره شده است.", "error");
+  openModal('<div class="m-head"><h3>' + ic("file", 19) + " فایل PDF سفارش <span class=\"oc-id\">#" + fa(o.orderNo) + "</span></h3></div>" +
+    '<div class="m-body"><div class="pdf-frame"><iframe src="' + o.pdf.dataUrl + '" title="پیش‌نمایش PDF"></iframe></div>' +
+    '<div class="hint">اگر پیش‌نمایش را نمی‌بینید، از دکمه دانلود استفاده کنید.</div>' +
+    '<a class="btn btn-primary btn-block" href="' + o.pdf.dataUrl + '" download="' + esc(o.pdf.name) + '">' + ic("download", 18) + " دانلود فایل (" + fmtSize(o.pdf.size) + ")</a></div>");
+}
+function openOrder(id){
+  const o = byId(id);
+  if (!o) return toast("سفارش یافت نشد.", "error");
+  if (!canSeeOrder(o)) return denied();
+  const st = STATUS[o.status], chain = chainOf(o);
+  const canRev = can("review") && o.status === "pending";
+  const canVer = o.status === "rejected" && can("create") && canSeeOrder(o);
+  let h = '<div class="m-head"><h3>سفارش <span class="oc-id">#' + fa(o.orderNo) + "</span>" +
+    (o.version > 1 ? ' <span class="badge ver">نسخه ' + fa(o.version) + "</span>" : "") +
+    ' <span class="badge ' + st.cls + '">' + st.label + "</span></h3></div><div class=\"m-body\">";
+  if (o.isSample) h += '<div class="info-box neutral" style="margin-bottom:13px">🧪 این سفارش به‌صورت <b>نمونه</b> ثبت شده است.</div>';
+  h += '<div class="det-grid">' +
+    "<div><span>نام مشتری</span><b>" + esc(o.customer) + "</b></div>" +
+    "<div><span>مبلغ</span><b>" + fmtNum(o.amount) + " تومان</b></div>" +
+    "<div><span>تاریخ سفارش</span><b>" + fmtJ(o.date) + "</b></div>" +
+    "<div><span>ساعت ثبت</span><b>" + timeOf(o.createdAt) + "</b></div>" +
+    "<div><span>ثبت‌کننده</span><b>" + esc(o.createdByName) + "</b></div>" +
+    "<div><span>نوع سفارش</span><b>" + (o.isSample ? "نمونه" : "عادی") + "</b></div></div>";
+  if (o.description) h += '<div class="info-box neutral"><b>توضیحات:</b> ' + esc(o.description) + "</div>";
+  if (o.pdf){
+    h += '<div class="info-box neutral"><b>' + ic("file",14) + " فایل PDF:</b> " + esc(o.pdf.name) + " · " + fmtSize(o.pdf.size) +
+      '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">' +
+      (o.pdf.stored
+        ? '<button class="btn btn-ghost btn-sm" data-mact="pdf" data-id="' + o.id + '">' + ic("eye",15) + " مشاهده</button>" +
+          '<a class="btn btn-primary btn-sm" href="' + o.pdf.dataUrl + '" download="' + esc(o.pdf.name) + '">' + ic("download",15) + " دانلود</a>"
+        : '<button class="btn btn-bad-o btn-sm" data-mact="pdf" data-id="' + o.id + '">' + ic("alert",15) + " فایل در حافظه محلی نیست</button>") +
+      "</div></div>";
+  }
+  if (o.status === "approved" && o.review)
+    h += '<div class="info-box ok">' + ic("check",15) + " <b>تأیید شده</b> توسط " + esc(o.review.byName) +
+      '<div class="ib-sub">' + ic("calendar",13) + " تاریخ تأیید: " + o.review.dateJ + " · ساعت " + o.review.time + "</div></div>";
+  if (o.status === "rejected" && o.reject)
+    h += '<div class="info-box bad"><b>دلیل رد:</b> ' + esc(o.reject.reason) +
+      '<div class="ib-sub">' + ic("user",13) + " رد شده توسط: " + esc(o.reject.byName) + "</div>" +
+      '<div class="ib-sub">' + ic("calendar",13) + " تاریخ رد: " + o.reject.dateJ + " · ساعت " + o.reject.time + "</div>" +
+      '<div class="ib-sub">' + ic("lock",13) + " این سفارش قفل شده و قابل ویرایش نیست.</div></div>";
+  if (chain.length > 1){
+    h += '<div class="sec-t" style="margin-top:16px">' + ic("refresh", 15) + " تاریخچه نسخه‌های سفارش #" + fa(o.orderNo) + "</div>";
+    h += chain.map(c => '<button class="chain-item ' + (c.id === o.id ? "cur" : "") + '" data-mact="goto" data-id="' + c.id + '">' +
+      "نسخه " + fa(c.version) + " · " + fmtJ(c.date) + '<span class="badge ' + STATUS[c.status].cls + '">' + STATUS[c.status].label + "</span></button>").join("");
+  }
+  h += '<div class="m-foot" style="flex-wrap:wrap">';
+  if (canRev) h += '<button class="btn btn-ok" data-mact="approve" data-id="' + o.id + '">' + ic("check",17) + " تأیید سفارش</button>" +
+                   '<button class="btn btn-danger" data-mact="reject" data-id="' + o.id + '">' + ic("x",17) + " رد سفارش</button>";
+  if (canVer) h += '<button class="btn btn-primary" data-mact="newver" data-id="' + o.id + '">' + ic("refresh",17) + " ارسال نسخه جدید</button>';
+  if (can("deleteOrder")) h += '<button class="btn btn-bad-o" data-mact="del" data-id="' + o.id + '">' + ic("trash",16) + " حذف</button>';
+  h += "</div></div>";
+  openModal(h);
+}
+
+/* ═══════════════════ ۱۴) مدیریت اعضا ═══════════════════ */
+function renderMembers(){
+  if (!can("members")) return '<div class="page"><div class="empty glass">' + ic("lock", 40) + "<b>دسترسی غیرمجاز</b></div></div>";
+  const users = DB.users();
+  let h = '<div class="page"><div class="page-head"><div><h1>مدیریت اعضا</h1><p class="pg-sub">' + fa(users.length) + ' عضو سیستم</p></div>' +
+    '<button class="btn btn-primary" data-mact="adduser">' + ic("plus", 17) + " افزودن عضو</button></div>";
+  h += '<div class="olist">' + users.map((u, i) => {
+    const j = jOfTs(u.createdAt);
+    return '<article class="member-card glass" style="animation-delay:' + i * 50 + 'ms">' +
+      '<div class="mc-av">' + esc(u.name.trim().charAt(0)) + "</div>" +
+      '<div class="mc-info"><b>' + esc(u.name) + (u.primary ? ' <span class="badge muted">🛡 مدیر اصلی</span>' : "") + (u.id === state.user.id ? ' <span class="badge muted">شما</span>' : "") + "</b>" +
+      "<span>@" + esc(u.username) + "</span></div>" +
+      '<div class="mc-meta"><span class="badge r-' + u.role + '">' + ROLE_FA[u.role] + '</span><span class="dot ' + (u.active ? "on" : "off") + '"></span>' +
+      '<span style="font-size:11.5px;color:' + (u.active ? "var(--ok)" : "var(--dim)") + '">' + (u.active ? "فعال" : "غیرفعال") + "</span>" +
+      '<span class="mc-date">عضویت: ' + fmtJ(j) + "</span></div>" +
+      '<div class="mc-actions">' +
+      '<button class="btn btn-ghost btn-sm" data-mact="edituser" data-id="' + u.id + '">' + ic("pencil", 15) + " ویرایش</button>" +
+      (!u.primary && u.id !== state.user.id
+        ? '<button class="btn btn-ghost btn-sm" data-mact="toggleuser" data-id="' + u.id + '">' + ic("power", 15) + (u.active ? " غیرفعال‌سازی" : " فعال‌سازی") + "</button>" +
+          '<button class="btn btn-bad-o btn-sm" data-mact="deluser" data-id="' + u.id + '">' + ic("trash", 15) + " حذف</button>"
+        : "") +
+      "</div></article>";
+  }).join("") + "</div></div>";
+  return h;
+}
+function openMemberModal(editId){
+  if (!can("members")) return denied();
+  const u = editId ? DB.users().find(x => x.id === editId) : null;
+  const isPrimary = !!u && !!u.primary;
+  const roles = Object.entries(ROLE_FA).map(([k, v]) =>
+    '<option value="' + k + '"' + (u && u.role === k ? " selected" : "") + (isPrimary ? " disabled" : "") + ">" + v + "</option>").join("");
+  openModal('<div class="m-head"><h3>' + ic("users", 19) + (u ? " ویرایش عضو" : " افزودن عضو جدید") + "</h3></div>" +
+    '<div class="m-body">' +
+    '<label class="fld"><span>نام و نام خانوادگی <i class="req">*</i></span><div class="inp">' + ic("user",17) + '<input id="mName" value="' + esc(u ? u.name : "") + '" placeholder="مثلاً رضا حسینی"></div></label>' +
+    '<label class="fld"><span>نام کاربری <i class="req">*</i></span><div class="inp">' + ic("user",17) + '<input id="mUser" dir="ltr" value="' + esc(u ? u.username : "") + '" placeholder="username"' + (u ? " readonly style=\"opacity:.7\"" : "") + "></div></label>" +
+    '<label class="fld"><span>رمز عبور ' + (u ? "(برای تغییر وارد کنید)" : "") + (u ? "" : '<i class="req">*</i>') + '</span><div class="inp">' + ic("lock",17) + '<input id="mPass" dir="ltr" type="text" placeholder="' + (u ? "بدون تغییر" : "حداقل ۴ کاراکتر") + '"></div></label>' +
+    '<label class="fld"><span>نقش</span><div class="inp"><select id="mRole">' + roles + "</select></div></label>" +
+    (isPrimary ? '<div class="info-box neutral">' + ic("shield",14) + " نقش و نام کاربری مدیر اصلی قابل تغییر نیست.</div>" : "") +
+    '<div class="m-foot"><button class="btn btn-ghost" id="mCancel">انصراف</button><button class="btn btn-primary" id="mSave">' + (u ? "ذخیره تغییرات" : "افزودن عضو") + "</button></div></div>");
+  $("#mCancel").onclick = closeModal;
+  $("#mSave").onclick = () => saveMember(editId, isPrimary);
+}
+function saveMember(editId, isPrimary){
+  if (!can("members")) return denied();
+  const users = DB.users();
+  const u = editId ? users.find(x => x.id === editId) : null;
+  const name = $("#mName").value.trim();
+  const username = $("#mUser").value.trim().toLowerCase();
+  const pass = $("#mPass").value;
+  const role = $("#mRole").value;
+  if (name.length < 2) return toast("نام عضو را وارد کنید.", "error");
+  if (!u){
+    if (!/^[a-z0-9_.]{3,20}$/i.test(username)) return toast("نام کاربری باید ۳ تا ۲۰ کاراکتر لاتین باشد.", "error");
+    if (users.some(x => x.username.toLowerCase() === username)) return toast("این نام کاربری قبلاً استفاده شده است.", "error");
+  }
+  if (!u && pass.length < 4) return toast("رمز عبور باید حداقل ۴ کاراکتر باشد.", "error");
+  if (u && pass && pass.length < 4) return toast("رمز عبور جدید باید حداقل ۴ کاراکتر باشد.", "error");
+  if (!ROLE_FA[role]) return toast("نقش معتبر نیست.", "error");
+  if (u){
+    u.name = name;
+    if (!isPrimary) u.role = role;
+    if (pass) u.password = pass;
+    logAct("ویرایش عضو", name);
+    toast("✓ تغییرات عضو ذخیره شد.");
+  } else {
+    users.push({ id: uid("u"), name, username, password: pass, role, active:true, createdAt: Date.now() });
+    logAct("افزودن عضو", name);
+    toast("✓ عضو جدید اضافه شد.");
+  }
+  DB.saveUsers(users);
+  closeModal(); renderMain();
+}
+function toggleMember(id){
+  if (!can("members")) return denied();
+  const users = DB.users(), u = users.find(x => x.id === id);
+  if (!u) return;
+  if (u.primary) return toast("مدیر اصلی سیستم غیرفعال‌پذیر نیست.", "warn");
+  if (u.id === state.user.id) return toast("نمی‌توانید حساب خودتان را غیرفعال کنید.", "warn");
+  u.active = !u.active;
+  DB.saveUsers(users);
+  logAct(u.active ? "فعال‌سازی عضو" : "غیرفعال‌سازی عضو", u.name);
+  toast(u.active ? "✓ عضو فعال شد." : "عضو غیرفعال شد.", "info");
+  renderMain();
+}
+function deleteMember(id){
+  if (!can("members")) return denied();
+  const u = DB.users().find(x => x.id === id);
+  if (!u) return;
+  if (u.primary) return toast("مدیر اصلی سیستم قابل حذف نیست.", "warn");
+  if (u.id === state.user.id) return toast("نمی‌توانید حساب خودتان را حذف کنید.", "warn");
+  confirmModal("حذف عضو", "عضو «" + u.name + "» برای همیشه حذف می‌شود.", "حذف عضو", () => {
+    DB.saveUsers(DB.users().filter(x => x.id !== id));
+    logAct("حذف عضو", u.name);
+    toast("عضو حذف شد.", "info");
+    renderMain();
+  });
+}
+function resetDemo(){
+  if (!can("reset")) return denied();
+  confirmModal("بازنشانی داده‌های آزمایشی", "تمام سفارش‌ها، اعضا و تغییرات فعلی حذف و داده‌های اولیه دوباره ساخته می‌شوند. ادامه می‌دهید؟", "بازنشانی", () => {
+    Store.clearAll();
+    seed();
+    const admin = DB.users().find(x => x.username === "admin");
+    state.user = admin; state.sessionAt = Date.now(); state.tab = "dash"; state.draft = null; state.pendingFile = null;
+    DB.setSession({ userId: admin.id, at: state.sessionAt, tab: "dash" });
+    enterApp();
+    toast("✓ داده‌های آزمایشی بازنشانی شد.");
+  });
+}
+
+/* ═══════════════════ ۱۵) اتصال رویدادها ═══════════════════ */
+function bindPage(){
+  $$("[data-go]").forEach(b => b.onclick = () => switchTab(b.dataset.go));
+  const rs = $("[data-act='reset']"); if (rs) rs.onclick = resetDemo;
+
+  const qI = $("#qInput");
+  if (qI) qI.addEventListener("input", () => { state.filters.q = qI.value; renderList(state.tab === "my" ? "mine" : "all"); });
+  $$("#main [data-preset]").forEach(c => c.onclick = () => { state.filters.preset = c.dataset.preset; renderMain(); });
+  const ap = $("#applyRange");
+  if (ap) ap.onclick = () => {
+    const f = parseJStr($("#fromInp").value), t = parseJStr($("#toInp").value);
+    if (!f || !t) return toast("تاریخ‌ها را به شکل ۱۴۰۵/۰۵/۲۰ و معتبر وارد کنید.", "error");
+    if (f.jdn > t.jdn) return toast("تاریخ شروع باید قبل از تاریخ پایان باشد.", "error");
+    state.filters.from = f.jdn; state.filters.to = t.jdn;
+    state.filters.fromJStr = fa(f.jy + "/" + String(f.jm).padStart(2,"0") + "/" + String(f.jd).padStart(2,"0"));
+    state.filters.toJStr = fa(t.jy + "/" + String(t.jm).padStart(2,"0") + "/" + String(t.jd).padStart(2,"0"));
+    toast("بازه تاریخ اعمال شد.", "info");
+    renderList(state.tab === "my" ? "mine" : "all");
+    const rb = $("#rangeBox"); if (rb) rb.hidden = false;
+  };
+  const ol = $("#orderList");
+  if (ol) ol.addEventListener("click", e => {
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    const id = b.dataset.id, act = b.dataset.act;
+    if (act === "view") openOrder(id);
+    else if (act === "pdf") openPdf(id);
+    else if (act === "approve") approveOrder(id);
+    else if (act === "reject") openReject(id);
+    else if (act === "newver") startNewVersion(id);
+    else if (act === "del") deleteOrder(id);
+  });
+
+  const of = $("#orderForm");
+  if (of){
+    renderFileZone();
+    const fz = $("#fileZone");
+    fz.onclick = () => $("#pdfFile").click();
+    $("#pdfFile").onchange = function(){
+      const f = this.files[0]; this.value = "";
+      if (!f) return;
+      if (!(f.type === "application/pdf" || /\.pdf$/i.test(f.name))) return toast("فقط فایل PDF مجاز است.", "error");
+      if (f.size > 15 * 1048576) return toast("حجم فایل بسیار زیاد است (حداکثر ۱۵ مگابایت).", "error");
+      state.pendingFile = f; renderFileZone();
+    };
+    const bt = $("#btnToday"); if (bt) bt.onclick = () => { $("#fDate").value = todayJStr(); };
+    const cv = $("#btnCancelVer"); if (cv) cv.onclick = () => { state.draft = null; renderMain(); };
+    of.addEventListener("submit", submitOrder);
+  }
+
+  $$("[data-mact]").forEach(b => b.onclick = () => {
+    const act = b.dataset.mact, id = b.dataset.id;
+    if (act === "adduser") openMemberModal(null);
+    else if (act === "edituser") openMemberModal(id);
+    else if (act === "toggleuser") toggleMember(id);
+    else if (act === "deluser") deleteMember(id);
+    else if (act === "goto") openOrder(id);
+    else if (act === "pdf") openPdf(id);
+    else if (act === "approve") approveOrder(id);
+    else if (act === "reject") openReject(id);
+    else if (act === "newver") startNewVersion(id);
+    else if (act === "del") deleteOrder(id);
+  });
+
+  if (ol) renderList(state.tab === "my" ? "mine" : "all");
+}
+
+/* ═══════════════════ ۱۶) ورود و راه‌اندازی ═══════════════════ */
+function attemptLogin(username, password){
+  const err = $("#lErr"), btn = $("#lBtn");
+  err.hidden = true;
+  btn.disabled = true; btn.textContent = "در حال ورود…";
+  setTimeout(() => {
+    const res = doLogin(username, password);
+    btn.disabled = false; btn.textContent = "ورود به سامانه";
+    if (!res.ok){
+      err.innerHTML = ic("alert", 16) + " " + esc(res.msg);
+      err.hidden = false;
+      err.style.animation = "none"; void err.offsetWidth; err.style.animation = "";
+      return;
+    }
+    $("#lPass").value = "";
+    state.tab = "dash";
+    enterApp();
+    toast("خوش آمدید، " + state.user.name + " 👋");
+  }, 350);
+}
+function bindLogin(){
+  $("#logoBig").innerHTML = ic("box", 36);
+  $("#brandLogo").innerHTML = ic("box", 22);
+  $("#btnLogout").innerHTML = ic("logout", 19);
+  $("#lEye").innerHTML = ic("eye", 18);
+  let eyeOn = false;
+  $("#lEye").onclick = () => {
+    eyeOn = !eyeOn;
+    $("#lPass").type = eyeOn ? "text" : "password";
+    $("#lEye").innerHTML = ic(eyeOn ? "eyeOff" : "eye", 18);
+  };
+  /* لمس هر حساب آزمایشی = ورود مستقیم */
+  $$(".demo-row").forEach(r => r.onclick = () => {
+    $("#lUser").value = r.dataset.u;
+    $("#lPass").value = r.dataset.p;
+    attemptLogin(r.dataset.u, r.dataset.p);
+  });
+  $("#btnLogout").onclick = logout;
+  $("#loginForm").addEventListener("submit", e => {
+    e.preventDefault();
+    attemptLogin($("#lUser").value, $("#lPass").value);
+  });
+}
+function init(){
+  try { seedIfFirst(); } catch(e){ console.error(e); }
+  bindLogin();
+  if (!Store.available){
+    $("#loginFoot").innerHTML = "⚠ حافظه دائمی مرورگر در دسترس نیست — اطلاعات فقط تا بستن صفحه می‌ماند.<br>بهتر است فایل را با مرورگر Chrome باز کنید.";
+  }
+  const s = DB.session();
+  if (s){
+    const u = DB.users().find(x => x.id === s.userId);
+    if (u && u.active){
+      state.user = u; state.sessionAt = s.at || Date.now();
+      state.tab = (NAVS[u.role] || []).some(n => n[0] === s.tab) ? s.tab : "dash";
+      enterApp();
+      return;
+    }
+  }
+  DB.setSession(null);
+  showLogin();
+}
+window.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
