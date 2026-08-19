@@ -1,5 +1,5 @@
 {
- "rev": 3,
+ "rev": 4,
  "users": [
   {
    "id": "root-mrnami",
@@ -40,6 +40,16 @@
    "active": true,
    "isRoot": false,
    "createdAt": 1787174775596
+  },
+  {
+   "id": "mt0ls8btxo2d2i",
+   "name": "خانم محمدی",
+   "username": "MsMohammadi",
+   "passHash": "aeda9df10f8e25db94995f55128c73fee35a64ecd39f9559fe1d4ccae0d9c13e",
+   "role": "officer",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787174886953
   }
  ]
 }
