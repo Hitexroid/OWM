@@ -1,5 +1,5 @@
 {
- "rev": 1,
+ "rev": 2,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -27,8 +27,8 @@
    "seenBy": null,
    "review": null,
    "returnRequest": null,
-   "deletedAt": null,
-   "deletedBy": null,
+   "deletedAt": 1787174361487,
+   "deletedBy": "MrsNami",
    "createdAt": 1787173109990,
    "history": [
     {
@@ -37,6 +37,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787173109991
+    },
+    {
+     "type": "deleted",
+     "text": "سفارش توسط ثبت‌کننده حذف شد",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787174361487
     }
    ]
   }
