@@ -19,16 +19,6 @@
    "createdAt": 1787158698981
   },
   {
-   "id": "mt0cqbkoj2afiw",
-   "name": "خانم نامی",
-   "username": "MrsNami",
-   "passHash": "7c8208903a218a47b97e1d239968ac69db8417b927371eeb6644f42e65a5fc47",
-   "role": "sales",
-   "active": true,
-   "isRoot": false,
-   "createdAt": 1787159681304
-  },
-  {
    "id": "mt0cyoei8vq5xz",
    "name": "خانم رستمی",
    "username": "MsRostami",
@@ -39,5 +29,6 @@
    "createdAt": 1787160071178
   }
  ],
- "orders": []
+ "orders": [],
+ "rev": 2
 }
