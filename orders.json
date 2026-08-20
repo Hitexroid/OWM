@@ -1,5 +1,5 @@
 {
- "rev": 36,
+ "rev": 37,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -269,7 +269,7 @@
    "ts": 1787230794920,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "completed",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787230795/owm/dbzz9v9hogowlzk4k9n6.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_600,q_auto,f_auto/v1787230795/owm/dbzz9v9hogowlzk4k9n6.jpg",
@@ -337,9 +337,18 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787254660419
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · اسنپ",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787255097623
     }
    ],
-   "downloaded": true
+   "downloaded": true,
+   "shippedAt": 1787255097623,
+   "shipMethod": "اسنپ"
   },
   {
    "id": "mt1lwamotsvabq",
