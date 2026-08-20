@@ -1,0 +1,1736 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
+<title>OWM — سامانه مدیریت سفارش‌ها</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --txt:#eef4fb;--txt2:rgba(228,238,248,.62);--txt3:rgba(228,238,248,.38);
+  --stroke:rgba(255,255,255,.14);--stroke-soft:rgba(255,255,255,.08);
+  --teal:#2dd4bf;--teal-soft:rgba(45,212,191,.14);
+  --gold:#f6b73c;--sky:#5bc8f5;--green:#4ade80;--amber:#fbbf24;--red:#fb7185;
+  --purple:#a78bfa;--r:16px;
+}
+body{font-family:Vazirmatn,"Segoe UI",Tahoma,Arial,sans-serif;background:#0b1220;color:var(--txt);min-height:100vh;line-height:1.8;font-size:14.5px;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}svg{display:block}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:9px}
+:focus-visible{outline:2px solid rgba(45,212,191,.7);outline-offset:2px}
+.bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(155deg,#0a1120 0%,#0d1b2e 45%,#0a2330 100%);overflow:hidden}
+.bg:after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1.3px);background-size:26px 26px}
+.bg i{position:absolute;border-radius:50%;filter:blur(70px);display:block}
+.b1{width:52vmax;height:52vmax;background:radial-gradient(circle,rgba(20,184,166,.42),transparent 62%);top:-16vmax;right:-12vmax;animation:fl1 26s ease-in-out infinite alternate}
+.b2{width:44vmax;height:44vmax;background:radial-gradient(circle,rgba(246,183,60,.22),transparent 62%);bottom:-14vmax;left:-10vmax;animation:fl2 32s ease-in-out infinite alternate}
+.b3{width:38vmax;height:38vmax;background:radial-gradient(circle,rgba(56,152,224,.28),transparent 62%);top:32%;left:28%;animation:fl3 38s ease-in-out infinite alternate}
+@keyframes fl1{to{transform:translate(-6vmax,8vmax) scale(1.12)}}
+@keyframes fl2{to{transform:translate(7vmax,-6vmax) scale(1.15)}}
+@keyframes fl3{to{transform:translate(-8vmax,-5vmax) scale(.9)}}
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));-webkit-backdrop-filter:blur(20px) saturate(140%);backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--stroke);border-radius:var(--r);box-shadow:0 16px 40px rgba(2,8,23,.45),inset 0 1px 0 rgba(255,255,255,.13)}
+.auth{min-height:100vh;display:grid;place-items:center;padding:20px}
+.auth-card{width:min(430px,100%);padding:30px 24px;animation:rise .6s both}
+.logo{display:flex;align-items:center;gap:13px;justify-content:center;margin-bottom:8px}
+.logo-mark{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-weight:900;font-size:14px;letter-spacing:1.5px;color:#032522;background:linear-gradient(135deg,#5eead4,#0d9488 70%);box-shadow:0 12px 30px rgba(45,212,191,.35),inset 0 1px 0 rgba(255,255,255,.5);transform:rotate(-4deg)}
+.brand-name{font-size:38px;font-weight:900;line-height:1;letter-spacing:2px}
+.brand-sub{color:var(--txt2);font-size:12.5px;margin-bottom:6px;text-align:center}
+.frow{margin-top:14px}
+.frow label,.flbl{display:block;font-size:12.5px;font-weight:700;color:var(--txt2);margin-bottom:6px}
+.inp{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:12px;padding:11px 14px;color:var(--txt);transition:.2s;min-height:48px;font-size:15px}
+.inp::placeholder{color:var(--txt3)}
+.inp:focus{outline:none;border-color:rgba(45,212,191,.7);box-shadow:0 0 0 4px rgba(45,212,191,.14);background:rgba(255,255,255,.09)}
+select.inp option{background:#0e1a2b;color:var(--txt)}
+textarea.inp{resize:vertical;min-height:90px}
+.pwd{position:relative}.pwd .inp{padding-left:52px}
+.pwd button{position:absolute;top:5px;bottom:5px;left:6px;width:40px;border:none;background:none;color:var(--txt3);display:grid;place-items:center;border-radius:10px}
+.ferr{font-size:12.5px;margin-top:10px;text-align:center;min-height:20px;font-weight:700;color:var(--red)}
+.fnote{font-size:11.5px;color:var(--txt3);margin-top:5px}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:14px}
+.switch-row>span:first-child{font-weight:700;font-size:13.5px}
+.switch{position:relative;width:52px;height:30px;flex:none}
+.switch input{position:absolute;opacity:0;inset:0;z-index:2;margin:0;cursor:pointer}
+.switch i{position:absolute;inset:0;background:rgba(255,255,255,.12);border:1px solid var(--stroke);border-radius:99px;transition:.25s}
+.switch i:after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:#cbd5e1;top:3px;right:3px;transition:.25s}
+.switch input:checked+i{background:rgba(45,212,191,.35);border-color:rgba(45,212,191,.6)}
+.switch input:checked+i:after{right:26px;background:var(--teal)}
+.switch input:disabled+i{opacity:.4}
+.filebox{display:block;border:1.5px dashed rgba(255,255,255,.28);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:.2s;background:rgba(255,255,255,.03)}
+.filebox:hover{border-color:var(--teal);background:var(--teal-soft)}
+.filebox svg{margin:0 auto 8px;color:var(--teal)}
+.filebox b{display:block;font-size:14px}.filebox small{color:var(--txt3);font-size:11.5px}
+.filebox .fmeta{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.filebox.has{border-style:solid;border-color:rgba(45,212,191,.55);background:var(--teal-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:12px;padding:11px 18px;font-weight:800;font-size:14px;transition:.2s;min-height:48px;text-decoration:none}
+.btn:active{transform:scale(.96)}.btn svg{width:18px;height:18px}
+.btn-p{background:linear-gradient(135deg,#2dd4bf,#0e9f9a);color:#04211f;box-shadow:0 8px 22px rgba(45,212,191,.28)}
+.btn-p:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ok{background:linear-gradient(135deg,#4ade80,#16a34a);color:#05240f;box-shadow:0 8px 20px rgba(74,222,128,.25)}
+.btn-dng{background:linear-gradient(135deg,#fb7185,#e11d48);color:#fff;box-shadow:0 8px 20px rgba(225,29,72,.3)}
+.btn-gh{background:rgba(255,255,255,.07);border:1px solid var(--stroke);color:var(--txt)}
+.btn-gh:hover{background:rgba(255,255,255,.13)}
+.btn-blk{width:100%}
+.btn-sm{min-height:40px;padding:7px 13px;font-size:12.5px;border-radius:10px;gap:6px}
+.btn-sm svg{width:15px;height:15px}
+.btn:disabled{opacity:.45;pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:800;border:1px solid;white-space:nowrap}
+.badge svg{width:12px;height:12px}
+.b-pending{color:#fcd34d;background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35)}
+.b-approved{color:#86efac;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.35)}
+.b-rejected{color:#fda4af;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+.b-seen{color:#93c5fd;background:rgba(96,165,250,.12);border-color:rgba(96,165,250,.4)}
+.b-in_progress{color:#aee9fb;background:rgba(91,200,245,.12);border-color:rgba(91,200,245,.42)}
+.b-need_production{color:#d8b4fe;background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.4)}
+.b-completed{color:#86efac;background:rgba(74,222,128,.14);border-color:rgba(74,222,128,.45)}
+.b-shipped{color:#c7d2fe;background:rgba(165,180,252,.14);border-color:rgba(165,180,252,.45)}
+.b-return_requested{color:#fcd34d;background:rgba(251,191,36,.18);border-color:rgba(251,191,36,.55);animation:pulseBd 1.4s infinite}
+.b-returned_healthy{color:#86efac;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.35)}
+.b-returned_broken{color:#fda4af;background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.4)}
+@keyframes pulseBd{0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,.35)}50%{box-shadow:0 0 0 6px rgba(251,191,36,0)}}
+.b-sample{color:#aee9fb;background:rgba(91,200,245,.12);border-color:rgba(91,200,245,.42)}
+.b-ver{color:var(--txt2);background:rgba(255,255,255,.07);border-color:var(--stroke)}
+.b-lock{color:var(--txt3);background:transparent;border-color:transparent}
+.r-admin{color:#ffd98a;background:rgba(246,183,60,.13);border-color:rgba(246,183,60,.4)}
+.r-accountant{color:#aee9fb;background:rgba(91,200,245,.12);border-color:rgba(91,200,245,.4)}
+.r-sales{color:#86efac;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.35)}
+.r-officer{color:#d8b4fe;background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.4)}
+.r-active{color:#86efac;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.35)}
+.r-inactive{color:var(--txt3);background:rgba(255,255,255,.05);border-color:var(--stroke)}
+#view-app{display:none;min-height:100vh}
+.topbar{position:sticky;top:10px;z-index:30;display:flex;align-items:center;gap:10px;margin:10px 12px 0;padding:9px 14px}
+.tb-logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:900;font-size:10.5px;letter-spacing:1px;color:#032522;background:linear-gradient(135deg,#5eead4,#0d9488);box-shadow:0 6px 16px rgba(45,212,191,.3);flex:none;user-select:none;cursor:pointer}
+.tb-title{font-size:16.5px;font-weight:900;line-height:1.2}
+.sync-chip{margin-right:auto;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid var(--stroke);padding:6px 12px;border-radius:99px;font-size:11.5px;font-weight:700;color:var(--txt2);transition:.2s;white-space:nowrap}
+.sync-chip:hover{background:rgba(255,255,255,.13)}
+.sync-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
+.sync-chip.ok .dot{background:var(--green);box-shadow:0 0 8px rgba(74,222,128,.7)}
+.sync-chip.off .dot{background:var(--red)}
+.tb-user{text-align:right;line-height:1.4;min-width:0}
+.tb-user b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:20vw}
+.tb-user span{font-size:10.5px;color:var(--txt2)}
+.tb-out{width:42px;height:42px;flex:none;border-radius:12px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);display:grid;place-items:center;transition:.2s}
+.tb-out:hover{color:#fff;background:rgba(255,255,255,.14)}
+main{padding:16px 14px 120px;max-width:1100px;margin:0 auto}
+.page{display:none}.page.active{display:block;animation:rise .45s both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.sidenav{display:none}
+@media(min-width:920px){
+  .bottomnav{display:none!important}
+  .sidenav{display:flex;flex-direction:column;gap:6px;position:fixed;top:82px;right:18px;width:216px;padding:12px;z-index:30}
+  main{margin-right:250px;padding-bottom:40px}.topbar{margin:12px 18px 0}
+}
+.bn-btn,.sn-btn{display:flex;align-items:center;gap:10px;border:none;background:none;color:var(--txt3);font-weight:800;font-size:12px;border-radius:14px;transition:.22s}
+.bn-btn{flex-direction:column;gap:3px;padding:7px 12px;font-size:10.5px}
+.bn-btn svg,.sn-btn svg{width:22px;height:22px}
+.sn-btn{padding:11px 14px;font-size:13.5px;width:100%;text-align:right}
+.bn-btn.on,.sn-btn.on{color:#7ff5e6;background:var(--teal-soft);box-shadow:inset 0 0 0 1px rgba(45,212,191,.35)}
+.bottomnav{position:fixed;bottom:10px;left:10px;right:10px;z-index:40;display:flex;justify-content:space-around;padding:7px 6px calc(7px + env(safe-area-inset-bottom))}
+.welcome{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:18px 20px;margin-bottom:16px}
+.welcome h2{font-size:19px;font-weight:900}.welcome p{font-size:12.5px;color:var(--txt2)}
+.welcome .btn{margin-right:auto}
+.alert-banner{background:linear-gradient(135deg,rgba(251,191,36,.14),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.4);color:#fcd34d;border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;animation:pulseBd 1.6s infinite}
+.alert-banner svg{width:19px;height:19px;flex:none}
+.offline-banner{background:linear-gradient(135deg,rgba(251,113,133,.14),rgba(251,113,133,.05));border:1px solid rgba(251,113,133,.4);color:#fda4af;border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800}
+.offline-banner svg{width:19px;height:19px;flex:none}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:10px}
+@media(min-width:760px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+.stat{display:flex;gap:12px;align-items:center;padding:15px 16px;transition:.25s}
+.stat:hover{transform:translateY(-2px)}
+.s-ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none}
+.s-ic svg{width:22px;height:22px}
+.s-num{font-size:23px;font-weight:900;line-height:1.3}.s-lbl{font-size:11.5px;color:var(--txt2)}
+.subhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 12px}
+.subhead h3{font-size:15.5px;font-weight:900;display:flex;align-items:center;gap:8px}
+.subhead h3 svg{width:18px;height:18px;color:var(--teal)}
+.subhead button{border:none;background:none;color:#7ff5e6;font-size:12.5px;font-weight:800}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:3px 1px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);color:var(--txt2);font-size:12.5px;font-weight:700;transition:.2s;min-height:40px}
+.chip.on{background:linear-gradient(135deg,rgba(45,212,191,.28),rgba(45,212,191,.08));color:#7ff5e6;border-color:rgba(45,212,191,.55)}
+.custom-range{margin-top:12px;padding:14px;display:grid;gap:10px}
+.custom-range .cr-row{display:grid;grid-template-columns:86px 1fr;gap:8px;align-items:center}
+.custom-range .cr-row>span{font-size:12.5px;font-weight:800;color:var(--txt2)}
+.search{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:13px;padding:0 14px;min-height:48px;margin-top:12px;transition:.2s}
+.search:focus-within{border-color:rgba(45,212,191,.6)}
+.search svg{color:var(--txt3);flex:none;width:18px;height:18px}
+.search input{flex:1;background:none;border:none;outline:none;color:var(--txt);min-height:46px;font-size:14px}
+.ocount{font-size:12px;color:var(--txt3);margin:12px 2px 8px}
+.olist{display:flex;flex-direction:column;gap:12px}
+.ocard{padding:16px;transition:.25s;animation:rise .4s both}
+.ocard:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.26)}
+.ocard-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.ono{font-weight:900;font-size:14px;background:rgba(255,255,255,.08);padding:3px 12px;border-radius:10px;border:1px solid var(--stroke)}
+.oprev{position:relative;width:100%;height:180px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid var(--stroke);cursor:pointer;margin-bottom:10px;transition:.2s}
+.oprev:hover{border-color:var(--teal)}
+.oprev-ico{position:absolute;inset:0;display:grid;place-items:center;color:var(--txt3);z-index:1}
+.oprev-ico svg{width:32px;height:32px}
+.oprev img{position:absolute;left:50%;top:50%;width:auto;height:100%;object-fit:cover;transform:translate(-50%,-50%) rotate(90deg);transform-origin:center}
+.ocust{font-size:16.5px;font-weight:800;margin-bottom:2px;word-break:break-word}
+.osub{font-size:12px;color:var(--txt2);margin-bottom:8px}
+.oinfo{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:12.5px;color:var(--txt2);margin-bottom:4px}
+@media(min-width:640px){.oinfo{grid-template-columns:repeat(2,1fr)}}
+.oinfo span{display:inline-flex;align-items:center;gap:6px}
+.oinfo svg{width:15px;height:15px;color:var(--txt3);flex:none}
+.status-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.st-chip{padding:8px 14px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);color:var(--txt2);font-size:12.5px;font-weight:800;transition:.2s;cursor:pointer}
+.st-chip:hover{background:rgba(255,255,255,.12);color:var(--txt)}
+.st-chip.on{color:#04211f;background:var(--teal);border-color:var(--teal);box-shadow:0 4px 12px rgba(45,212,191,.3)}
+.oacts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.empty{padding:46px 20px;text-align:center;color:var(--txt3)}
+.empty svg{width:46px;height:46px;margin:0 auto 12px;opacity:.45}
+.empty b{display:block;color:var(--txt2);font-size:15px;margin-bottom:4px}
+.mcard{display:flex;align-items:center;gap:12px;padding:14px 16px;flex-wrap:wrap;animation:rise .4s both}
+.m-ava{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:17px;color:#04211f;background:linear-gradient(135deg,#5eead4,#0d9488);flex:none}
+.m-info{min-width:110px}.m-info b{display:block;font-size:14.5px}
+.m-info span{font-size:11.5px;color:var(--txt3);direction:ltr;display:inline-block}
+.m-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.m-date{font-size:11px;color:var(--txt3)}
+.m-acts{display:flex;gap:7px;margin-right:auto}
+.ibtn{width:40px;height:40px;border-radius:11px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);display:grid;place-items:center;transition:.2s}
+.ibtn:hover{color:#fff;background:rgba(255,255,255,.14)}
+.ibtn.danger:hover{background:rgba(225,29,72,.35);border-color:rgba(225,29,72,.5)}
+.ibtn svg{width:17px;height:17px}
+.overlay{position:fixed;inset:0;z-index:60;background:rgba(4,10,20,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .25s}
+@keyframes fadeIn{from{opacity:0}}
+.modal{width:100%;max-width:620px;max-height:93vh;overflow-y:auto;background:linear-gradient(180deg,rgba(24,36,56,.92),rgba(15,25,42,.94));-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);border:1px solid var(--stroke);border-bottom:none;border-radius:24px 24px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));box-shadow:0 -10px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.12);animation:sheetUp .38s both}
+@keyframes sheetUp{from{transform:translateY(70px);opacity:0}}
+@media(min-width:720px){.overlay{align-items:center;padding:24px}.modal{border-radius:24px;border-bottom:1px solid var(--stroke)}}
+.m-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.m-title{font-size:16.5px;font-weight:900;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.m-title svg{width:19px;height:19px;color:var(--teal)}
+.m-x{width:38px;height:38px;flex:none;border-radius:11px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:var(--txt2);font-size:15px}
+.drow{display:flex;justify-content:space-between;gap:12px;padding:9px 2px;border-bottom:1px solid var(--stroke-soft);font-size:13.5px}
+.drow span{color:var(--txt2);flex:none}.drow b{font-weight:800;text-align:right}
+.rbox{border-radius:13px;padding:13px 15px;margin-top:14px;font-size:13px;border:1px solid;line-height:2}
+.rbox svg{display:inline-block;width:15px;height:15px;vertical-align:-2px;margin-left:4px}
+.rbox.ok{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.3)}
+.rbox.bad{background:rgba(244,63,94,.09);border-color:rgba(244,63,94,.35)}
+.rbox.warn{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.4);color:#fcd34d}
+.rbox b{display:inline-block;min-width:104px;color:var(--txt2);font-weight:700}
+.rbox .reason{background:rgba(0,0,0,.22);border-radius:9px;padding:8px 12px;margin-top:6px}
+.locknote{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:12px;color:var(--txt2);background:rgba(255,255,255,.05);border:1px dashed var(--stroke);border-radius:11px;padding:9px 13px;line-height:1.9}
+.locknote svg{width:16px;height:16px;flex:none;color:var(--gold)}
+.ver-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.ver-row{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;background:rgba(255,255,255,.05);border:1px solid var(--stroke);border-radius:12px;padding:9px 13px;font-size:13px}
+.ver-row.cur{border-color:rgba(45,212,191,.55);background:var(--teal-soft)}
+.m-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.m-actions .btn{flex:1;min-width:110px}
+.sec-title{font-size:13px;font-weight:900;color:var(--txt2);margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+.sec-title svg{width:15px;height:15px}
+.sec-title:after{content:"";flex:1;height:1px;background:var(--stroke-soft)}
+.pdf-prev{width:100%;height:60vh;border:none;border-radius:13px;background:#fff;margin-top:10px}
+.tline{position:relative;padding-right:20px;margin-top:10px}
+.tline:before{content:"";position:absolute;right:6px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,.12);border-radius:2px}
+.tl-item{position:relative;padding:7px 0}
+.tl-item:before{content:"";position:absolute;right:-19px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(45,212,191,.18)}
+.tl-item.c-approved:before{background:var(--green);box-shadow:0 0 0 3px rgba(74,222,128,.18)}
+.tl-item.c-rejected:before{background:var(--red);box-shadow:0 0 0 3px rgba(251,113,133,.18)}
+.tl-item.c-resubmitted:before{background:var(--gold);box-shadow:0 0 0 3px rgba(246,183,60,.18)}
+.tl-item.c-status:before{background:var(--purple);box-shadow:0 0 0 3px rgba(167,139,250,.18)}
+.tl-item.c-return:before{background:var(--amber);box-shadow:0 0 0 3px rgba(251,191,36,.18)}
+.tl-item.c-deleted:before{background:var(--txt3);box-shadow:0 0 0 3px rgba(228,238,248,.18)}
+.tl-item b{display:block;font-size:13px}.tl-item span{font-size:11.5px;color:var(--txt3)}
+#toastRoot{position:fixed;bottom:calc(92px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:8px;width:min(400px,calc(100vw - 24px))}
+@media(min-width:920px){#toastRoot{bottom:26px}}
+.toast{display:flex;gap:10px;align-items:center;padding:13px 16px;border-radius:14px;font-size:13.5px;font-weight:700;background:rgba(13,23,38,.94);border:1px solid var(--stroke);box-shadow:0 14px 34px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);animation:tIn .35s both}
+.toast svg{width:19px;height:19px;flex:none}
+.toast.ok{border-right:4px solid var(--green)}.toast.ok svg{color:var(--green)}
+.toast.error{border-right:4px solid var(--red)}.toast.error svg{color:var(--red)}
+.toast.out{animation:tOut .3s forwards}
+@keyframes tIn{from{opacity:0;transform:translateY(16px) scale(.95)}}
+@keyframes tOut{to{opacity:0;transform:translateY(10px) scale(.96)}}
+body.modal-open{overflow:hidden}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn-row .btn{flex:1;min-width:110px}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+
+<section id="view-login" class="auth">
+  <div class="auth-card glass">
+    <div class="logo"><div class="logo-mark">OWM</div><div><div class="brand-name">OWM</div><div class="brand-sub">سامانه مدیریت سفارش‌ها</div></div></div>
+    <form id="loginForm" novalidate>
+      <div class="frow"><label for="loginUser">نام کاربری</label><input class="inp" id="loginUser" autocomplete="username" placeholder="نام کاربری"></div>
+      <div class="frow"><label for="loginPass">رمز عبور</label>
+        <div class="pwd"><input class="inp" id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••"><button type="button" data-pwd="loginPass" aria-label="نمایش رمز">👁</button></div>
+      </div>
+      <div class="frow"><button class="btn btn-p btn-blk" type="submit" id="loginBtn">ورود به سیستم</button></div>
+      <div id="loginErr" class="ferr"></div>
+    </form>
+  </div>
+</section>
+
+<div id="view-app">
+  <header class="topbar glass">
+    <div class="tb-logo" id="logoTap" title="OWM">OWM</div>
+    <div class="tb-title" id="pageTitle">داشبورد</div>
+    <button class="sync-chip" id="syncChip" title="وضعیت اتصال"><span class="dot" id="syncDot"></span><span id="syncTxt">…</span></button>
+    <div class="tb-user"><b id="hdrName"></b><span id="hdrRole"></span></div>
+    <button class="tb-out" id="btnSettings" title="تنظیمات" style="display:none"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+    <button class="tb-out" id="btnLogout" title="خروج"><svg viewBox="0 0 24 24" width="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg></button>
+  </header>
+  <nav class="sidenav glass" id="sideNav" aria-label="منوی اصلی"></nav>
+  <main>
+    <section class="page" id="page-dashboard"></section>
+    <section class="page" id="page-orders"></section>
+    <section class="page" id="page-newOrder"></section>
+    <section class="page" id="page-notdone"></section>
+    <section class="page" id="page-members"></section>
+  </main>
+  <nav class="bottomnav glass" id="bottomNav" aria-label="منوی اصلی"></nav>
+</div>
+
+<div id="modalRoot"></div>
+<div id="toastRoot" aria-live="polite"></div>
+
+<script>
+'use strict';
+function AppError(m){this.message=m;this.name='AppError'}
+AppError.prototype=Object.create(Error.prototype);
+if(!Element.prototype.closest){Element.prototype.closest=function(s){var el=this;while(el&&el.nodeType===1){if(el.matches?el.matches(s):false)return el;el=el.parentElement}return null}}
+
+var CL={cloud:'ffi2p3eq',preset:'Owm-presets'};
+var ROLE_FA={admin:'مدیر کل',accountant:'حسابدار',sales:'مدیر فروش',officer:'مسئول سفارش'};
+var STATUS_FA={
+  pending:'در انتظار بررسی',approved:'تأیید شده',rejected:'رد شده',
+  seen:'دیده شده',in_progress:'در حال انجام',need_production:'نیازمند تولید',
+  completed:'انجام شده',shipped:'ارسال شده',
+  return_requested:'درخواست مرجوعی',returned_healthy:'مرجوعی سالم',returned_broken:'مرجوعی شکسته'
+};
+var STATUS_AFTER_APPROVED=['in_progress','need_production','completed','shipped'];
+var MONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+var WEEKDAYS_FA=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+var PAGE_ACCESS={
+  admin:['dashboard','orders','notdone','members'],
+  accountant:['dashboard','orders','notdone'],
+  sales:['dashboard','newOrder','orders','notdone'],
+  officer:['dashboard','orders','notdone']
+};
+var PAGE_TITLE={dashboard:'داشبورد',orders:'سفارش‌ها',newOrder:'ثبت سفارش',notdone:'انجام نشده‌ها',members:'مدیریت اعضا'};
+var NAV_ITEMS={
+  admin:[['dashboard','داشبورد','grid'],['orders','سفارش‌ها','clipboard'],['notdone','انجام نشده‌ها','alert'],['members','مدیریت اعضا','users']],
+  accountant:[['dashboard','داشبورد','grid'],['orders','سفارش‌ها','clipboard'],['notdone','انجام نشده‌ها','alert']],
+  sales:[['dashboard','داشبورد','grid'],['newOrder','ثبت سفارش','plus'],['orders','سفارش‌ها','clipboard'],['notdone','انجام نشده‌ها','alert']],
+  officer:[['dashboard','داشبورد','grid'],['orders','سفارش‌ها','clipboard'],['notdone','انجام نشده‌ها','alert']]
+};
+var PRESETS=[['today','امروز'],['yesterday','دیروز'],['thisWeek','این هفته'],['lastWeek','هفته گذشته'],['thisMonth','این ماه'],['lastMonth','ماه گذشته'],['custom','بازه دلخواه'],['all','همه']];
+var MAX_PDF=3*1024*1024;
+var DEFAULT_ADMIN={username:'MrNami',password:'03992708!',name:'مدیر کل'};
+var DELETE_WINDOW_MS=60*60*1000;
+var FILE_KEY={users:'users',orders:'orders',settings:'settings'};
+
+/* flag برای کنترل انیمیشن کارت‌ها در رندر خودکار (حذف چشمک‌زدن) */
+var RENDER_ANIM=false;
+
+function _ic(p){return '<svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'}
+var I={
+  grid:_ic('<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'),
+  clipboard:_ic('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4a3 3 0 0 1 6 0"/><path d="M9 11h6M9 15h6"/>'),
+  users:_ic('<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c.7-3.2 3.3-5 6.5-5s5.8 1.8 6.5 5"/><path d="M16 3.8a3.2 3.2 0 0 1 0 6.4"/><path d="M17.8 15.3c2 .6 3.3 2 3.7 4.7"/>'),
+  plus:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>'),
+  alert:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/>'),
+  search:_ic('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>'),
+  check:_ic('<path d="M20 6L9 17l-5-5"/>'),
+  x:_ic('<path d="M18 6L6 18M6 6l12 12"/>'),
+  eye:_ic('<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  download:_ic('<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/>'),
+  file:_ic('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'),
+  refresh:_ic('<path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/>'),
+  edit:_ic('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>'),
+  trash:_ic('<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/>'),
+  calendar:_ic('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/>'),
+  clock:_ic('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>'),
+  user:_ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c.9-3.7 4-6 8-6s7.1 2.3 8 6"/>'),
+  lock:_ic('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),
+  flask:_ic('<path d="M10 2v6.3L4.6 17.6A2 2 0 0 0 6.4 21h11.2a2 2 0 0 0 1.8-3.4L14 8.3V2"/><path d="M8.5 2h7"/><path d="M7.5 15h9"/>'),
+  history:_ic('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/>'),
+  print:_ic('<path d="M6 9V3h12v6"/><rect x="4" y="9" width="16" height="8" rx="2"/><path d="M6 15v6h12v-6"/>'),
+  share:_ic('<circle cx="6" cy="12" r="2.5"/><circle cx="17" cy="5" r="2.5"/><circle cx="17" cy="19" r="2.5"/><path d="M8.2 10.8l6.6-4.4M8.2 13.2l6.6 4.4"/>'),
+  back:_ic('<path d="M3 10h13"/><path d="M8 5l-5 5 5 5"/><path d="M18 21v-2a4 4 0 0 0-4-4H9"/>')
+};
+
+function $(s){return document.querySelector(s)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function pad2(n){n=String(n);return n.length<2?'0'+n:n}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function faNum(n){return Number(n).toLocaleString('fa-IR')}
+function fmtTimeFa(t){var p=String(t).split(':');return faNum(p[0])+':'+faNum(p[1])}
+function fmtJDateFa(jd){var p=jd.split('/');return faNum(+p[2])+' '+MONTHS_FA[+p[1]-1]+' '+faNum(+p[0])}
+function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d);return faNum(j.jd)+' '+MONTHS_FA[j.jm-1]+' '+faNum(j.jy)+' · '+faNum(d.getHours())+':'+faNum(pad2(d.getMinutes()))}
+function relTime(ts){
+  var diff=Date.now()-ts;if(diff<0)diff=0;
+  var m=Math.floor(diff/60000);
+  if(m<1)return 'همین الان';
+  if(m<60)return faNum(m)+' دقیقه پیش';
+  var h=Math.floor(m/60);
+  if(h<24)return faNum(h)+' ساعت پیش';
+  var d=Math.floor(h/24);
+  if(d<30)return faNum(d)+' روز پیش';
+  return faNum(Math.floor(d/30))+' ماه پیش';
+}
+
+function _div(a,b){return ~~(a/b)}function _mod(a,b){return a-~~(a/b)*b}
+function jalCal(jy){
+  var breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+  var bl=breaks.length,gy=jy+621,leapJ=-14,jp=breaks[0],jm,jump,leap,leapG,march,n,i;
+  for(i=1;i<bl;i+=1){jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ=leapJ+_div(jump,33)*8+_div(_mod(jump,33),4);jp=jm}
+  n=jy-jm;leapJ=leapJ+_div(n,33)*8+_div(_mod(n,33)+3,4);
+  if(_mod(jump,33)===4&&jump-n===4)leapJ+=1;
+  leapG=_div(gy,4)-_div((_div(gy,100)+1)*3,4)-150;march=20+leapJ-leapG;
+  if(jump-n<6)n=n-jump+_div(jump+4,33)*33;
+  leap=_mod(_mod(n+1,33)-1,4);if(leap===-1)leap=4;
+  return {leap:leap,gy:gy,march:march};
+}
+function g2d(gy,gm,gd){var d=_div((gy+_div(gm-8,6)+100100)*1461,4)+_div(153*_mod(gm+9,12)+2,5)+gd-34840408;d=d-_div(_div(gy+100100+_div(gm-8,6),100)*3,4)+752;return d}
+function d2g(jdn){var j=4*jdn+139361631;j=j+_div(_div(4*jdn+183187720,146097)*3,4)*4-3908;var i=_div(_mod(j,1461),4)*5+308;var gd=_div(_mod(i,153),5)+1,gm=_mod(_div(i,153),12)+1,gy=_div(j,1461)-100100+_div(8-gm,6);return {gy:gy,gm:gm,gd:gd}}
+function j2d(jy,jm,jd){var r=jalCal(jy);return g2d(r.gy,3,r.march)+(jm-1)*31-_div(jm,7)*(jm-7)+jd-1}
+function d2j(jdn){var gy=d2g(jdn).gy,jy=gy-621,r=jalCal(jy),jdn1f=g2d(gy,3,r.march),k=jdn-jdn1f,jd,jm;
+  if(k>=0){if(k<=185){jm=1+_div(k,31);jd=_mod(k,31)+1;return {jy:jy,jm:jm,jd:jd}}k-=186}
+  else{jy-=1;k+=179;if(r.leap===1)k+=1}
+  jm=7+_div(k,30);jd=_mod(k,30)+1;return {jy:jy,jm:jm,jd:jd}}
+function toJalaali(date){return d2j(g2d(date.getFullYear(),date.getMonth()+1,date.getDate()))}
+function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}
+function jalaliMonthLen(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;return jalCal(jy).leap===0?30:29}
+function todayJ(){return toJalaali(new Date())}
+function jISO(jy,jm,jd){return jy+'/'+pad2(jm)+'/'+pad2(jd)}
+function pWeek(d){return (d.getDay()+1)%7}
+function addDays(d,n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n)}
+function jOfDate(d){var j=toJalaali(d);return jISO(j.jy,j.jm,j.jd)}
+function presetRange(p){
+  var now=new Date(),t=todayJ(),tISO=jISO(t.jy,t.jm,t.jd),s,jy,jm;
+  if(p==='today')return {from:tISO,to:tISO};
+  if(p==='yesterday'){s=jOfDate(addDays(now,-1));return {from:s,to:s}}
+  if(p==='thisWeek')return {from:jOfDate(addDays(now,-pWeek(now))),to:tISO};
+  if(p==='lastWeek')return {from:jOfDate(addDays(now,-pWeek(now)-7)),to:jOfDate(addDays(now,-pWeek(now)-1))};
+  if(p==='thisMonth')return {from:jISO(t.jy,t.jm,1),to:tISO};
+  if(p==='lastMonth'){jy=t.jy;jm=t.jm-1;if(jm<1){jm=12;jy--}return {from:jISO(jy,jm,1),to:jISO(jy,jm,jalaliMonthLen(jy,jm))}}
+  return null;
+}
+
+function utf8ToB64(str){
+  try{
+    var bytes=new TextEncoder().encode(str),bin='',CH=0x8000,i;
+    for(i=0;i<bytes.length;i+=CH)bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH));
+    return btoa(bin);
+  }catch(e){return btoa(unescape(encodeURIComponent(str)))}
+}
+function b64ToUtf8(b64){
+  try{
+    var bin=atob(b64),arr=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+    return new TextDecoder().decode(arr);
+  }catch(e){return decodeURIComponent(escape(atob(b64)))}
+}
+
+var DB={
+  get:function(k,f){try{var v=localStorage.getItem('owm.'+k);return v?JSON.parse(v):f}catch(e){return f}},
+  set:function(k,v){try{localStorage.setItem('owm.'+k,JSON.stringify(v));return true}catch(e){return false}},
+  del:function(k){try{localStorage.removeItem('owm.'+k)}catch(e){}}
+};
+
+var FILES={
+  users:{rev:0,data:[],pending:false},
+  orders:{rev:0,data:[],pending:false},
+  settings:{rev:0,data:{},pending:false}
+};
+var session=null,rootHash='',viewScope=null,officerUser='',curPage='dashboard',lastSig='';
+
+/* امضای داده‌ها برای تشخیص تغییر واقعی (حذف چشمک‌زدن) */
+function dataSig(){return (FILES.users.rev||0)+'|'+(FILES.orders.rev||0)+'|'+(FILES.settings.rev||0)}
+
+function ghCfg(){
+  var l={};try{l=JSON.parse(localStorage.getItem('owm.gh')||'{}')}catch(e){}
+  var s=FILES.settings.data||{};
+  return {owner:l.owner||s.owner||'',repo:l.repo||s.repo||'',branch:l.branch||s.branch||'main',token:l.token||s.token||'',pollSec:l.pollSec||s.pollSec||8};
+}
+function ghEnabled(){var c=ghCfg();return !!(c.token&&c.owner&&c.repo)}
+function canWrite(){return ghEnabled()&&navigator.onLine!==false}
+function assertWritable(){
+  if(!ghEnabled())throw new AppError('اتصال به گیت‌هاب تنظیم نشده است. سیستم فقط قابل مشاهده است. مدیر کل باید از نشانگر بالای صفحه، توکن و مشخصات ریپازیتوری را وارد کند.');
+  if(navigator.onLine===false)throw new AppError('اتصال اینترنت برقرار نیست. تا برقراری اتصال، امکان ثبت یا تغییر وجود ندارد.');
+}
+
+function translateErr(e){
+  if(!e)return 'خطای نامشخص';
+  if(e.status===401)return 'توکن نامعتبر یا منقضی است. توکن جدید بسازید.';
+  if(e.status===403)return 'دسترسی توکن کافی نیست. مطمئن شوید Contents: Read and write دارد.';
+  if(e.status===404)return 'ریپازیتوری یا فایل پیدا نشد. owner / repo / branch را بررسی کنید.';
+  if(e.status===409)return 'تداخل همزمان در ذخیره‌سازی.';
+  if(e.status===422)return 'خطا در ذخیره (422). branch یا ساختار فایل را بررسی کنید.';
+  if(e.status>=500)return 'خطای موقت از سمت گیت‌هاب. چند لحظه دیگر دوباره تلاش می‌شود.';
+  return e.message||'خطای نامشخص';
+}
+function ghApi(path,opts,token){
+  opts=opts||{};
+  var isGet=!opts.method||opts.method==='GET';
+  var headers={'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'Content-Type':'application/json'};
+  return fetch('https://api.github.com'+path,{method:opts.method||'GET',headers:headers,body:opts.body||null,cache:isGet?'no-store':'no-cache'}).then(function(r){
+    if(!r.ok){
+      return r.text().then(function(txt){
+        var msg='';
+        try{var j=JSON.parse(txt);if(j&&j.message)msg=j.message}catch(e){}
+        var e=new Error(msg||('HTTP '+r.status));
+        e.status=r.status;
+        throw e;
+      });
+    }
+    if(r.status===204)return null;
+    return r.json();
+  });
+}
+
+function fetchFile(file){
+  var cfg=ghCfg();
+  var url='/repos/'+cfg.owner+'/'+cfg.repo+'/contents/'+file+'.json?ref='+encodeURIComponent(cfg.branch)+'&_t='+Date.now();
+  return ghApi(url,{},cfg.token).then(function(j){
+    var b64=(j.content||'').replace(/\s/g,'');
+    var txt=b64?b64ToUtf8(b64):'{}';
+    var data;try{data=JSON.parse(txt)}catch(e){data={}}
+    return {data:data,sha:j.sha||null};
+  }).catch(function(e){
+    if(e.status===404)return {data:{},sha:null};
+    throw e;
+  });
+}
+
+function refreshFile(file){
+  if(!ghEnabled())return Promise.resolve();
+  return fetchFile(file).then(function(cur){
+    if(FILES[file].pending)return;
+    FILES[file].rev=(cur.data.rev)||0;
+    FILES[file].data=cur.data[FILE_KEY[file]]||(file==='settings'?{}:[]);
+    DB.set('cache_'+file,FILES[file]);
+  }).catch(function(e){});
+}
+
+/* رندر خودکار فقط وقتی دادهٔ واقعی تغییر کرده باشد (حذف چشمک‌زدن) */
+function refreshAll(){
+  if(!ghEnabled())return Promise.resolve();
+  return Promise.all(['users','orders','settings'].map(function(f){
+    if(FILES[f].pending)return Promise.resolve();
+    return refreshFile(f);
+  })).then(function(){
+    if(session){
+      var me=findUserById(session.userId);
+      if(!me||!me.active){toast('حساب شما حذف یا غیرفعال شده است','error');doLogout();return}
+    }
+    var sig=dataSig();
+    if(sig!==lastSig){
+      lastSig=sig;
+      RENDER_ANIM=false;
+      autoRender();
+    }
+  });
+}
+
+function autoRender(){if(session&&curPage!=='newOrder')renderPage(curPage)}
+
+function commitFile(file,applyFn,msg){
+  var cfg=ghCfg();
+  function attempt(n){
+    return fetchFile(file).then(function(cur){
+      var inner=cur.data[FILE_KEY[file]]||(file==='settings'?{}:[]);
+      var newInner=applyFn(JSON.parse(JSON.stringify(inner)));
+      var full={rev:((cur.data.rev)||0)+1};
+      full[FILE_KEY[file]]=newInner;
+      var body={message:msg||('OWM: به‌روزرسانی '+file),content:utf8ToB64(JSON.stringify(full,null,1)),branch:cfg.branch};
+      if(cur.sha)body.sha=cur.sha;
+      return ghApi('/repos/'+cfg.owner+'/'+cfg.repo+'/contents/'+file+'.json',{method:'PUT',body:JSON.stringify(body)},cfg.token);
+    }).catch(function(e){
+      if(n<4&&(e.status===409||e.status===422||e.status===500||e.status===502))return attempt(n+1);
+      throw e;
+    });
+  }
+  return attempt(0);
+}
+function mutate(file,applyFn,msg){
+  assertWritable();
+  FILES[file].pending=true;
+  var optimistic=applyFn(JSON.parse(JSON.stringify(FILES[file].data)));
+  FILES[file].data=optimistic;
+  if(curPage!=='newOrder')renderPage(curPage);
+  return commitFile(file,applyFn,msg).then(function(){
+    FILES[file].pending=false;
+    return refreshFile(file);
+  }).then(function(){
+    lastSig=dataSig();
+    if(curPage!=='newOrder'){RENDER_ANIM=false;renderPage(curPage);}
+  }).catch(function(e){
+    FILES[file].pending=false;
+    return refreshFile(file).then(function(){
+      lastSig=dataSig();
+      if(curPage!=='newOrder'){RENDER_ANIM=false;renderPage(curPage);}
+      throw new AppError(translateErr(e));
+    });
+  });
+}
+
+function hashPassword(pw){
+  var s='owm::'+pw;
+  function fallback(){
+    var h1=0xdeadbeef^7,h2=0x41c6ce57^7,i,ch;
+    for(i=0;i<s.length;i++){ch=s.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}
+    h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);
+    h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);
+    return (4294967296*(2097151&h2)+(h1>>>0)).toString(16);
+  }
+  return new Promise(function(resolve){
+    try{
+      if(window.crypto&&crypto.subtle&&window.TextEncoder){
+        crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(buf){
+          var out='',bytes=new Uint8Array(buf);
+          for(var i=0;i<bytes.length;i++)out+=('0'+bytes[i].toString(16)).slice(-2);
+          resolve(out);
+        }).catch(function(){resolve(fallback())});
+        return;
+      }
+    }catch(e){}
+    resolve(fallback());
+  });
+}
+function findUserById(id){for(var i=0;i<FILES.users.data.length;i++)if(FILES.users.data[i].id===id)return FILES.users.data[i];return null}
+function findUserByUsername(un){un=un.toLowerCase();for(var i=0;i<FILES.users.data.length;i++)if(FILES.users.data[i].username.toLowerCase()===un)return FILES.users.data[i];return null}
+function ensureUsersLoaded(){if(ghEnabled())return refreshFile('users');return Promise.resolve()}
+function validateSession(){
+  var s=DB.get('session',null);if(!s||!s.userId)return null;
+  var u=findUserById(s.userId);
+  if(!u||!u.active)return null;
+  return {userId:u.id,username:u.username,name:u.name,role:u.role,isRoot:!!u.isRoot,loginAt:s.loginAt};
+}
+function ensureRootLocal(){
+  if(!Array.isArray(FILES.users.data))FILES.users.data=[];
+  if(findUserByUsername(DEFAULT_ADMIN.username))return Promise.resolve();
+  return hashPassword(DEFAULT_ADMIN.password).then(function(h){
+    FILES.users.data.push({id:'root-mrnami',name:DEFAULT_ADMIN.name,username:DEFAULT_ADMIN.username,passHash:h,role:'admin',active:true,isRoot:true,createdAt:Date.now()});
+    DB.set('cache_users',FILES.users);
+  });
+}
+function persistRootToRemote(){
+  if(!ghEnabled())return Promise.resolve();
+  return fetchFile('users').then(function(cur){
+    var arr=cur.data.users||[];
+    if(arr.some(function(u){return u.username===DEFAULT_ADMIN.username}))return;
+    var root=findUserByUsername(DEFAULT_ADMIN.username);
+    if(!root)return;
+    return commitFile('users',function(a){
+      if(!a.some(function(u){return u.username===DEFAULT_ADMIN.username}))a.push(root);
+      return a;
+    },'OWM: ایجاد حساب مدیر کل');
+  }).catch(function(){});
+}
+
+function requireAuth(){if(!session)throw new AppError('نشست شما معتبر نیست؛ دوباره وارد شوید');return session}
+function requireRole(roles){var u=requireAuth();if(roles.indexOf(u.role)===-1)throw new AppError('دسترسی شما به این عملیات مجاز نیست');return u}
+function safe(fn){
+  return Promise.resolve().then(fn).catch(function(e){
+    var msg=(e&&e.message)?e.message:'خطای نامشخص';
+    if(window.console)console.error(e);
+    toast(msg,'error');
+  });
+}
+
+function approvalEnabled(){return (FILES.settings.data||{}).accountantApproval===true}
+function canReview(){
+  if(session.role==='admin')return true;
+  if(session.role==='accountant')return approvalEnabled();
+  return false;
+}
+function openSettingsModal(){
+  requireRole(['admin']);
+  var st=FILES.settings.data||{};
+  var checked=st.accountantApproval===true;
+  var m=openModal(
+    '<div class="m-head"><div class="m-title">'+I.grid+' تنظیمات سیستم</div><button class="m-x" data-close>✕</button></div>'+
+    '<label class="switch-row"><span>حسابدار بتواند سفارش‌ها را تأیید یا رد کند</span><span class="switch"><input type="checkbox" id="setApprove" '+(checked?'checked':'')+'><i></i></span></label>'+
+    '<div class="fnote" style="margin-top:10px">تا زمانی که این گزینه غیرفعال است، سفارش‌ها در وضعیت «در انتظار بررسی» می‌مانند و فقط مدیر کل می‌تواند آن‌ها را تأیید یا رد کند.</div>'+
+    '<div class="m-actions"><button class="btn btn-p" id="setSave">ذخیره تنظیمات</button></div>'
+  );
+  m.md.querySelector('#setSave').addEventListener('click',function(){
+    var val=m.md.querySelector('#setApprove').checked;
+    safe(function(){
+      return mutate('settings',function(s){s.accountantApproval=val;return s},'OWM: تغییر تنظیمات').then(function(){
+        closeModal();
+        toast(val?'تأیید/رد توسط حسابدار فعال شد':'تأیید/رد توسط حسابدار غیرفعال شد');
+      });
+    });
+  });
+}
+
+function addUser(d){
+  requireRole(['admin']);assertWritable();
+  var name=(d.name||'').trim(),username=(d.username||'').trim();
+  if(!name)throw new AppError('نام کاربر را وارد کنید');
+  if(!username)throw new AppError('نام کاربری را وارد کنید');
+  if(!d.password)throw new AppError('رمز عبور را وارد کنید');
+  if(!ROLE_FA[d.role])throw new AppError('نقش انتخاب‌شده معتبر نیست');
+  if(findUserByUsername(username))throw new AppError('این نام کاربری قبلاً ثبت شده است');
+  return hashPassword(d.password).then(function(h){
+    var rec={id:uid(),name:name,username:username,passHash:h,role:d.role,active:true,isRoot:false,createdAt:Date.now()};
+    return mutate('users',function(users){
+      if(!users.some(function(u){return u.id===rec.id||u.username.toLowerCase()===rec.username.toLowerCase()}))users.push(rec);
+      return users;
+    },'OWM: افزودن کاربر '+rec.username);
+  }).then(function(){toast('کاربر ایجاد شد')});
+}
+function updateUser(id,d){
+  requireRole(['admin']);assertWritable();
+  var u=findUserById(id);
+  if(!u)throw new AppError('کاربر یافت نشد');
+  var name=(d.name||'').trim(),username=(d.username||'').trim();
+  if(!name)throw new AppError('نام کاربر را وارد کنید');
+  if(!username)throw new AppError('نام کاربری را وارد کنید');
+  if(u.isRoot){
+    if(d.role&&d.role!=='admin')throw new AppError('نقش مدیر کل قابل تغییر نیست');
+    if(username!==u.username)throw new AppError('نام کاربری مدیر کل قابل تغییر نیست');
+    if(d.active===false)throw new AppError('مدیر کل قابل غیرفعال کردن نیست');
+  }
+  if(FILES.users.data.some(function(x){return x.id!==id&&x.username.toLowerCase()===username.toLowerCase()}))throw new AppError('این نام کاربری قبلاً ثبت شده');
+  var pwP=d.password?hashPassword(d.password):Promise.resolve(null);
+  return pwP.then(function(h){
+    return mutate('users',function(users){
+      return users.map(function(x){
+        if(x.id!==id)return x;
+        if(x.isRoot&&d.role&&d.role!=='admin')return x;
+        var nx=Object.assign({},x);
+        if(d.role)nx.role=d.role;
+        nx.name=name;nx.username=username;
+        if(d.active!==undefined&&!x.isRoot)nx.active=d.active;
+        if(h)nx.passHash=h;
+        return nx;
+      });
+    },'OWM: ویرایش کاربر');
+  }).then(function(){toast('تغییرات ذخیره شد')});
+}
+function deleteUser(id){
+  requireRole(['admin']);assertWritable();
+  var u=findUserById(id);
+  if(!u)throw new AppError('کاربر یافت نشد');
+  if(u.isRoot)throw new AppError('مدیر کل قابل حذف نیست');
+  return mutate('users',function(users){return users.filter(function(x){return x.id!==id})},'OWM: حذف کاربر '+u.username)
+    .then(function(){toast('کاربر حذف شد');if(session&&session.userId===id)doLogout()});
+}
+
+function makeThumb(url){
+  if(!url)return '';
+  var t=url.replace('/image/upload/','/image/upload/w_900,q_auto,f_auto/');
+  t=t.replace(/\.pdf(\?.*)?$/i,'.jpg');
+  return t;
+}
+function uploadToCloudinary(file){
+  var fd=new FormData();
+  fd.append('file',file);
+  fd.append('upload_preset',CL.preset);
+  fd.append('folder','owm');
+  return fetch('https://api.cloudinary.com/v1_1/'+CL.cloud+'/image/upload',{method:'POST',body:fd})
+    .then(function(r){if(!r.ok)throw new Error('خطای '+r.status+' در آپلود Cloudinary');return r.json()})
+    .then(function(j){
+      if(!j||!j.secure_url)throw new Error('پاسخ نامعتبر از Cloudinary');
+      return {url:j.secure_url,thumb:makeThumb(j.secure_url),public_id:j.public_id,bytes:j.bytes,name:file.name};
+    });
+}
+
+function ev(type,text,u){return {type:type,text:text,user:u.username,userName:u.name,ts:Date.now()}}
+function suggestNo(){
+  var mx=0,has=false;
+  for(var i=0;i<FILES.orders.data.length;i++){var n=parseInt(FILES.orders.data[i].orderNo,10);if(Number.isFinite(n)){if(n>mx)mx=n;has=true}}
+  return String(has?mx+1:1001);
+}
+function createOrder(d){
+  var u=requireRole(['sales']);assertWritable();
+  if(!d.title)throw new AppError('عنوان سفارش را وارد کنید');
+  if(!d.file)throw new AppError('فایل PDF انتخاب نشده است');
+  var now=new Date(),j=todayJ();
+  var time=pad2(now.getHours())+':'+pad2(now.getMinutes());
+  var orderNo=suggestNo();
+  return uploadToCloudinary(d.file).then(function(cl){
+    var order={id:uid(),orderNo:orderNo,version:1,baseId:null,prevId:null,
+      title:d.title,customer:(d.customer||'').trim(),desc:(d.desc||'').trim(),
+      isSample:!!d.isSample,
+      jdate:jISO(j.jy,j.jm,j.jd),time:time,ts:now.getTime(),
+      createdBy:u.username,creatorName:u.name,
+      status:'pending',
+      pdf:{url:cl.url,thumb:cl.thumb,public_id:cl.public_id,name:cl.name||d.file.name,size:cl.bytes||d.file.size},
+      seenAt:null,seenBy:null,review:null,returnRequest:null,
+      deletedAt:null,deletedBy:null,
+      createdAt:Date.now(),history:[]};
+    order.baseId=order.id;
+    order.history.push(ev('created','سفارش ایجاد و برای بررسی ارسال شد',u));
+    return mutate('orders',function(orders){
+      if(!orders.some(function(o){return o.id===order.id||o.orderNo===order.orderNo}))orders.push(order);
+      return orders;
+    },'OWM: ثبت سفارش #'+order.orderNo).then(function(){toast('سفارش ثبت شد');return order});
+  });
+}
+function findOrder(id){for(var i=0;i<FILES.orders.data.length;i++)if(FILES.orders.data[i].id===id)return FILES.orders.data[i];return null}
+function approveOrder(id){
+  var u=requireRole(['admin','accountant']);assertWritable();
+  if(u.role==='accountant'&&!approvalEnabled())throw new AppError('تأیید سفارش توسط حسابدار هنوز توسط مدیر کل فعال نشده است');
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.status!=='pending')throw new AppError('این سفارش قبلاً بررسی شده است');
+  var now=new Date(),t=todayJ();
+  var review={by:u.username,byName:u.name,ts:Date.now(),time:pad2(now.getHours())+':'+pad2(now.getMinutes()),jdate:jISO(t.jy,t.jm,t.jd),reason:null};
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id||o.status!=='pending')return o;
+      return Object.assign({},o,{status:'approved',review:review,history:o.history.concat([ev('approved','سفارش تأیید شد',u)])});
+    });
+  },'OWM: تأیید سفارش').then(function(){toast('سفارش تأیید شد')});
+}
+function rejectOrder(id,reason){
+  var u=requireRole(['admin','accountant']);assertWritable();
+  if(u.role==='accountant'&&!approvalEnabled())throw new AppError('رد سفارش توسط حسابدار هنوز توسط مدیر کل فعال نشده است');
+  reason=(reason||'').trim();
+  if(!reason)throw new AppError('دلیل رد سفارش الزامی است');
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.status!=='pending')throw new AppError('این سفارش قبلاً بررسی شده است');
+  var now=new Date(),t=todayJ();
+  var review={by:u.username,byName:u.name,ts:Date.now(),time:pad2(now.getHours())+':'+pad2(now.getMinutes()),jdate:jISO(t.jy,t.jm,t.jd),reason:reason};
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id||o.status!=='pending')return o;
+      return Object.assign({},o,{status:'rejected',review:review,history:o.history.concat([ev('rejected','سفارش رد شد و دلیل رد ثبت شد',u)])});
+    });
+  },'OWM: رد سفارش').then(function(){toast('سفارش رد شد')});
+}
+function markSeen(id){
+  var u=requireRole(['officer']);assertWritable();
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.status!=='approved')throw new AppError('فقط سفارش تأیید شده را می‌توان دید');
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id||o.status!=='approved')return o;
+      return Object.assign({},o,{status:'seen',seenAt:Date.now(),seenBy:u.username,history:o.history.concat([ev('status','سفارش توسط مسئول سفارش دیده شد',u)])});
+    });
+  },'OWM: مشاهده سفارش').then(function(){toast('وضعیت به «دیده شده» تغییر کرد')});
+}
+function setOfficerStatus(id,newStatus){
+  var u=requireRole(['officer']);assertWritable();
+  if(STATUS_AFTER_APPROVED.indexOf(newStatus)===-1)throw new AppError('وضعیت نامعتبر است');
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(['approved','seen','in_progress','need_production'].indexOf(o.status)===-1)throw new AppError('این سفارش قابل تغییر وضعیت نیست');
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id)return o;
+      return Object.assign({},o,{status:newStatus,history:o.history.concat([ev('status','وضعیت به «'+STATUS_FA[newStatus]+'» تغییر کرد',u)])});
+    });
+  },'OWM: تغییر وضعیت سفارش').then(function(){toast('وضعیت به «'+STATUS_FA[newStatus]+'» تغییر کرد')});
+}
+function resubmitOrder(id,d){
+  var u=requireRole(['sales']);assertWritable();
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.createdBy!==u.username)throw new AppError('فقط ثبت‌کننده سفارش می‌تواند نسخه جدید ارسال کند');
+  if(o.status!=='rejected')throw new AppError('فقط سفارش رد شده قابل ارسال مجدد است');
+  var title=(d.title||'').trim();
+  if(!title)throw new AppError('عنوان سفارش را وارد کنید');
+  var fileP=d.file?uploadToCloudinary(d.file):Promise.resolve(o.pdf);
+  return fileP.then(function(cl){
+    var maxV=0;
+    for(var j=0;j<FILES.orders.data.length;j++)if(FILES.orders.data[j].baseId===o.baseId&&FILES.orders.data[j].version>maxV)maxV=FILES.orders.data[j].version;
+    var version=maxV+1;
+    var now=new Date(),j=todayJ();
+    var time=pad2(now.getHours())+':'+pad2(now.getMinutes());
+    var nv={id:uid(),orderNo:o.orderNo,version:version,baseId:o.baseId,prevId:o.id,
+      title:title,customer:(d.customer||'').trim(),desc:(d.desc||'').trim(),
+      isSample:!!d.isSample,
+      jdate:jISO(j.jy,j.jm,j.jd),time:time,ts:now.getTime(),
+      createdBy:u.username,creatorName:u.name,
+      status:'pending',
+      pdf:{url:cl.url,thumb:cl.thumb||o.pdf.thumb,public_id:cl.public_id,name:cl.name||o.pdf.name,size:cl.bytes||o.pdf.size},
+      seenAt:null,seenBy:null,review:null,returnRequest:null,
+      deletedAt:null,deletedBy:null,
+      createdAt:Date.now(),history:[]};
+    nv.history.push(ev('created','نسخه '+version+' ایجاد و برای بررسی ارسال شد',u));
+    return mutate('orders',function(orders){
+      if(orders.some(function(p){return p.id===nv.id}))return orders;
+      var result=orders.map(function(o){
+        if(o.id!==id)return o;
+        return Object.assign({},o,{history:o.history.concat([ev('resubmitted','نسخه جدید (نسخه '+version+') ارسال شد',u)])});
+      });
+      result.push(nv);
+      return result;
+    },'OWM: نسخه '+version+' سفارش #'+o.orderNo).then(function(){toast('نسخه جدید سفارش ارسال شد');return nv});
+  });
+}
+function requestReturn(id,reason){
+  var u=requireRole(['sales']);assertWritable();
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.createdBy!==u.username)throw new AppError('فقط ثبت‌کننده سفارش می‌تواند درخواست مرجوعی دهد');
+  if(STATUS_AFTER_APPROVED.indexOf(o.status)===-1&&o.status!=='seen')throw new AppError('این سفارش هنوز در مرحله‌ای نیست که مرجوع شود');
+  if(o.returnRequest)throw new AppError('برای این سفارش قبلاً درخواست مرجوعی ثبت شده است');
+  reason=(reason||'').trim();
+  if(!reason)throw new AppError('دلیل مرجوعی الزامی است');
+  var prev=o.status;
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id)return o;
+      return Object.assign({},o,{
+        returnRequest:{by:u.username,byName:u.name,reason:reason,ts:Date.now(),status:'pending',resolvedAt:null,resolvedBy:null,resolvedName:null,condition:null,prevStatus:prev},
+        status:'return_requested',
+        history:o.history.concat([ev('return','درخواست مرجوعی فاکتور ثبت شد — در انتظار تأیید مسئول سفارش',u)])
+      });
+    });
+  },'OWM: درخواست مرجوعی سفارش #'+o.orderNo).then(function(){toast('درخواست مرجوعی ثبت شد')});
+}
+function approveReturn(id,condition){
+  var u=requireRole(['officer']);assertWritable();
+  if(condition!=='healthy'&&condition!=='broken')throw new AppError('وضعیت نامعتبر است');
+  var o=findOrder(id);
+  if(!o||!o.returnRequest||o.returnRequest.status!=='pending')throw new AppError('درخواست مرجوعی فعالی وجود ندارد');
+  var newStatus=condition==='healthy'?'returned_healthy':'returned_broken';
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id||!o.returnRequest||o.returnRequest.status!=='pending')return o;
+      return Object.assign({},o,{
+        returnRequest:Object.assign({},o.returnRequest,{status:'approved',resolvedAt:Date.now(),resolvedBy:u.username,resolvedName:u.name,condition:condition}),
+        status:newStatus,
+        history:o.history.concat([ev('return','بازگشت به کارخانه تأیید شد — وضعیت: '+(condition==='healthy'?'سالم':'شکسته'),u)])
+      });
+    });
+  },'OWM: تأیید مرجوعی سفارش #'+o.orderNo).then(function(){toast('مرجوعی تأیید شد')});
+}
+function deleteOrder(id){
+  assertWritable();
+  var o=findOrder(id);
+  if(!o)throw new AppError('سفارش یافت نشد');
+  if(o.deletedAt)throw new AppError('این سفارش قبلاً حذف شده است');
+  var canDelete=false,actor='';
+  if(session.role==='admin'){canDelete=true;actor='مدیر کل'}
+  else if(session.role==='accountant'){canDelete=true;actor='حسابدار'}
+  else if(session.role==='sales'&&o.createdBy===session.username){
+    var age=Date.now()-o.createdAt;
+    if(age<=DELETE_WINDOW_MS){canDelete=true;actor='ثبت‌کننده'}
+    else throw new AppError('مدیر فروش فقط تا ۱ ساعت پس از ثبت می‌تواند سفارش را حذف کند. پس از آن فقط حسابدار یا مدیر کل می‌توانند حذف کنند.');
+  }
+  else throw new AppError('دسترسی حذف این سفارش را ندارید');
+  return mutate('orders',function(orders){
+    return orders.map(function(o){
+      if(o.id!==id)return o;
+      return Object.assign({},o,{deletedAt:Date.now(),deletedBy:session.username,history:o.history.concat([ev('deleted','سفارش توسط '+actor+' حذف شد',session)])});
+    });
+  },'OWM: حذف سفارش #'+o.orderNo).then(function(){toast('سفارش حذف شد')});
+}
+function groupVersions(o){return FILES.orders.data.filter(function(x){return x.baseId===o.baseId}).sort(function(a,b){return a.version-b.version})}
+function visibleOrders(){
+  var os=FILES.orders.data.filter(function(o){return !o.deletedAt});
+  if(session.role==='sales'&&viewScope==='own')os=os.filter(function(o){return o.createdBy===session.username});
+  if(session.role==='officer'&&officerUser)os=os.filter(function(o){return o.createdBy===officerUser});
+  return os;
+}
+function unreturnedReturns(){
+  return FILES.orders.data.filter(function(o){return !o.deletedAt&&o.returnRequest&&o.returnRequest.status==='pending'});
+}
+
+function toast(msg,type){
+  type=type||'ok';
+  var el=document.createElement('div');el.className='toast '+type;
+  el.innerHTML=(type==='error'?I.alert:I.check)+'<span>'+esc(msg)+'</span>';
+  $('#toastRoot').appendChild(el);
+  setTimeout(function(){el.classList.add('out');setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},320)},3800);
+}
+function openModal(html,opts){
+  opts=opts||{};
+  var root=$('#modalRoot'),ov=document.createElement('div');ov.className='overlay';
+  var md=document.createElement('div');md.className='modal glass';
+  md.style.maxWidth=(opts.wide?700:560)+'px';md.innerHTML=html;
+  ov.appendChild(md);root.appendChild(ov);document.body.classList.add('modal-open');
+  if(!opts.static)ov.addEventListener('click',function(e){if(e.target===ov)closeModal()});
+  var cls=md.querySelectorAll('[data-close]');
+  for(var i=0;i<cls.length;i++)cls[i].addEventListener('click',closeModal);
+  return {ov:ov,md:md};
+}
+function closeModal(){
+  var root=$('#modalRoot'),last=root.lastElementChild;
+  if(last&&last.parentNode)last.parentNode.removeChild(last);
+  if(!root.children.length)document.body.classList.remove('modal-open');
+}
+function closeAllModals(){$('#modalRoot').innerHTML='';document.body.classList.remove('modal-open')}
+function confirmBox(o){
+  return new Promise(function(res){
+    var m=openModal('<div class="m-head"><div class="m-title">'+esc(o.title)+'</div><button class="m-x" data-close>✕</button></div>'+
+      '<p style="color:var(--txt2);font-size:13.5px">'+esc(o.text)+'</p>'+
+      '<div class="m-actions"><button class="btn '+(o.danger?'btn-dng':'btn-ok')+'" id="cfOk">'+esc(o.okText||'تأیید')+'</button>'+
+      '<button class="btn btn-gh" id="cfNo">انصراف</button></div>');
+    m.md.querySelector('#cfOk').addEventListener('click',function(){closeModal();res(true)});
+    m.md.querySelector('#cfNo').addEventListener('click',function(){closeModal();res(false)});
+  });
+}
+
+function openPdfModal(id){
+  var o=findOrder(id);
+  if(!o||!o.pdf||!o.pdf.url)throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  var url=o.pdf.url;
+  if(session.role==='officer'&&o.status==='approved'){markSeen(id).catch(function(){})}
+  var m=openModal(
+    '<div class="m-head"><div class="m-title">'+I.file+' پیش‌نمایش PDF</div><button class="m-x" data-close>✕</button></div>'+
+    '<div style="font-size:12.5px;color:var(--txt2)">'+esc(o.pdf.name)+' · '+faNum(Math.round((o.pdf.size||0)/1024))+' کیلوبایت</div>'+
+    '<iframe class="pdf-prev" src="'+url+'" title="پیش‌نمایش PDF"></iframe>'+
+    '<div class="fnote" style="text-align:center;margin-top:8px">اگر پیش‌نمایش نمایش داده نشد، از دکمه دانلود استفاده کنید.</div>'+
+    '<div class="m-actions"><button class="btn btn-p" id="pdfDl">'+I.download+' دانلود</button>'+
+    '<button class="btn btn-gh" id="pdfPr">'+I.print+' چاپ</button>'+
+    '<button class="btn btn-gh" id="pdfSh">'+I.share+' اشتراک</button></div>',{wide:true});
+  m.md.addEventListener('click',function(e){
+    if(e.target.closest('#pdfDl'))safe(function(){downloadPdf(id)});
+    if(e.target.closest('#pdfPr'))safe(function(){printOrder(id)});
+    if(e.target.closest('#pdfSh'))safe(function(){shareOrder(id)});
+  });
+}
+function downloadPdf(id){
+  var o=findOrder(id);
+  if(!o||!o.pdf||!o.pdf.url)throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  fetch(o.pdf.url).then(function(r){if(!r.ok)throw new Error('خطا در دانلود');return r.blob()}).then(function(b){
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(b);
+    a.download=o.pdf.name;document.body.appendChild(a);a.click();if(a.parentNode)a.parentNode.removeChild(a);
+    toast('دانلود شروع شد');
+    if(session.role==='officer'&&o.status==='approved')markSeen(id).catch(function(){});
+  }).catch(function(){window.open(o.pdf.url,'_blank')});
+}
+function printOrder(id){
+  var o=findOrder(id);
+  if(!o||!o.pdf||!o.pdf.url)throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  var ifr=document.createElement('iframe');
+  ifr.style.position='fixed';ifr.style.width='0';ifr.style.height='0';ifr.style.border='0';
+  ifr.src=o.pdf.url;document.body.appendChild(ifr);
+  ifr.onload=function(){
+    setTimeout(function(){
+      try{ifr.contentWindow.focus();ifr.contentWindow.print()}
+      catch(e){window.open(o.pdf.url,'_blank')}
+      setTimeout(function(){if(ifr.parentNode)ifr.parentNode.removeChild(ifr)},120000);
+    },400);
+  };
+  toast('در حال آماده‌سازی چاپ…');
+}
+function shareOrder(id){
+  var o=findOrder(id);
+  if(!o||!o.pdf||!o.pdf.url)throw new AppError('فایلی برای این سفارش ثبت نشده است');
+  var txt='سفارش #'+o.orderNo+' — '+o.title+' · وضعیت: '+STATUS_FA[o.status];
+  fetch(o.pdf.url).then(function(r){if(!r.ok)throw new Error('x');return r.blob()}).then(function(b){
+    try{
+      var file=new File([b],o.pdf.name,{type:'application/pdf'});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:txt,text:txt}).catch(function(){});return}
+      if(navigator.share){navigator.share({title:txt,text:txt+' · '+o.pdf.url}).catch(function(){});return}
+    }catch(e){}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(o.pdf.url);toast('لینک PDF کپی شد');return}
+    window.open(o.pdf.url,'_blank');
+  }).catch(function(){window.open(o.pdf.url,'_blank')});
+}
+
+function statusBadge(st){
+  var icon=I.clock;
+  if(st==='approved'||st==='completed'||st==='shipped'||st==='returned_healthy')icon=I.check;
+  else if(st==='rejected'||st==='returned_broken')icon=I.x;
+  else if(st==='return_requested')icon=I.alert;
+  else if(st==='in_progress'||st==='need_production')icon=I.refresh;
+  else if(st==='seen')icon=I.eye;
+  return '<span class="badge b-'+st+'">'+icon+' '+STATUS_FA[st]+'</span>';
+}
+function orderBadges(o){
+  var h='<span class="ono">#'+faNum(o.orderNo)+'</span>'+statusBadge(o.status);
+  if(o.isSample)h+='<span class="badge b-sample">'+I.flask+' نمونه</span>';
+  if(groupVersions(o).length>1||o.version>1)h+='<span class="badge b-ver">نسخه '+faNum(o.version)+'</span>';
+  if(o.status==='rejected')h+='<span class="badge b-lock">'+I.lock+' قفل شده</span>';
+  return h;
+}
+function canDeleteNow(o){
+  if(!session||o.deletedAt)return false;
+  if(session.role==='admin'||session.role==='accountant')return true;
+  if(session.role==='sales'&&o.createdBy===session.username)return (Date.now()-o.createdAt)<=DELETE_WINDOW_MS;
+  return false;
+}
+function actionBtns(o){
+  var b=[];
+  b.push('<button class="btn btn-gh btn-sm" data-act="detail" data-id="'+o.id+'">'+I.eye+' جزئیات</button>');
+  if(o.pdf){
+    b.push('<button class="btn btn-gh btn-sm" data-act="viewpdf" data-id="'+o.id+'">'+I.file+' PDF</button>');
+    b.push('<button class="btn btn-gh btn-sm" data-act="dlpdf" data-id="'+o.id+'">'+I.download+' دانلود</button>');
+    b.push('<button class="btn btn-gh btn-sm" data-act="print" data-id="'+o.id+'">'+I.print+' چاپ</button>');
+    b.push('<button class="btn btn-gh btn-sm" data-act="share" data-id="'+o.id+'">'+I.share+' اشتراک</button>');
+  }
+  if(canReview()&&o.status==='pending'){
+    b.push('<button class="btn btn-ok btn-sm" data-act="approve" data-id="'+o.id+'">'+I.check+' تأیید</button>');
+    b.push('<button class="btn btn-dng btn-sm" data-act="reject" data-id="'+o.id+'">'+I.x+' رد</button>');
+  }
+  if(session.role==='officer'&&o.status==='approved'){
+    b.push('<button class="btn btn-p btn-sm" data-act="markseen" data-id="'+o.id+'">'+I.eye+' دیده شد</button>');
+  }
+  if(session.role==='sales'&&o.createdBy===session.username&&o.status==='rejected'){
+    b.push('<button class="btn btn-p btn-sm" data-act="resubmit" data-id="'+o.id+'">'+I.refresh+' ارسال مجدد</button>');
+  }
+  if(canDeleteNow(o)){
+    b.push('<button class="btn btn-dng btn-sm" data-act="delete" data-id="'+o.id+'">'+I.trash+' حذف</button>');
+  }
+  if(session.role==='sales'&&o.createdBy===session.username&&!o.returnRequest&&!o.deletedAt&&
+     (STATUS_AFTER_APPROVED.indexOf(o.status)!==-1||o.status==='seen')){
+    b.push('<button class="btn btn-gh btn-sm" data-act="return" data-id="'+o.id+'">'+I.back+' درخواست مرجوعی</button>');
+  }
+  return b.join('');
+}
+function orderCardHTML(o,i){
+  var sub=[];
+  if(o.customer)sub.push('مشتری: '+esc(o.customer));
+  if(o.desc)sub.push(esc(o.desc));
+  /* پیش‌نمایش بزرگ و افقی PDF */
+  var prev='';
+  if(o.pdf){
+    prev='<div class="oprev" data-act="viewpdf" data-id="'+o.id+'" title="مشاهده PDF">'+
+      '<div class="oprev-ico">'+I.file+'</div>'+
+      (o.pdf.thumb?'<img src="'+esc(o.pdf.thumb)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+
+    '</div>';
+  }
+  /* chip‌های وضعیت مستقیم برای مسئول سفارش */
+  var statusRow='';
+  if(session && session.role==='officer' && ['approved','seen','in_progress','need_production'].indexOf(o.status)!==-1){
+    statusRow='<div class="status-row">'+STATUS_AFTER_APPROVED.map(function(s){
+      return '<button class="st-chip '+(o.status===s?'on':'')+'" data-act="setstatus" data-id="'+o.id+'" data-status="'+s+'">'+STATUS_FA[s]+'</button>';
+    }).join('')+'</div>';
+  }
+  var animStyle=RENDER_ANIM?('animation-delay:'+Math.min(i*45,360)+'ms'):'animation:none';
+  return '<article class="ocard glass" style="'+animStyle+'">'+
+    '<div class="ocard-top">'+orderBadges(o)+'</div>'+
+    prev+
+    '<div class="ocust">'+esc(o.title)+'</div>'+
+    (sub.length?'<div class="osub">'+sub.join(' · ')+'</div>':'')+
+    '<div class="oinfo">'+
+      '<span>'+I.calendar+' '+fmtJDateFa(o.jdate)+' · '+relTime(o.ts)+'</span>'+
+      '<span>'+I.clock+' '+fmtTimeFa(o.time)+'</span>'+
+      (o.pdf?'<span>'+I.file+' '+faNum(Math.round((o.pdf.size||0)/1024))+' کیلوبایت</span>':'')+
+      '<span>'+I.user+' '+esc(o.creatorName)+'</span>'+
+    '</div>'+
+    statusRow+
+    '<div class="oacts">'+actionBtns(o)+'</div>'+
+  '</article>';
+}
+function emptyHTML(title,sub){return '<div class="empty glass">'+I.clipboard+'<b>'+esc(title)+'</b>'+(sub?esc(sub):'')+'</div>'}
+function pageErrorHTML(e){return '<div class="empty glass">'+I.alert+'<b>خطا در نمایش این بخش</b>'+esc(e&&e.message?e.message:'خطای نامشخص')+'</div>'}
+
+function dateSelectsHTML(side,val){
+  var t=todayJ(),jy=val?val.jy:t.jy,jm=val?val.jm:t.jm,jd=val?val.jd:t.jd;
+  var yo='',mo='',dOp='',y,m,len,d;
+  for(y=t.jy-4;y<=t.jy+1;y++)yo+='<option value="'+y+'" '+(y===jy?'selected':'')+'>'+faNum(y)+'</option>';
+  for(m=1;m<=12;m++)mo+='<option value="'+m+'" '+(m===jm?'selected':'')+'>'+MONTHS_FA[m-1]+'</option>';
+  len=jalaliMonthLen(jy,jm);
+  for(d=1;d<=len;d++)dOp+='<option value="'+d+'" '+(d===jd?'selected':'')+'>'+faNum(d)+'</option>';
+  return '<div class="dsel" data-side="'+side+'">'+
+    '<select class="inp ov-dsel" data-k="y" aria-label="سال">'+yo+'</select>'+
+    '<select class="inp ov-dsel" data-k="m" aria-label="ماه">'+mo+'</select>'+
+    '<select class="inp ov-dsel" data-k="d" aria-label="روز">'+dOp+'</select></div>';
+}
+function makeOrdersView(opts){
+  var mount=$(opts.mount);
+  var t=todayJ();
+  var st={preset:opts.defaultPreset||'today',query:'',cf:{jy:t.jy,jm:t.jm,jd:1},ct:{jy:t.jy,jm:t.jm,jd:t.jd}};
+  function range(){
+    if(st.preset==='all')return null;
+    if(st.preset==='custom')return {from:jISO(st.cf.jy,st.cf.jm,st.cf.jd),to:jISO(st.ct.jy,st.ct.jm,st.ct.jd)};
+    return presetRange(st.preset);
+  }
+  function filtered(){
+    var os=visibleOrders();
+    /* قانون جدید: هر سفارشی که ارسال نشده باشد = انجام نشده */
+    if(opts.mode==='notdone')os=os.filter(function(o){return o.status!=='shipped'});
+    var r=range();
+    if(r)os=os.filter(function(o){return o.jdate>=r.from&&o.jdate<=r.to});
+    var q=st.query.trim().toLowerCase();
+    if(q)os=os.filter(function(o){return (o.orderNo||'').toLowerCase().indexOf(q)>-1||(o.title||'').toLowerCase().indexOf(q)>-1||(o.customer||'').toLowerCase().indexOf(q)>-1||(o.creatorName||'').toLowerCase().indexOf(q)>-1});
+    return os.sort(function(a,b){return a.ts-b.ts||a.createdAt-b.createdAt});
+  }
+  function renderToolbar(){
+    var tb=mount.querySelector('.ov-toolbar');if(!tb)return;
+    var chips=PRESETS.map(function(p){return '<button class="chip '+(st.preset===p[0]?'on':'')+'" data-preset="'+p[0]+'">'+p[1]+'</button>'}).join('');
+    var custom=st.preset==='custom'?'<div class="custom-range glass">'+
+      '<div class="cr-row"><span>از تاریخ</span>'+dateSelectsHTML('from',st.cf)+'</div>'+
+      '<div class="cr-row"><span>تا تاریخ</span>'+dateSelectsHTML('to',st.ct)+'</div></div>':'';
+    var roleCtl='';
+    if(session.role==='sales'){
+      roleCtl='<label class="switch-row" style="margin-top:12px"><span>فقط سفارش‌های من</span><span class="switch"><input type="checkbox" class="scopeOwn" '+(viewScope==='own'?'checked':'')+'><i></i></span></label>';
+    }else if(session.role==='officer'){
+      var op='<option value="">همه مدیران فروش</option>'+FILES.users.data.filter(function(u){return u.role==='sales'}).map(function(u){
+        return '<option value="'+esc(u.username)+'" '+(officerUser===u.username?'selected':'')+'>'+esc(u.name)+'</option>'}).join('');
+      roleCtl='<div class="frow" style="margin-top:12px"><label class="flbl">نمایش سفارش‌های:</label><select class="inp officerSel">'+op+'</select></div>';
+    }
+    tb.innerHTML='<div class="chips">'+chips+'</div>'+custom+roleCtl;
+    var cs=tb.querySelectorAll('.chip');
+    for(var i=0;i<cs.length;i++)cs[i].addEventListener('click',function(){st.preset=this.getAttribute('data-preset');renderToolbar();renderList()});
+    var sc=tb.querySelector('.scopeOwn');
+    if(sc)sc.addEventListener('change',function(){viewScope=this.checked?'own':'all';renderList()});
+    var osel=tb.querySelector('.officerSel');
+    if(osel)osel.addEventListener('change',function(){officerUser=this.value;renderList()});
+  }
+  function renderSearch(){
+    var sw=mount.querySelector('.ov-search');if(!sw)return;
+    sw.innerHTML='<label class="search">'+I.search+'<input placeholder="جستجو: شماره سفارش، عنوان، مشتری، ثبت‌کننده…" value="'+esc(st.query)+'"></label>';
+    sw.querySelector('input').addEventListener('input',function(e){st.query=e.target.value;renderList()});
+  }
+  function syncGroup(g){
+    var y=+g.querySelector('[data-k=y]').value,m=+g.querySelector('[data-k=m]').value;
+    var dSel=g.querySelector('[data-k=d]'),cur=+dSel.value||1,len=jalaliMonthLen(y,m);
+    dSel.innerHTML='';
+    for(var d=1;d<=len;d++){var op=document.createElement('option');op.value=d;op.textContent=faNum(d);dSel.appendChild(op)}
+    dSel.value=Math.min(cur,len);
+  }
+  function renderList(){
+    var listEl=mount.querySelector('.ov-list');if(!listEl)return;
+    var items=filtered(),hasAny=FILES.orders.data.filter(function(o){return !o.deletedAt}).length>0;
+    listEl.innerHTML=items.length?items.map(orderCardHTML).join('')
+      :emptyHTML(hasAny?'سفارشی با این فیلتر یافت نشد':(opts.mode==='notdone'?'همهٔ سفارش‌ها ارسال شده‌اند':'هنوز سفارشی ثبت نشده'),
+                 hasAny?'بازه تاریخ یا عبارت جستجو را تغییر دهید':'');
+    var cnt=mount.querySelector('.ocount');
+    if(cnt)cnt.textContent=items.length?faNum(items.length)+' سفارش':'';
+  }
+  function render(){
+    try{
+      mount.innerHTML='<div class="ov-toolbar"></div><div class="ov-search"></div><div class="ocount"></div><div class="ov-list olist"></div>';
+      renderToolbar();renderSearch();renderList();
+    }catch(e){if(window.console)console.error(e);mount.innerHTML=pageErrorHTML(e)}
+  }
+  if(!mount.getAttribute('data-bound')){
+    mount.setAttribute('data-bound','1');
+    mount.addEventListener('change',function(e){
+      var tg=e.target;
+      if(!tg||!tg.classList||!tg.classList.contains('ov-dsel'))return;
+      var g=tg.closest('.dsel');if(!g)return;
+      syncGroup(g);
+      var v={jy:+g.querySelector('[data-k=y]').value,jm:+g.querySelector('[data-k=m]').value,jd:+g.querySelector('[data-k=d]').value};
+      if(g.getAttribute('data-side')==='from')st.cf=v;else st.ct=v;
+      renderList();
+    });
+  }
+  return {render:render,refresh:renderList};
+}
+var ordersView=null,notDoneView=null;
+
+function orderFormHTML(o,mode){
+  var v={title:o.title||'',customer:o.customer||'',desc:o.desc||'',isSample:!!o.isSample};
+  var h='';
+  h+='<div class="frow"><label>'+(mode==='create'?'فایل PDF *':'فایل PDF')+'</label>'+
+    '<label class="filebox" id="ofBox"><input type="file" accept="application/pdf,.pdf" id="ofFile">'+
+    '<div class="fmeta" id="ofMeta">'+I.file+'<div><b>'+(mode==='create'?'انتخاب فایل PDF':'انتخاب فایل جدید (اختیاری)')+'</b>'+
+    '<small>'+(mode==='create'?'حداکثر ۳ مگابایت · در Cloudinary آپلود می‌شود':'در صورت عدم انتخاب، فایل نسخه قبل حفظ می‌شود')+'</small></div></div></label></div>';
+  h+='<div class="frow"><label>عنوان سفارش *</label><input class="inp" name="otitle" value="'+esc(v.title)+'" placeholder="به‌صورت خودکار از نام فایل PDF پر می‌شود"></div>';
+  h+='<div class="frow"><label>نام مشتری (اختیاری)</label><input class="inp" name="customer" value="'+esc(v.customer)+'"></div>';
+  h+='<div class="frow"><label>توضیح (یک خط)</label><input class="inp" name="desc" maxlength="120" value="'+esc(v.desc)+'" placeholder="توضیح کوتاه دلخواه…"></div>';
+  h+='<label class="switch-row"><span>🧪 این سفارش نمونه است</span><span class="switch"><input type="checkbox" name="isSample" '+(v.isSample?'checked':'')+'><i></i></span></label>';
+  return h;
+}
+function bindOrderForm(mount,onSubmit){
+  var picked=null;
+  var fileInp=mount.querySelector('#ofFile'),box=mount.querySelector('#ofBox'),meta=mount.querySelector('#ofMeta');
+  var titleInp=mount.querySelector('[name=otitle]');
+  var autoTitle=true;
+  if(!fileInp||!mount.querySelector('form'))return;
+  fileInp.style.display='none';
+  if(titleInp)titleInp.addEventListener('input',function(){autoTitle=false});
+  fileInp.addEventListener('change',function(){
+    var f=fileInp.files[0];fileInp.value='';
+    if(!f)return;
+    if(!(f.type==='application/pdf'||/\.pdf$/i.test(f.name))){toast('فقط فایل PDF مجاز است','error');return}
+    if(f.size>MAX_PDF){toast('حجم فایل بیشتر از حد مجاز (۳ مگابایت) است','error');return}
+    picked=f;box.classList.add('has');
+    meta.innerHTML=I.check+'<div><b>'+esc(f.name)+'</b><small>'+faNum(Math.round(f.size/1024))+' کیلوبایت · برای تغییر، دوباره کلیک کنید</small></div>';
+    if(titleInp&&(autoTitle||!titleInp.value.trim())){titleInp.value=f.name.replace(/\.pdf$/i,'');autoTitle=true}
+  });
+  mount.querySelector('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=e.target;
+    onSubmit({title:f.otitle.value,customer:f.customer.value,desc:f.desc.value,isSample:f.isSample.checked,file:picked});
+  });
+}
+function renderNewOrder(){
+  requireRole(['sales']);
+  var page=$('#page-newOrder');
+  page.innerHTML='<div class="glass" style="padding:22px 18px;max-width:640px">'+
+    '<div class="subhead" style="margin-top:0"><h3>'+I.plus+' ثبت سفارش جدید</h3></div>'+
+    '<form id="newOrderForm" novalidate>'+orderFormHTML({},'create')+
+    '<div class="frow"><button class="btn btn-p btn-blk" type="submit" id="submitBtn">'+I.check+' ثبت سفارش</button></div></form>'+
+    '<div class="fnote">تاریخ و ساعت ثبت خودکار در لحظهٔ ارسال ذخیره می‌شود. شمارهٔ سفارش یکتا تولید می‌شود. فایل در Cloudinary آپلود و سفارش با وضعیت «در انتظار بررسی» برای حسابدار ارسال می‌شود.</div></div>';
+  bindOrderForm(page,function(d){
+    var btn=page.querySelector('#submitBtn');if(btn){btn.disabled=true;btn.textContent='در حال آپلود و ثبت…'}
+    safe(function(){
+      return createOrder(d).then(function(){renderNewOrder();if(notDoneView)notDoneView.refresh()}).then(function(){
+        if(btn){btn.disabled=false;btn.innerHTML=I.check+' ثبت سفارش'}
+      }).catch(function(e){
+        if(btn){btn.disabled=false;btn.innerHTML=I.check+' ثبت سفارش'}
+        throw e;
+      });
+    });
+  });
+}
+
+function openDetail(id){
+  var o=findOrder(id);
+  if(!o){toast('سفارش یافت نشد','error');return}
+  var g=groupVersions(o),tl=[],i,j;
+  for(i=0;i<g.length;i++)for(j=0;j<g[i].history.length;j++)tl.push(g[i].history[j]);
+  tl.sort(function(a,b){return a.ts-b.ts});
+  var reviewBox='';
+  if(o.status==='approved'&&o.review)
+    reviewBox='<div class="rbox ok">'+I.check+' <b>تأیید شده توسط:</b> '+esc(o.review.byName)+'<br><b>تاریخ تأیید:</b> '+fmtJDateFa(o.review.jdate)+'<br><b>ساعت تأیید:</b> '+fmtTimeFa(o.review.time)+'</div>';
+  if(o.status==='rejected'&&o.review)
+    reviewBox='<div class="rbox bad">'+I.x+' <b>رد شده توسط:</b> '+esc(o.review.byName)+'<br><b>تاریخ رد:</b> '+fmtJDateFa(o.review.jdate)+' · ساعت '+fmtTimeFa(o.review.time)+
+      '<div class="reason"><b style="min-width:auto;color:#fda4af">دلیل رد:</b><br>'+esc(o.review.reason)+'</div></div>'+
+      '<div class="locknote">'+I.lock+'<span>این سفارش قفل شده.'+(session.role==='sales'&&o.createdBy===session.username?' برای اصلاح، «ارسال مجدد» بزنید.':'')+'</span></div>';
+  var returnBox='';
+  if(o.returnRequest){
+    if(o.returnRequest.status==='pending'){
+      returnBox='<div class="rbox warn">'+I.alert+' <b>درخواست مرجوعی در انتظار تأیید:</b> '+esc(o.returnRequest.byName)+
+        '<br><b>تاریخ درخواست:</b> '+fmtTsFull(o.returnRequest.ts)+
+        '<div class="reason"><b style="min-width:auto;color:#fcd34d">دلیل:</b><br>'+esc(o.returnRequest.reason)+'</div>';
+      if(session.role==='officer'){
+        returnBox+='<div class="btn-row" style="margin-top:12px">'+
+          '<button class="btn btn-ok btn-sm" data-returnok="healthy">تأیید — سالم</button>'+
+          '<button class="btn btn-dng btn-sm" data-returnok="broken">تأیید — شکسته</button></div>';
+      }
+      returnBox+='</div>';
+    }else if(o.returnRequest.status==='approved'){
+      var con=o.returnRequest.condition==='healthy'?'سالم':'شکسته';
+      var cls=o.returnRequest.condition==='healthy'?'ok':'bad';
+      returnBox='<div class="rbox '+cls+'">'+(o.returnRequest.condition==='healthy'?I.check:I.x)+' <b>مرجوعی تأیید شد:</b> '+con+
+        '<br><b>تأییدکننده:</b> '+esc(o.returnRequest.resolvedName)+
+        '<br><b>تاریخ:</b> '+fmtTsFull(o.returnRequest.resolvedAt)+
+        '<div class="reason"><b style="min-width:auto">دلیل اولیه:</b><br>'+esc(o.returnRequest.reason)+'</div></div>';
+    }
+  }
+  var vers='';
+  if(g.length>1){
+    vers='<div class="sec-title">نسخه‌های سفارش</div><div class="ver-list">'+g.map(function(v){
+      return '<div class="ver-row '+(v.id===o.id?'cur':'')+'"><span><b>نسخه '+faNum(v.version)+'</b> · '+fmtJDateFa(v.jdate)+'</span>'+
+      '<span style="display:flex;gap:8px;align-items:center">'+statusBadge(v.status)+(v.id!==o.id&&!v.deletedAt?'<button class="btn btn-gh btn-sm" data-act="openver" data-id="'+v.id+'">مشاهده</button>':'')+'</span></div>';
+    }).join('')+'</div>';
+  }
+  /* chip‌های وضعیت در جزئیات سفارش هم نمایش داده می‌شوند */
+  var statusRow='';
+  if(session && session.role==='officer' && ['approved','seen','in_progress','need_production'].indexOf(o.status)!==-1){
+    statusRow='<div class="sec-title">تغییر وضعیت</div><div class="status-row">'+STATUS_AFTER_APPROVED.map(function(s){
+      return '<button class="st-chip '+(o.status===s?'on':'')+'" data-act="setstatus" data-id="'+o.id+'" data-status="'+s+'">'+STATUS_FA[s]+'</button>';
+    }).join('')+'</div>';
+  }
+  /* پیش‌نمایش افقی در جزئیات */
+  var prevImg='';
+  if(o.pdf&&o.pdf.thumb){
+    prevImg='<div style="width:100%;height:220px;border-radius:12px;border:1px solid var(--stroke);overflow:hidden;margin-bottom:14px;position:relative;background:rgba(255,255,255,.06)"><img src="'+esc(o.pdf.thumb)+'" onerror="this.parentNode.style.display=\'none\'" style="position:absolute;left:50%;top:50%;height:100%;width:auto;object-fit:cover;transform:translate(-50%,-50%) rotate(90deg)"></div>';
+  }
+  openModal(
+    '<div class="m-head"><div class="m-title">'+I.file+' جزئیات سفارش #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div>'+
+    '<div class="ocard-top" style="margin-bottom:12px">'+orderBadges(o)+'</div>'+
+    prevImg+
+    '<div class="drow"><span>عنوان سفارش</span><b>'+esc(o.title)+'</b></div>'+
+    '<div class="drow"><span>نام مشتری</span><b>'+(o.customer?esc(o.customer):'—')+'</b></div>'+
+    '<div class="drow"><span>تاریخ ثبت</span><b>'+fmtJDateFa(o.jdate)+' · '+relTime(o.ts)+'</b></div>'+
+    '<div class="drow"><span>ساعت ثبت</span><b>'+fmtTimeFa(o.time)+'</b></div>'+
+    '<div class="drow"><span>ثبت‌کننده</span><b>'+esc(o.creatorName)+'</b></div>'+
+    '<div class="drow"><span>نوع سفارش</span><b>'+(o.isSample?'🧪 نمونه':'عادی')+'</b></div>'+
+    '<div class="drow"><span>وضعیت</span><b>'+statusBadge(o.status)+'</b></div>'+
+    (o.seenAt?'<div class="drow"><span>دیده شده توسط مسئول سفارش</span><b>'+esc(o.seenBy||'—')+' · '+fmtTsFull(o.seenAt)+'</b></div>':'')+
+    (o.desc?'<div class="drow"><span>توضیح</span><b>'+esc(o.desc)+'</b></div>':'')+
+    (o.pdf?'<div class="drow"><span>فایل PDF</span><b>'+esc(o.pdf.name)+' · '+faNum(Math.round((o.pdf.size||0)/1024))+' کیلوبایت</b></div>':'')+
+    reviewBox+returnBox+statusRow+vers+
+    '<div class="sec-title">'+I.history+' تاریخچه سفارش</div>'+
+    '<div class="tline">'+tl.map(function(h){return '<div class="tl-item c-'+h.type+'"><b>'+esc(h.text)+'</b><span>'+esc(h.userName)+' · '+fmtTsFull(h.ts)+'</span></div>'}).join('')+'</div>'+
+    '<div class="m-actions">'+actionBtns(o)+'</div>',{wide:true});
+}
+function openRejectModal(id){
+  var o=findOrder(id);if(!o)return;
+  var m=openModal(
+    '<div class="m-head"><div class="m-title" style="color:#fda4af">'+I.x+' رد سفارش #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div>'+
+    '<p style="color:var(--txt2);font-size:13px;margin-bottom:10px">پس از رد، سفارش قفل می‌شود و ثبت‌کننده برای اصلاح باید نسخه جدید ارسال کند.</p>'+
+    '<label style="font-size:12.5px;font-weight:700;color:var(--txt2)">دلیل رد سفارش *</label>'+
+    '<textarea class="inp" id="rejReason" style="margin-top:8px" placeholder="دلیل رد را بنویسید…"></textarea>'+
+    '<div class="m-actions"><button class="btn btn-dng" id="rejOk">'+I.x+' ثبت رد سفارش</button><button class="btn btn-gh" data-close>انصراف</button></div>');
+  m.md.querySelector('#rejOk').addEventListener('click',function(){
+    safe(function(){
+      var reason=m.md.querySelector('#rejReason').value;
+      return rejectOrder(id,reason).then(function(){closeAllModals();renderPage(curPage)});
+    });
+  });
+}
+function openResubmitModal(id){
+  var o=findOrder(id);if(!o)return;
+  var m=openModal(
+    '<div class="m-head"><div class="m-title">'+I.refresh+' ارسال مجدد سفارش #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div>'+
+    '<div class="locknote" style="margin:0 0 12px">'+I.lock+'<span>نسخه '+faNum(o.version)+' رد و قفل شده است؛ با ثبت این فرم، <b>نسخه '+faNum(o.version+1)+'</b> ایجاد و برای بررسی ارسال می‌شود. نسخه‌های قبلی حذف نمی‌شوند.</span></div>'+
+    '<form id="reForm" novalidate>'+orderFormHTML(o,'resubmit')+
+    '<div class="m-actions"><button class="btn btn-p" type="submit" style="flex:1">'+I.refresh+' ثبت نسخه جدید</button><button class="btn btn-gh" type="button" data-close>انصراف</button></div></form>',{wide:true});
+  bindOrderForm(m.md,function(d){
+    safe(function(){return resubmitOrder(id,d).then(function(){closeAllModals();renderPage(curPage)})});
+  });
+}
+function openReturnModal(id){
+  var o=findOrder(id);if(!o)return;
+  var m=openModal(
+    '<div class="m-head"><div class="m-title" style="color:#fcd34d">'+I.back+' درخواست مرجوعی سفارش #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div>'+
+    '<p style="color:var(--txt2);font-size:13px;margin-bottom:10px">این درخواست برای حسابدار و مدیرکل نمایش داده می‌شود و تا تأیید نهایی توسط مسئول سفارش، به‌صورت اعلان «مرجوعی بدون پیگیری» باقی می‌ماند.</p>'+
+    '<label style="font-size:12.5px;font-weight:700;color:var(--txt2)">دلیل مرجوعی *</label>'+
+    '<textarea class="inp" id="retReason" style="margin-top:8px" placeholder="دلیل مرجوعی را بنویسید…"></textarea>'+
+    '<div class="m-actions"><button class="btn btn-p" id="retOk">'+I.back+' ثبت درخواست مرجوعی</button><button class="btn btn-gh" data-close>انصراف</button></div>');
+  m.md.querySelector('#retOk').addEventListener('click',function(){
+    safe(function(){
+      var reason=m.md.querySelector('#retReason').value;
+      return requestReturn(id,reason).then(function(){closeAllModals();renderPage(curPage)});
+    });
+  });
+}
+
+function renderMembers(){
+  requireRole(['admin']);
+  var page=$('#page-members'),users=FILES.users.data;
+  var rows=users.map(function(u){
+    var acts='<button class="ibtn" title="ویرایش" data-act="edituser" data-id="'+u.id+'">'+I.edit+'</button>';
+    if(!u.isRoot){
+      acts+='<button class="ibtn" title="'+(u.active?'غیرفعال کردن':'فعال کردن')+'" data-act="toggleuser" data-id="'+u.id+'">'+(u.active?I.lock:I.check)+'</button>';
+      acts+='<button class="ibtn danger" title="حذف" data-act="deluser" data-id="'+u.id+'">'+I.trash+'</button>';
+    }
+    return '<div class="mcard glass">'+
+      '<div class="m-ava">'+esc(u.name.charAt(0)||'؟')+'</div>'+
+      '<div class="m-info"><b>'+esc(u.name)+(u.isRoot?' 🛡️':'')+'</b><span>@'+esc(u.username)+'</span></div>'+
+      '<div class="m-meta"><span class="badge r-'+u.role+'">'+(u.isRoot?'مدیر کل':ROLE_FA[u.role])+'</span>'+
+      '<span class="badge '+(u.active?'r-active':'r-inactive')+'">'+(u.active?'فعال':'غیرفعال')+'</span>'+
+      '<span class="m-date">ایجاد: '+fmtJDateFa(jOfDate(new Date(u.createdAt)))+'</span></div>'+
+      '<div class="m-acts">'+acts+'</div></div>';
+  }).join('');
+  page.innerHTML='<div class="subhead" style="margin-top:0"><h3>'+I.users+' کاربران سیستم ('+faNum(users.length)+')</h3>'+
+    '<button class="btn btn-p btn-sm" data-act="adduser">'+I.plus+' افزودن کاربر</button></div>'+
+    '<div class="olist">'+(rows||emptyHTML('هیچ کاربری ثبت نشده',''))+'</div>';
+}
+function openUserModal(u){
+  var isEdit=!!u,roleOpts='',r;
+  for(r in ROLE_FA)roleOpts+='<option value="'+r+'" '+(u&&u.role===r?'selected':'')+'>'+ROLE_FA[r]+'</option>';
+  var m=openModal(
+    '<div class="m-head"><div class="m-title">'+(isEdit?'ویرایش کاربر':'افزودن کاربر جدید')+'</div><button class="m-x" data-close>✕</button></div>'+
+    (u&&u.isRoot?'<div class="locknote" style="margin:0 0 6px">'+I.lock+'<span>این حساب مدیر کل سیستم است؛ نقش و نام کاربری آن قابل تغییر و حذف آن ممکن نیست.</span></div>':'')+
+    '<form id="uForm" novalidate>'+
+    '<div class="frow"><label>نام و نام خانوادگی *</label><input class="inp" name="uname" value="'+esc(u?u.name:'')+'"></div>'+
+    '<div class="frow"><label>نام کاربری *</label><input class="inp" name="uuser" dir="ltr" value="'+esc(u?u.username:'')+'" '+(u&&u.isRoot?'disabled':'')+'></div>'+
+    '<div class="frow"><label>رمز عبور '+(isEdit?'':'*')+'</label><div class="pwd"><input class="inp" name="upass" type="password" autocomplete="new-password" placeholder="'+(isEdit?'برای تغییر نکردن خالی بگذارید':'')+'"><button type="button" class="pu" aria-label="نمایش رمز">👁</button></div></div>'+
+    '<div class="frow"><label>نقش *</label><select class="inp" name="urole" '+(u&&u.isRoot?'disabled':'')+'>'+roleOpts+'</select>'+
+    '<div class="fnote">مدیر کل: دسترسی کامل · حسابدار: تأیید/رد (با اجازه مدیر) · مدیر فروش: ثبت سفارش و مرجوعی · مسئول سفارش: دیدن، تغییر وضعیت و تأیید مرجوعی</div></div>'+
+    '<label class="switch-row"><span>حساب فعال است</span><span class="switch"><input type="checkbox" name="uactive" '+(!u||u.active?'checked':'')+' '+(u&&u.isRoot?'disabled':'')+'><i></i></span></label>'+
+    '<div class="m-actions"><button class="btn btn-p" type="submit" style="flex:1">'+(isEdit?'ذخیره تغییرات':'ایجاد کاربر')+'</button><button class="btn btn-gh" type="button" data-close>انصراف</button></div>'+
+    '</form>');
+  m.md.querySelector('.pu').addEventListener('click',function(){var i=m.md.querySelector('[name=upass]');i.type=i.type==='password'?'text':'password'});
+  m.md.querySelector('#uForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=e.target;
+    safe(function(){
+      var data={name:f.uname.value,username:f.uuser.value,password:f.upass.value,role:f.urole.value,active:f.uactive.checked};
+      var p=isEdit?updateUser(u.id,data):addUser(data);
+      return p.then(function(){closeModal();renderPage(curPage)});
+    });
+  });
+}
+
+function openSyncModal(){
+  var cfg=ghCfg();
+  var isAdmin=session&&session.role==='admin';
+  var dis=isAdmin?'':' disabled';
+  var m=openModal(
+    '<div class="m-head"><div class="m-title">'+I.refresh+' اتصال به ریپازیتوری گیت‌هاب</div><button class="m-x" data-close>✕</button></div>'+
+    '<div class="fnote" style="margin-bottom:8px">'+(isAdmin
+      ?'توکن Fine-grained با دسترسی <b dir="ltr">Contents: Read and write</b> بسازید و مشخصات را وارد کنید. پس از ذخیره، همگام‌سازی به‌صورت خودکار انجام می‌شود.'
+      :'فقط مدیر کل می‌تواند تنظیمات اتصال را تغییر دهد. وضعیت فعلی: '+(ghEnabled()?'<b style="color:#86efac">متصل — همگام‌سازی خودکار فعال</b>':'<b style="color:#fda4af">آفلاین — فقط مشاهده</b>'))+'</div>'+
+    '<form id="syncForm">'+
+    '<div class="frow"><label>مالک / نام‌کاربری گیت‌هاب</label><input class="inp" name="sOwner" dir="ltr" value="'+esc(cfg.owner)+'"'+dis+'></div>'+
+    '<div class="frow"><label>نام ریپازیتو</label><input class="inp" name="sRepo" dir="ltr" value="'+esc(cfg.repo)+'"'+dis+'></div>'+
+    '<div class="frow"><label>شاخه</label><input class="inp" name="sBranch" dir="ltr" value="'+esc(cfg.branch||'main')+'"'+dis+'></div>'+
+    '<div class="frow"><label>توکن (Fine-grained)</label><div class="pwd"><input class="inp" name="sToken" type="password" dir="ltr" value="'+(isAdmin?esc(cfg.token):'')+'" placeholder="'+(isAdmin?'github_pat_…':'—')+'"'+dis+'>'+(isAdmin?'<button type="button" class="pu" aria-label="نمایش">👁</button>':'')+'</div></div>'+
+    (isAdmin?'<div class="m-actions"><button class="btn btn-p" type="submit">ذخیره و برقراری اتصال</button></div>':'')+
+    '</form>',{wide:true});
+  var pu=m.md.querySelector('.pu');
+  if(pu)pu.addEventListener('click',function(){var i=m.md.querySelector('[name=sToken]');i.type=i.type==='password'?'text':'password'});
+  var f=m.md.querySelector('#syncForm');
+  if(f)f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var newCfg={owner:f.sOwner.value.trim(),repo:f.sRepo.value.trim(),branch:f.sBranch.value.trim()||'main',token:f.sToken.value.trim(),pollSec:8};
+    if(!newCfg.token||!newCfg.owner||!newCfg.repo){toast('owner، repo و token الزامی است','error');return}
+    localStorage.setItem('owm.gh',JSON.stringify(newCfg));
+    closeModal();
+    toast('در حال بررسی اتصال…');
+    refreshAll().then(function(){
+      setSyncChip();
+      toast('اتصال برقرار شد؛ همگام‌سازی خودکار فعال است');
+      return persistRootToRemote();
+    }).catch(function(err){
+      setSyncChip();
+      toast('خطا در اتصال: '+translateErr(err),'error');
+    });
+  });
+}
+
+function statTile(icon,color,num,lbl){
+  return '<div class="stat glass"><div class="s-ic" style="color:'+color+';background:'+color+'1f;border:1px solid '+color+'44">'+icon+'</div>'+
+    '<div><div class="s-num">'+faNum(num)+'</div><div class="s-lbl">'+esc(lbl)+'</div></div></div>';
+}
+function renderDashboard(){
+  var page=$('#page-dashboard'),role=session.role;
+  var base=visibleOrders();
+  function cnt(st){var n=0;for(var i=0;i<base.length;i++)if(base[i].status===st)n++;return n}
+  var t=todayJ(),todayISO=jISO(t.jy,t.jm,t.jd);
+  var wk=presetRange('thisWeek'),mo=presetRange('thisMonth');
+  var now=new Date(),wd=WEEKDAYS_FA[now.getDay()];
+  var pendingQ=base.filter(function(o){return o.status==='pending'}).sort(function(a,b){return a.ts-b.ts});
+  var rejectedMine=role==='sales'?base.filter(function(o){return o.status==='rejected'}).sort(function(a,b){return a.ts-b.ts}):[];
+  var unret=unreturnedReturns();
+  var h='<div class="welcome glass"><div><h2>سلام، '+esc(session.name)+' 👋</h2>'+
+    '<p>'+wd+'، '+faNum(t.jd)+' '+MONTHS_FA[t.jm-1]+' '+faNum(t.jy)+' · نقش: '+(session.isRoot?'مدیر کل':ROLE_FA[role])+'</p></div>'+
+    (role==='sales'?'<button class="btn btn-p" data-navpage="newOrder">'+I.plus+' ثبت سفارش جدید</button>':'')+'</div>';
+  if(!ghEnabled()){
+    h+='<div class="offline-banner">'+I.alert+'<span>سیستم در حالت آفلاین است و فقط قابل مشاهده می‌باشد. برای فعال‌سازی ذخیره‌سازی، مدیر کل باید روی نشانگر بالای صفحه بزند و اتصال را برقرار کند.</span></div>';
+  }
+  if(role==='accountant'&&!approvalEnabled()){
+    h+='<div class="offline-banner">'+I.lock+'<span>تأیید و رد سفارش‌ها برای شما توسط مدیر کل غیرفعال است. سفارش‌ها را فقط مشاهده کنید.</span></div>';
+  }
+  if((role==='admin'||role==='accountant')&&unret.length){
+    h+='<div class="alert-banner">'+I.alert+'<span>'+faNum(unret.length)+' سفارش با درخواست مرجوعی در انتظار تأیید مسئول سفارش — <button data-navpage="orders" style="background:none;border:none;color:#fcd34d;text-decoration:underline">مشاهده</button></span></div>';
+  }
+  h+='<div class="stat-grid">'+
+    statTile(I.clipboard,'#5bc8f5',base.length,'کل سفارش‌های فعال')+
+    statTile(I.clock,'#fbbf24',cnt('pending'),'در انتظار بررسی')+
+    statTile(I.check,'#4ade80',cnt('approved')+cnt('seen')+cnt('in_progress')+cnt('need_production')+cnt('completed')+cnt('shipped'),'در جریان')+
+    statTile(I.x,'#fb7185',cnt('rejected')+cnt('returned_broken'),'رد/شکسته')+'</div>';
+  if(role!=='sales'){
+    h+='<div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">'+
+      statTile(I.calendar,'#2dd4bf',base.filter(function(o){return o.jdate===todayISO}).length,'امروز')+
+      statTile(I.calendar,'#2dd4bf',base.filter(function(o){return o.jdate>=wk.from&&o.jdate<=wk.to}).length,'این هفته')+
+      statTile(I.calendar,'#2dd4bf',base.filter(function(o){return o.jdate>=mo.from&&o.jdate<=mo.to}).length,'این ماه')+'</div>';
+  }
+  if(role==='sales'&&rejectedMine.length){
+    h+='<div class="subhead"><h3>'+I.alert+' نیازمند اقدام — رد شده‌ها</h3><button data-navpage="orders">مشاهده همه</button></div>'+
+      '<div class="olist">'+rejectedMine.slice(0,5).map(orderCardHTML).join('')+'</div>';
+  }
+  h+='<div class="subhead"><h3>'+I.clock+' صف بررسی — در انتظار (قدیمی‌ترین ابتدا)</h3><button data-navpage="orders">مشاهده همه</button></div>'+
+    '<div class="olist">'+(pendingQ.length?pendingQ.slice(0,6).map(orderCardHTML).join(''):emptyHTML('سفارشی در انتظار بررسی نیست',''))+'</div>';
+  page.innerHTML=h;
+}
+
+function showView(name){
+  $('#view-login').style.display=(name==='login')?'grid':'none';
+  $('#view-app').style.display=(name==='app')?'block':'none';
+}
+function renderNav(){
+  var items=NAV_ITEMS[session.role]||NAV_ITEMS.sales;
+  $('#bottomNav').innerHTML=items.map(function(x){return '<button class="bn-btn '+(curPage===x[0]?'on':'')+'" data-navpage="'+x[0]+'">'+I[x[2]]+'<span>'+x[1]+'</span></button>'}).join('');
+  $('#sideNav').innerHTML=items.map(function(x){return '<button class="sn-btn '+(curPage===x[0]?'on':'')+'" data-navpage="'+x[0]+'">'+I[x[2]]+'<span>'+x[1]+'</span></button>'}).join('');
+}
+function renderPage(p){
+  try{
+    if(p==='dashboard')renderDashboard();
+    else if(p==='orders'){if(ordersView)ordersView.render()}
+    else if(p==='notdone'){if(notDoneView)notDoneView.render()}
+    else if(p==='newOrder')renderNewOrder();
+    else if(p==='members')renderMembers();
+  }catch(e){
+    if(window.console)console.error(e);
+    var el=$('#page-'+p);
+    if(el)el.innerHTML=pageErrorHTML(e);
+  }
+}
+function goTo(p){
+  if(!session){showView('login');return}
+  if(PAGE_ACCESS[session.role].indexOf(p)===-1){toast('دسترسی شما به این بخش مجاز نیست','error');return}
+  curPage=p;
+  var pages=document.querySelectorAll('.page'),i;
+  for(i=0;i<pages.length;i++)pages[i].classList.remove('active');
+  var el=$('#page-'+p);if(el)el.classList.add('active');
+  $('#pageTitle').textContent=PAGE_TITLE[p]||'';
+  RENDER_ANIM=true;
+  renderNav();renderPage(p);window.scrollTo(0,0);
+}
+function renderHeader(){
+  $('#hdrName').textContent=session.name;
+  $('#hdrRole').textContent=session.isRoot?'مدیر کل':ROLE_FA[session.role];
+  var sb=$('#btnSettings');
+  if(sb)sb.style.display=(session.role==='admin')?'grid':'none';
+}
+function setSyncChip(){
+  var chip=$('#syncChip'),txt=$('#syncTxt');
+  if(!chip)return;
+  chip.classList.remove('ok','off');
+  if(ghEnabled()){chip.classList.add('ok');txt.textContent='همگام خودکار'}
+  else{chip.classList.add('off');txt.textContent='آفلاین (فقط مشاهده)'}
+}
+function enterApp(){
+  showView('app');renderHeader();setSyncChip();
+  if(viewScope===null){
+    var sd=FILES.settings.data||{};
+    viewScope=(sd.salesDefaultScope==='all')?'all':'own';
+  }
+  if(!ordersView){var e1=$('#page-orders');if(e1)ordersView=makeOrdersView({mount:'#page-orders',mode:'normal',defaultPreset:'today'})}
+  if(!notDoneView){var e2=$('#page-notdone');if(e2)notDoneView=makeOrdersView({mount:'#page-notdone',mode:'notdone',defaultPreset:'all'})}
+  RENDER_ANIM=true;
+  goTo('dashboard');
+}
+function doLogout(){
+  DB.del('session');session=null;closeAllModals();
+  var lp=$('#loginPass');if(lp)lp.value='';
+  showView('login');
+}
+
+function startPoll(){
+  function tick(){
+    if(ghEnabled()){refreshAll()}
+    setTimeout(tick,(ghCfg().pollSec||8)*1000);
+  }
+  setTimeout(tick,1500);
+  setInterval(function(){if(session&&curPage!=='newOrder'){RENDER_ANIM=false;renderPage(curPage)}},60000);
+}
+
+document.addEventListener('click',function(e){
+  var tg=e.target;if(!tg||!tg.closest)return;
+  var pwd=tg.closest('[data-pwd]');
+  if(pwd){var i=$('#'+pwd.getAttribute('data-pwd'));if(i){i.type=i.type==='password'?'text':'password'}return}
+  var nav=tg.closest('[data-navpage]');
+  if(nav){goTo(nav.getAttribute('data-navpage'));return}
+  var b=tg.closest('[data-act]');
+  if(!b)return;
+  var act=b.getAttribute('data-act'),id=b.getAttribute('data-id');
+  safe(function(){
+    var o,u2,p;
+    if(act==='detail'){openDetail(id);return}
+    if(act==='openver'){closeModal();openDetail(id);return}
+    if(act==='viewpdf'){openPdfModal(id);return}
+    if(act==='dlpdf'){downloadPdf(id);return}
+    if(act==='print'){printOrder(id);return}
+    if(act==='share'){shareOrder(id);return}
+    if(act==='reject'){openRejectModal(id);return}
+    if(act==='resubmit'){openResubmitModal(id);return}
+    if(act==='return'){openReturnModal(id);return}
+    if(act==='markseen'){return markSeen(id).then(function(){renderPage(curPage)})}
+    /* chip وضعیت — تغییر فوری بدون modal */
+    if(act==='setstatus'){
+      var ns=b.getAttribute('data-status');
+      return setOfficerStatus(id,ns).then(function(){RENDER_ANIM=false;renderPage(curPage)});
+    }
+    if(act==='delete'){
+      o=findOrder(id);if(!o)return;
+      return confirmBox({title:'حذف سفارش',text:'سفارش #'+o.orderNo+' — «'+o.title+'» برای همیشه حذف شود؟',okText:'حذف سفارش',danger:true}).then(function(ok){
+        if(ok)return deleteOrder(id).then(function(){renderPage(curPage)});
+      });
+    }
+    if(act==='adduser'){openUserModal(null);return}
+    if(act==='edituser'){openUserModal(findUserById(id));return}
+    if(act==='approve'){
+      o=findOrder(id);if(!o)return;
+      return confirmBox({title:'تأیید سفارش',text:'سفارش #'+o.orderNo+' — «'+o.title+'» تأیید شود؟',okText:'تأیید سفارش'}).then(function(ok){
+        if(ok)return approveOrder(id).then(function(){closeAllModals();renderPage(curPage)});
+      });
+    }
+    if(act==='toggleuser'){
+      u2=findUserById(id);if(!u2)return;
+      p=Promise.resolve(true);
+      if(u2.active)p=confirmBox({title:'غیرفعال کردن کاربر',text:'کاربر «'+u2.name+'» غیرفعال شود؟',okText:'غیرفعال کن',danger:true});
+      return p.then(function(ok){if(!ok)return;return updateUser(id,{name:u2.name,username:u2.username,active:!u2.active}).then(function(){renderPage(curPage)})});
+    }
+    if(act==='deluser'){
+      u2=findUserById(id);if(!u2)return;
+      return confirmBox({title:'حذف کاربر',text:'کاربر «'+u2.name+'» برای همیشه حذف شود؟',okText:'حذف کاربر',danger:true}).then(function(ok){
+        if(ok)return deleteUser(id).then(function(){if(session)renderPage(curPage)});
+      });
+    }
+  });
+});
+document.addEventListener('click',function(e){
+  var tg=e.target;if(!tg||!tg.closest)return;
+  var btn=tg.closest('[data-returnok]');
+  if(!btn)return;
+  var con=btn.getAttribute('data-returnok');
+  var md=btn.closest('.modal');if(!md)return;
+  var titleEl=md.querySelector('.m-title');if(!titleEl)return;
+  var m=titleEl.textContent.match(/#(\d+)/);if(!m)return;
+  var orderNo=m[1];
+  var target=null;
+  for(var i=0;i<FILES.orders.data.length;i++){
+    if(FILES.orders.data[i].orderNo===orderNo&&FILES.orders.data[i].returnRequest&&FILES.orders.data[i].returnRequest.status==='pending'){target=FILES.orders.data[i];break}
+  }
+  if(!target){toast('سفارش یافت نشد','error');return}
+  safe(function(){return approveReturn(target.id,con).then(function(){closeAllModals();renderPage(curPage)})});
+});
+$('#btnLogout').addEventListener('click',function(){
+  safe(function(){
+    return confirmBox({title:'خروج از سیستم',text:'آیا می‌خواهید از سیستم خارج شوید؟',okText:'خروج',danger:true}).then(function(ok){if(ok)doLogout()});
+  });
+});
+$('#btnSettings').addEventListener('click',function(){
+  safe(function(){openSettingsModal()});
+});
+$('#syncChip').addEventListener('click',function(){
+  if(!session){toast('ابتدا وارد شوید','error');return}
+  openSyncModal();
+});
+$('#loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var errEl=$('#loginErr'),btn=$('#loginBtn');
+  errEl.textContent='';
+  var un=$('#loginUser').value.trim(),pw=$('#loginPass').value;
+  if(!un||!pw){errEl.textContent='نام کاربری و رمز عبور را وارد کنید';return}
+  btn.disabled=true;btn.textContent='در حال بررسی…';
+  ensureUsersLoaded().then(function(){
+    var u=findUserByUsername(un);
+    if(!u)throw new AppError('نام کاربری یا رمز عبور نادرست است');
+    if(!u.active)throw new AppError('حساب شما غیرفعال شده است؛ با مدیر کل تماس بگیرید');
+    return hashPassword(pw).then(function(h){
+      if(h!==u.passHash)throw new AppError('نام کاربری یا رمز عبور نادرست است');
+      session={userId:u.id,username:u.username,name:u.name,role:u.role,isRoot:!!u.isRoot,loginAt:Date.now()};
+      DB.set('session',{userId:u.id,loginAt:session.loginAt});
+      $('#loginPass').value='';
+      btn.disabled=false;btn.textContent='ورود به سیستم';
+      enterApp();
+      toast('خوش آمدید، '+u.name);
+    });
+  }).catch(function(err){
+    btn.disabled=false;btn.textContent='ورود به سیستم';
+    errEl.textContent=(err&&err.message)?err.message:'خطا در ورود';
+  });
+});
+var _tap=0,_tapT=null;
+$('#logoTap').addEventListener('click',function(){
+  _tap++;clearTimeout(_tapT);_tapT=setTimeout(function(){_tap=0},1600);
+  if(_tap>=5){_tap=0;safe(function(){
+    if(!session||session.role!=='admin')return;
+    return confirmBox({title:'پاک‌سازی کش محلی (Debug)',text:'کش محلی این دستگاه حذف و دوباره از سرور خوانده می‌شود. داده‌های اصلی در گیت‌هاب دست‌نخورده می‌مانند.',okText:'پاک‌سازی کش',danger:true}).then(function(ok){
+      if(!ok)return;
+      ['cache_users','cache_orders','cache_settings','session'].forEach(function(k){DB.del(k)});
+      location.reload();
+    });
+  })}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+window.addEventListener('storage',function(){RENDER_ANIM=false;autoRender()});
+window.addEventListener('online',function(){setSyncChip();if(session&&ghEnabled())refreshAll()});
+window.addEventListener('offline',function(){setSyncChip()});
+
+(function init(){
+  ['users','orders','settings'].forEach(function(f){
+    var c=DB.get('cache_'+f,null);
+    if(c&&c.data!==undefined){FILES[f].rev=c.rev||0;FILES[f].data=c.data}
+  });
+  lastSig=dataSig();
+  hashPassword(DEFAULT_ADMIN.password).then(function(h){
+    rootHash=h;
+    return ensureRootLocal();
+  }).then(function(){
+    setSyncChip();
+    if(ghEnabled()){
+      return refreshAll().then(function(){return persistRootToRemote()});
+    }
+  }).then(function(){
+    startPoll();
+    setSyncChip();
+    var s=validateSession();
+    if(s){session=s;enterApp()}else showView('login');
+  }).catch(function(e){
+    if(window.console)console.error(e);
+    startPoll();
+    setSyncChip();
+    var s=validateSession();
+    if(s){session=s;enterApp()}else showView('login');
+  });
+})();
+</script>
+</body>
+</html>
