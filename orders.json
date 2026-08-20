@@ -1,5 +1,5 @@
 {
- "rev": 28,
+ "rev": 29,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -62,7 +62,7 @@
    "ts": 1787174582414,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "completed",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787174583/owm/fhuxu7jyldmhaxgyvn3k.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_300,q_auto,f_auto/v1787174583/owm/fhuxu7jyldmhaxgyvn3k.jpg",
@@ -154,10 +154,19 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787209476112
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · وانت تلفنی",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787254494482
     }
    ],
    "pinned": false,
-   "pinnedBy": null
+   "pinnedBy": null,
+   "shippedAt": 1787254494482,
+   "shipMethod": "وانت تلفنی"
   },
   {
    "id": "mt0lmtgwmqa4gm",
