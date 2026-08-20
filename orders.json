@@ -1,5 +1,5 @@
 {
- "rev": 35,
+ "rev": 36,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -338,7 +338,8 @@
      "userName": "خانم محمدی",
      "ts": 1787254660419
     }
-   ]
+   ],
+   "downloaded": true
   },
   {
    "id": "mt1lwamotsvabq",
