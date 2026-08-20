@@ -1,5 +1,5 @@
 {
- "rev": 11,
+ "rev": 12,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -126,8 +126,17 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787200713792
+    },
+    {
+     "type": "status",
+     "text": "سنجاق شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787209462768
     }
-   ]
+   ],
+   "pinned": true,
+   "pinnedBy": "MsMohammadi"
   },
   {
    "id": "mt0lmtgwmqa4gm",
