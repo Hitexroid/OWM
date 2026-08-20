@@ -1,5 +1,5 @@
 {
- "rev": 18,
+ "rev": 19,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -251,7 +251,7 @@
    "ts": 1787230794920,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "pending",
+   "status": "approved",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787230795/owm/dbzz9v9hogowlzk4k9n6.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_600,q_auto,f_auto/v1787230795/owm/dbzz9v9hogowlzk4k9n6.jpg",
@@ -261,7 +261,14 @@
    },
    "seenAt": null,
    "seenBy": null,
-   "review": null,
+   "review": {
+    "by": "MrNami",
+    "byName": "مدیر کل",
+    "ts": 1787232071168,
+    "time": "16:51",
+    "jdate": "1405/09/10",
+    "reason": null
+   },
    "returnRequest": null,
    "deletedAt": null,
    "deletedBy": null,
@@ -277,6 +284,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787230796618
+    },
+    {
+     "type": "approved",
+     "text": "تأیید شد",
+     "user": "MrNami",
+     "userName": "مدیر کل",
+     "ts": 1787232071722
     }
    ]
   }
