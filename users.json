@@ -1,5 +1,5 @@
 {
- "rev": 4,
+ "rev": 5,
  "users": [
   {
    "id": "root-mrnami",
@@ -50,6 +50,16 @@
    "active": true,
    "isRoot": false,
    "createdAt": 1787174886953
+  },
+  {
+   "id": "mt10rtcof87h0b",
+   "name": "خانم فیلی",
+   "username": "Fil",
+   "passHash": "8079fe8f98faa1d1c1e5f01d0039350c1f2b8fb17bbab15f2b61dd3920fee30b",
+   "role": "sales",
+   "active": true,
+   "isRoot": false,
+   "createdAt": 1787200061784
   }
  ]
 }
