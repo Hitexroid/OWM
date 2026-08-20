@@ -1,5 +1,5 @@
 {
- "rev": 12,
+ "rev": 13,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -133,10 +133,17 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787209462768
+    },
+    {
+     "type": "status",
+     "text": "سنجاق برداشته شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787209464453
     }
    ],
-   "pinned": true,
-   "pinnedBy": "MsMohammadi"
+   "pinned": false,
+   "pinnedBy": null
   },
   {
    "id": "mt0lmtgwmqa4gm",
