@@ -1,5 +1,5 @@
 {
- "rev": 29,
+ "rev": 30,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -183,7 +183,7 @@
    "ts": 1787174632957,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "completed",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787174633/owm/dfcpdoon2km99hnn2lsg.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_300,q_auto,f_auto/v1787174633/owm/dfcpdoon2km99hnn2lsg.jpg",
@@ -240,10 +240,19 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787209477578
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · اسنپ",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787254553904
     }
    ],
    "pinned": false,
-   "pinnedBy": null
+   "pinnedBy": null,
+   "shippedAt": 1787254553904,
+   "shipMethod": "اسنپ"
   },
   {
    "id": "mt1j2ki15ungj6",
