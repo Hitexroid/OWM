@@ -1,5 +1,5 @@
 {
- "rev": 30,
+ "rev": 31,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -412,8 +412,18 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787244394499
+    },
+    {
+     "type": "status",
+     "text": "چک تحویل گرفته شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787254589736
     }
-   ]
+   ],
+   "checkReceived": true,
+   "checkReceivedAt": 1787254589736,
+   "checkReceivedBy": "MsMohammadi"
   }
  ]
 }
