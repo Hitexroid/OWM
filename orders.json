@@ -1,5 +1,5 @@
 {
- "rev": 54,
+ "rev": 55,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -622,7 +622,7 @@
    "ts": 1787314105156,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "in_progress",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787314106/owm/xjqajuajirduuisjao2j.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787314106/owm/xjqajuajirduuisjao2j.jpg",
@@ -638,8 +638,8 @@
    "deletedBy": null,
    "cancelledAt": null,
    "cancelledBy": null,
-   "shippedAt": null,
-   "shipMethod": null,
+   "shippedAt": 1787314238456,
+   "shipMethod": "نیسان مجموعه",
    "checkReceived": false,
    "checkReceivedAt": null,
    "checkReceivedBy": null,
@@ -682,6 +682,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787314186118
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · نیسان مجموعه",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787314238456
     }
    ]
   }
