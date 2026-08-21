@@ -1,5 +1,5 @@
 {
- "rev": 4,
+ "rev": 5,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -36,6 +36,15 @@
    "role": "officer",
    "text": "سلام بیقولی ها",
    "ts": 1787327085567
+  },
+  {
+   "id": "mt351a0lq3j8ou",
+   "userId": "mt0kfhznjzawtv",
+   "username": "MrsNami",
+   "name": "خانم نامی",
+   "role": "sales",
+   "text": "❤️😘",
+   "ts": 1787328154101
   }
  ]
 }
