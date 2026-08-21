@@ -1,5 +1,5 @@
 {
- "rev": 46,
+ "rev": 47,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -497,9 +497,9 @@
    "cancelledBy": null,
    "shippedAt": 1787311439217,
    "shipMethod": "نیسان مجموعه",
-   "checkReceived": false,
-   "checkReceivedAt": null,
-   "checkReceivedBy": null,
+   "checkReceived": true,
+   "checkReceivedAt": 1787311504306,
+   "checkReceivedBy": "MsMohammadi",
    "pinned": false,
    "pinnedBy": null,
    "downloaded": false,
@@ -574,6 +574,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787311439217
+    },
+    {
+     "type": "status",
+     "text": "چک تحویل گرفته شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787311504306
     }
    ]
   }
