@@ -1,5 +1,5 @@
 {
- "rev": 2,
+ "rev": 3,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -18,6 +18,15 @@
    "role": "sales",
    "text": "این بار ما کی ارسال میشه پس",
    "ts": 1787326911383
+  },
+  {
+   "id": "mt34bn123baoht",
+   "userId": "root-mrnami",
+   "username": "MrNami",
+   "name": "مدیر کل",
+   "role": "admin",
+   "text": "ب زودی نگران نباشید",
+   "ts": 1787326957910
   }
  ]
 }
