@@ -1,5 +1,5 @@
 {
- "rev": 80,
+ "rev": 81,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -973,7 +973,7 @@
    "checkReceivedBy": null,
    "pinned": false,
    "pinnedBy": null,
-   "downloaded": false,
+   "downloaded": true,
    "createdAt": 1787327649941,
    "history": [
     {
