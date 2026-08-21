@@ -1,5 +1,5 @@
 {
- "rev": 48,
+ "rev": 49,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -366,7 +366,7 @@
    "ts": 1787235539560,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "return_requested",
+   "status": "cancelled",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787235541/owm/g06p0ckiqhekzoxag6pi.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_600,q_auto,f_auto/v1787235541/owm/g06p0ckiqhekzoxag6pi.jpg",
@@ -395,8 +395,8 @@
    },
    "deletedAt": null,
    "deletedBy": null,
-   "cancelledAt": null,
-   "cancelledBy": null,
+   "cancelledAt": 1787313935683,
+   "cancelledBy": "MrsNami",
    "shippedAt": 1787244394499,
    "pinned": false,
    "pinnedBy": null,
@@ -472,6 +472,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787313318338
+    },
+    {
+     "type": "cancelled",
+     "text": "سفارش کنسل شد",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787313935683
     }
    ],
    "checkReceived": true,
