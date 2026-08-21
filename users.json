@@ -1,5 +1,5 @@
 {
- "rev": 10,
+ "rev": 11,
  "users": [
   {
    "id": "root-mrnami",
@@ -53,7 +53,9 @@
    "role": "officer",
    "active": true,
    "isRoot": false,
-   "createdAt": 1787174886953
+   "createdAt": 1787174886953,
+   "lastLoginTs": 1787318497794,
+   "lastDevice": "اندروید · Chrome"
   }
  ]
 }
