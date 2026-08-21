@@ -1,5 +1,5 @@
 {
- "rev": 50,
+ "rev": 51,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -622,7 +622,7 @@
    "ts": 1787314105156,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "approved",
+   "status": "seen",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787314106/owm/xjqajuajirduuisjao2j.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787314106/owm/xjqajuajirduuisjao2j.jpg",
@@ -630,8 +630,8 @@
     "name": "مرادپور.pdf",
     "size": 146486
    },
-   "seenAt": null,
-   "seenBy": null,
+   "seenAt": 1787314154047,
+   "seenBy": "MsMohammadi",
    "review": null,
    "returnRequest": null,
    "deletedAt": null,
@@ -661,6 +661,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787314108160
+    },
+    {
+     "type": "status",
+     "text": "دیده شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787314154047
     }
    ]
   }
