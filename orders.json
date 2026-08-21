@@ -1,5 +1,5 @@
 {
- "rev": 60,
+ "rev": 61,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -302,8 +302,8 @@
     "reason": null
    },
    "returnRequest": null,
-   "deletedAt": null,
-   "deletedBy": null,
+   "deletedAt": 1787317350777,
+   "deletedBy": "MrNami",
    "cancelledAt": null,
    "cancelledBy": null,
    "pinned": false,
@@ -358,6 +358,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787255097623
+    },
+    {
+     "type": "deleted",
+     "text": "حذف شد",
+     "user": "MrNami",
+     "userName": "مدیر کل",
+     "ts": 1787317350777
     }
    ],
    "downloaded": true,
