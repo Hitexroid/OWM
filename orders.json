@@ -1,5 +1,5 @@
 {
- "rev": 58,
+ "rev": 59,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -81,8 +81,8 @@
     "reason": null
    },
    "returnRequest": null,
-   "deletedAt": null,
-   "deletedBy": null,
+   "deletedAt": 1787317340759,
+   "deletedBy": "MrNami",
    "createdAt": 1787174584507,
    "history": [
     {
@@ -161,6 +161,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787254494482
+    },
+    {
+     "type": "deleted",
+     "text": "حذف شد",
+     "user": "MrNami",
+     "userName": "مدیر کل",
+     "ts": 1787317340759
     }
    ],
    "pinned": false,
