@@ -1,5 +1,5 @@
 {
- "rev": 63,
+ "rev": 64,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -750,7 +750,7 @@
    "ts": 1787318447025,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "seen",
+   "status": "in_progress",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787318448/owm/kc3gsyx1cnxpmndshby5.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787318448/owm/kc3gsyx1cnxpmndshby5.jpg",
@@ -796,6 +796,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787318510605
+    },
+    {
+     "type": "status",
+     "text": "وضعیت: در حال انجام",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787318513236
     }
    ]
   }
