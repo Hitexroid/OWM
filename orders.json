@@ -1,5 +1,5 @@
 {
- "rev": 74,
+ "rev": 75,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -414,8 +414,8 @@
     "condition": null,
     "prevStatus": "shipped"
    },
-   "deletedAt": null,
-   "deletedBy": null,
+   "deletedAt": 1787323795235,
+   "deletedBy": "MrNami",
    "cancelledAt": 1787313935683,
    "cancelledBy": "MrsNami",
    "shippedAt": 1787244394499,
@@ -500,6 +500,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787313935683
+    },
+    {
+     "type": "deleted",
+     "text": "حذف شد",
+     "user": "MrNami",
+     "userName": "مدیر کل",
+     "ts": 1787323795235
     }
    ],
    "checkReceived": true,
