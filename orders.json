@@ -1,5 +1,5 @@
 {
- "rev": 38,
+ "rev": 39,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -479,7 +479,7 @@
    "ts": 1787311179635,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "approved",
+   "status": "seen",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787311180/owm/nhva5mdurew22yx58flw.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/w_600,q_auto,f_auto/v1787311180/owm/nhva5mdurew22yx58flw.jpg",
@@ -487,8 +487,8 @@
     "name": "اقای اصبری(فروشگاه آلتون)_260802_145829.PDF",
     "size": 167420
    },
-   "seenAt": null,
-   "seenBy": null,
+   "seenAt": 1787311389418,
+   "seenBy": "MsMohammadi",
    "review": null,
    "returnRequest": null,
    "deletedAt": null,
@@ -518,6 +518,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787311181874
+    },
+    {
+     "type": "status",
+     "text": "دیده شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787311389418
     }
    ]
   }
