@@ -1,5 +1,5 @@
 {
- "rev": 7,
+ "rev": 8,
  "users": [
   {
    "id": "root-mrnami",
@@ -31,7 +31,9 @@
    "role": "sales",
    "active": true,
    "isRoot": false,
-   "createdAt": 1787172613332
+   "createdAt": 1787172613332,
+   "lastLoginTs": 1787317158235,
+   "lastDevice": "اندروید · Chrome"
   },
   {
    "id": "mt0lpuejs7muw0",
