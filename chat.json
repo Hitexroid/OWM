@@ -1,5 +1,5 @@
 {
- "rev": 28,
+ "rev": 29,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -69,17 +69,6 @@
    "avatar": "🧔",
    "text": "کرمانجی هره گوله",
    "ts": 1787348283985,
-   "seenBy": []
-  },
-  {
-   "id": "mt3hgj2wnjnk3b",
-   "userId": "mt0ls8btxo2d2i",
-   "username": "MsMohammadi",
-   "name": "خانم محمدی",
-   "role": "officer",
-   "avatar": "🧔",
-   "text": "کییر میخوام",
-   "ts": 1787349021080,
    "seenBy": []
   }
  ]
