@@ -1,5 +1,5 @@
 {
- "rev": 7,
+ "rev": 8,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -36,15 +36,6 @@
    "seenBy": [
     "mt0ls8btxo2d2i"
    ]
-  },
-  {
-   "id": "mt34edj3qhyc8d",
-   "userId": "mt0ls8btxo2d2i",
-   "username": "MsMohammadi",
-   "name": "خانم محمدی",
-   "role": "officer",
-   "text": "سلام بیقولی ها",
-   "ts": 1787327085567
   },
   {
    "id": "mt351a0lq3j8ou",
