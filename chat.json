@@ -1,5 +1,5 @@
 {
- "rev": 29,
+ "rev": 30,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -48,17 +48,6 @@
    "seenBy": [
     "mt0ls8btxo2d2i"
    ]
-  },
-  {
-   "id": "mt3gz02qrp22nu",
-   "userId": "mt0ls8btxo2d2i",
-   "username": "MsMohammadi",
-   "name": "خانم محمدی",
-   "role": "officer",
-   "avatar": "🧔",
-   "text": "من محمدی ام",
-   "ts": 1787348203298,
-   "seenBy": []
   },
   {
    "id": "mt3h0qc1hhjo4v",
