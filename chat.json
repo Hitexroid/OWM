@@ -1,5 +1,5 @@
 {
- "rev": 1,
+ "rev": 2,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -9,6 +9,15 @@
    "role": "sales",
    "text": "سلام خوبید؟",
    "ts": 1787326893846
+  },
+  {
+   "id": "mt34an4nw5vtk1",
+   "userId": "mt0kfhznjzawtv",
+   "username": "MrsNami",
+   "name": "خانم نامی",
+   "role": "sales",
+   "text": "این بار ما کی ارسال میشه پس",
+   "ts": 1787326911383
   }
  ]
 }
