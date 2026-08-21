@@ -1,5 +1,5 @@
 {
- "rev": 71,
+ "rev": 72,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -768,9 +768,9 @@
    "cancelledBy": null,
    "shippedAt": null,
    "shipMethod": null,
-   "checkReceived": false,
-   "checkReceivedAt": null,
-   "checkReceivedBy": null,
+   "checkReceived": true,
+   "checkReceivedAt": 1787320221183,
+   "checkReceivedBy": "MsMohammadi",
    "pinned": false,
    "pinnedBy": null,
    "downloaded": false,
@@ -817,6 +817,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787318531615
+    },
+    {
+     "type": "status",
+     "text": "چک تحویل گرفته شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787320221183
     }
    ]
   },
