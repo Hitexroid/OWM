@@ -1,5 +1,5 @@
 {
- "rev": 38,
+ "rev": 39,
  "users": [
   {
    "id": "root-mrnami",
@@ -22,7 +22,8 @@
    "role": "accountant",
    "active": true,
    "isRoot": false,
-   "createdAt": 1787170920378
+   "createdAt": 1787170920378,
+   "avatar": 0
   },
   {
    "id": "mt0kfhznjzawtv",
