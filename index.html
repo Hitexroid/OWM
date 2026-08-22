@@ -71,6 +71,7 @@ svg{display:block}
 @keyframes pkLeanR{0%,100%{transform:translateX(0)}30%{transform:translateX(-4px)}60%{transform:translateX(-1px)}}
 @keyframes popIn{from{opacity:0;transform:scale(.92) translateY(6px)}to{opacity:1;transform:scale(1) translateY(0)}}
 @keyframes driveIn{0%{transform:translateX(18px);opacity:.2}60%{transform:translateX(-4px)}100%{transform:translateX(0);opacity:1}}
+@keyframes blink{50%{opacity:.3}}
 .bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(155deg,#0a1120 0%,#0d1b2e 45%,#0a2330 100%);overflow:hidden}
 html.light .bg{opacity:1;background:radial-gradient(circle at 15% 20%,rgba(139,92,246,.3) 0%,transparent 45%),radial-gradient(circle at 85% 15%,rgba(59,130,246,.3) 0%,transparent 45%),radial-gradient(circle at 50% 90%,rgba(236,72,153,.2) 0%,transparent 45%),radial-gradient(circle at 80% 75%,rgba(16,185,129,.2) 0%,transparent 45%),linear-gradient(135deg,#d4e4f7 0%,#e4edf9 50%,#f0f6fd 100%)}
 .bg:after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1.3px);background-size:26px 26px}
@@ -184,6 +185,9 @@ html.light .r-inactive{color:#475569;background:rgba(15,23,42,.06);border-color:
 .sync-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
 .sync-chip.ok .dot{background:var(--green);box-shadow:0 0 8px rgba(74,222,128,.7)}
 .sync-chip.off .dot{background:var(--red)}
+.tb-user{display:flex;align-items:center;gap:8px;line-height:1.4;min-width:0}
+.tb-user b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:20vw}
+.tb-ava{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--stroke);flex:none}
 .tb-out{width:40px;height:40px;flex:none;border-radius:12px;border:1px solid var(--stroke);background:var(--panel2);color:var(--txt);display:grid;place-items:center;transition:.2s;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 .tb-out:hover{color:var(--teal);background:var(--teal-soft)}
 .tb-out svg{width:17px;height:17px}
@@ -239,7 +243,7 @@ html.light .chip.on{color:#0e7490}
 .custom-range{margin-top:12px;padding:14px;display:grid;gap:10px}
 .custom-range .cr-row{display:grid;grid-template-columns:56px 1fr;gap:8px;align-items:center}
 .custom-range .cr-row>span{font-size:12.5px;font-weight:800;color:var(--txt2)}
-.cr-cells{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.cr-cells{display:grid;grid-template-columns:1fr;gap:6px}
 .search{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--stroke);border-radius:13px;padding:0 14px;min-height:48px;margin-top:12px}
 .search:focus-within{border-color:rgba(45,212,191,.6)}
 .search svg{color:var(--txt3);flex:none;width:18px;height:18px}
@@ -265,6 +269,7 @@ html.light .ld-item.on{color:#0e7490}
 .ocard-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--txt2)}
 .ocard-meta span{display:inline-flex;align-items:center;gap:4px}
 .ocard-meta svg{width:13px;height:13px;flex:none}
+.mini-ava{width:18px;height:18px;border-radius:50%;object-fit:cover;border:1px solid var(--stroke);flex:none}
 .ocard-body{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:stretch}
 @media(max-width:480px){.ocard-body{grid-template-columns:86px 1fr}}
 .ocard-tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
@@ -316,8 +321,8 @@ html.light .check-banner{color:#92400e;background:rgba(251,191,36,.2)}
 .empty b{display:block;color:var(--txt2);font-size:15px;margin-bottom:4px}
 .member-list{display:flex;flex-direction:column;gap:10px}
 .member-card{display:flex;align-items:center;gap:10px;padding:10px 12px}
-.role-ava{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;color:#fff;box-shadow:0 6px 14px rgba(0,0,0,.25),inset 0 2px 3px rgba(255,255,255,.35),inset 0 -3px 6px rgba(0,0,0,.25)}
-.role-ava svg{width:22px;height:22px}
+.role-ava{width:46px;height:46px;border-radius:14px;flex:none;overflow:hidden;border:1px solid var(--stroke)}
+.role-ava img{width:100%;height:100%;object-fit:cover}
 .member-main{flex:1;min-width:0}
 .mm-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .mm-top b{font-size:13.5px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
@@ -328,7 +333,7 @@ html.light .check-banner{color:#92400e;background:rgba(251,191,36,.2)}
 .ibtn:active{transform:scale(.92)}
 .ibtn.danger{color:var(--red)}
 .ibtn svg{width:17px;height:17px}
-/* --- چت --- */
+/* چت */
 .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 220px);min-height:420px;overflow:hidden}
 @media(min-width:920px){.chat-wrap{height:calc(100vh - 150px)}}
 .chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px;border-bottom:1px solid var(--stroke-soft);flex-wrap:wrap}
@@ -336,13 +341,15 @@ html.light .check-banner{color:#92400e;background:rgba(251,191,36,.2)}
 .chat-head h3 svg{width:18px;height:18px;color:var(--teal)}
 .chat-head-actions{display:flex;align-items:center;gap:6px}
 .chat-head-actions .tb-out{width:36px;height:36px}
-.ava-btn{width:36px;height:36px;border-radius:12px;border:1px solid var(--stroke);background:var(--panel2);font-size:19px;display:grid;place-items:center;transition:.15s}
+.ava-btn{width:36px;height:36px;border-radius:12px;border:1px solid var(--stroke);background:var(--panel2);overflow:hidden;display:grid;place-items:center;transition:.15s;padding:0}
 .ava-btn:active{transform:scale(.9)}
+.ava-btn img{width:100%;height:100%;object-fit:cover}
 .chat-count{font-size:11px;color:var(--txt2);background:var(--chip-bg);border:1px solid var(--stroke);padding:3px 10px;border-radius:99px}
 .chat-list{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
 .cmsg{display:flex;gap:8px;align-items:flex-end;max-width:85%;align-self:flex-end;flex-direction:row-reverse}
 .cmsg.mine{align-self:flex-start}
-.cmsg-ava{width:32px;height:32px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:19px;background:var(--chip-bg);border:1px solid var(--stroke)}
+.cmsg-ava{width:32px;height:32px;border-radius:10px;flex:none;overflow:hidden;border:1px solid var(--stroke)}
+.cmsg-ava img{width:100%;height:100%;object-fit:cover}
 .cmsg-body{min-width:0;display:flex;flex-direction:column}
 .cmsg-top{display:flex;align-items:center;gap:6px;margin-bottom:3px;justify-content:flex-end}
 .cmsg-top b{font-size:11.5px;color:var(--txt)}
@@ -358,10 +365,25 @@ html.light .check-banner{color:#92400e;background:rgba(251,191,36,.2)}
 .chat-form textarea.inp{min-height:46px;max-height:90px;flex:1}
 .chat-send{min-width:52px;padding:0;height:46px}
 .chat-send svg{width:20px;height:20px;transform:scaleX(-1)}
-.ava-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
-.ava-item{font-size:26px;padding:10px 0;border-radius:12px;border:1px solid var(--stroke);background:var(--chip-bg);transition:.15s}
-.ava-item.on{border-color:var(--teal);background:var(--teal-soft)}
-.ava-item:disabled{opacity:.4}
+.mic-btn{width:46px;height:46px;border-radius:12px;border:1px solid var(--stroke);background:var(--panel2);color:var(--txt2);display:grid;place-items:center;flex:none;touch-action:none;-webkit-user-select:none;user-select:none}
+.mic-btn.rec{background:var(--red);border-color:var(--red);color:#fff;animation:pulseBd 1.2s infinite}
+.mic-btn svg{width:20px;height:20px}
+.rec-bar{display:none;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.4);color:#fda4af;font-size:12px;font-weight:700;margin:0 12px 8px}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:var(--red);animation:blink 1s infinite;flex:none}
+.voice-panel{display:none;align-items:center;gap:8px;padding:8px;border-radius:12px;background:var(--panel2);border:1px solid var(--stroke);margin:0 12px 8px;flex-wrap:wrap}
+.voice-panel audio{flex:1;min-width:150px;height:36px}
+.v-dur{font-size:10px;color:var(--txt3)}
+.voice-msg{display:flex;align-items:center;gap:8px;margin-top:2px}
+.voice-msg audio{height:36px;max-width:220px}
+@keyframes pulseBd{0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,.35)}50%{box-shadow:0 0 0 6px rgba(251,191,36,0)}}
+.ava-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
+.ava-item{position:relative;padding:4px;border-radius:12px;border:1px solid var(--stroke);background:var(--chip-bg);transition:.15s;aspect-ratio:1}
+.ava-item img{width:100%;height:100%;object-fit:cover;border-radius:9px}
+.ava-item.on{border-color:var(--teal);background:var(--teal-soft);box-shadow:0 0 0 2px rgba(45,212,191,.4)}
+.ava-item.taken{opacity:.4}
+.ava-item .ava-lock{display:none;position:absolute;top:7px;left:7px;width:18px;height:18px;color:#fff;background:rgba(0,0,0,.55);border-radius:50%;padding:3px}
+.ava-item .ava-lock svg{width:12px;height:12px}
+.ava-item.taken .ava-lock{display:block}
 .rules-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:6px}
 .rules-list li{display:flex;gap:8px;font-size:13px;color:var(--txt2);line-height:1.9}
 .rules-list li svg{width:16px;height:16px;flex:none;color:var(--teal);margin-top:5px}
@@ -486,6 +508,7 @@ html.light .report-tile b{color:#0e7490}
     <div class="tb-title" id="pageTitle">داشبورد</div>
     <button class="tb-out" id="btnTheme" title="تغییر تم" style="display:none">🌓</button>
     <button class="sync-chip" id="syncChip" title="وضعیت اتصال"><span class="dot" id="syncDot"></span><span id="syncTxt">…</span></button>
+    <div class="tb-user"><img id="hdrAva" class="tb-ava" alt=""><b id="hdrName"></b></div>
     <button class="tb-out" id="btnSettings" title="تنظیمات" style="display:none">⚙️</button>
     <button class="tb-out" id="btnLogout" title="خروج"></button>
   </header>
@@ -522,7 +545,7 @@ var STATUS_AFTER_APPROVED=['in_progress','need_production','completed','shipped'
 var STATUS_AFTER_COMPLETED=['shipped'];
 var MONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 var WEEKDAYS_FA=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
-var AVATARS=['🙂','🧔','👩','👨‍','','🐶','🦊','🐻','🦁','🐼'];
+var AVATARS=[0,1,2,3,4,5,6,7,8,9];
 var PAGE_ACCESS={admin:['dashboard','orders','chat','members','reports'],accountant:['dashboard','orders','chat'],sales:['dashboard','newOrder','orders','chat'],officer:['dashboard','orders','chat']};
 var PAGE_TITLE={dashboard:'داشبورد',orders:'سفارش‌ها',newOrder:'ثبت سفارش',chat:'گفتگو',members:'مدیریت اعضا',reports:'گزارش‌ها'};
 var NAV_ITEMS={
@@ -584,13 +607,35 @@ var I={
   nissan:_ic('<rect x="2" y="5" width="10" height="6" rx="1"/><path d="M2 11v5h2"/><path d="M12 16V7h4l5 5v4h-2"/><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="18" r="2.2"/><path d="M9.2 18h5.6"/><path d="M4.8 18H2v-2"/>'),
   khavar:_ic('<rect x="1" y="5" width="13" height="11" rx="1"/><path d="M14 9h4l4 4v3h-2"/><circle cx="6" cy="18" r="2"/><circle cx="11" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 18h1M13 18h2"/>'),
   chat:_ic('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>'),
-  send:_ic('<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>')
+  send:_ic('<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>'),
+  mic:_ic('<path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><path d="M12 18v4"/>')
 };
 var SHIP_ICONS={'اسنپ':I.car,'وانت تلفنی':I.pickup,'نیسان مجموعه':I.nissan,'خاور باربری':I.khavar};
 function shipIcon(m){return SHIP_ICONS[m]||I.truck}
 var ROLE_ICONS={admin:I.crown,accountant:I.calc,sales:I.bag,officer:I.box};
 var ROLE_GRADS={admin:['#f6b73c','#b45309'],accountant:['#5bc8f5','#0369a1'],sales:['#4ade80','#15803d'],officer:['#a78bfa','#6d28d9']};
 function roleAvaStyle(r){var g=ROLE_GRADS[r]||['#5bc8f5','#0369a1'];return 'background:linear-gradient(135deg,'+g[0]+','+g[1]+')'}
+
+/* --- آواتارها --- */
+function avatarPath(a){return 'assets/logo/'+a+'.jpg'}
+function isFemaleName(n){return n&&String(n).trim().indexOf('خانم')===0}
+function takenAvatars(excludeId){var s={};(FILES.users.data||[]).forEach(function(u){if(u.avatar!=null&&u.id!==excludeId)s[u.avatar]=true});return s}
+function defaultAvatarFor(name,excludeId){
+  var taken=takenAvatars(excludeId);
+  var cand=isFemaleName(name)?[0,2,4,6,8]:[1,3,5,7,9];
+  for(var i=0;i<cand.length;i++){if(!taken[cand[i]])return cand[i]}
+  for(var a=0;a<10;a++){if(!taken[a])return a}
+  return null;
+}
+function displayAvatar(u){if(!u)return 1;if(u.avatar!=null)return u.avatar;return isFemaleName(u.name)?0:1}
+function myAvatar(){return displayAvatar(findUserById(session.userId))}
+function avatarGridHTML(current,excludeId){
+  var taken=takenAvatars(excludeId);
+  return '<div class="ava-grid">'+AVATARS.map(function(a){
+    var isTaken=taken[a]&&String(a)!==String(current);
+    return '<button type="button" class="ava-item'+(String(a)===String(current)?' on':'')+(isTaken?' taken':'')+'" data-ava="'+a+'" '+(isTaken?'disabled':'')+'><img src="'+avatarPath(a)+'" alt=""><span class="ava-lock">'+I.lock+'</span></button>';
+  }).join('')+'</div>';
+}
 
 function $(s){return document.querySelector(s)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -600,6 +645,7 @@ function faNum(n){return Number(n).toLocaleString('fa-IR')}
 function faPad2(n){n=faNum(n);return n.length<2?'۰'+n:n}
 function fmtJDateShort(jd){var p=jd.split('/');return faNum(+p[0])+'/'+faPad2(+p[1])+'/'+faPad2(+p[2])}
 function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return faNum(j.jy)+'/'+faPad2(j.jm)+'/'+faPad2(j.jd)+' · '+faNum(d.getHours())+':'+faPad2(d.getMinutes())}
+function fmtDur(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),ss=s%60;return faNum(m)+':'+faPad2(ss)}
 
 function detectOS(){var ua=(navigator.userAgent||'').toLowerCase();if(/android/.test(ua))return'android';if(/ipad|iphone|ipod/.test(ua))return'ios';if(/windows/.test(ua))return'windows';return'other'}
 function detectDevice(){
@@ -775,8 +821,20 @@ function recordLogin(u){
   DB.set('cache_users',FILES.users);
   if(ghEnabled())commitFile('users',function(a){return a.map(function(x){if(x.id===u.id){x.lastLoginTs=ts;x.lastDevice=dev}return x})},'OWM: login').catch(function(){});
 }
+/* اختصاص آواتار پیش‌فرض به کاربر جاری در صورت نداشتن */
+function ensureMyAvatar(){
+  var u=findUserById(session.userId);if(!u)return;
+  function paint(){var el=$('#hdrAva');if(el)el.src=avatarPath(displayAvatar(u))}
+  if(u.avatar==null){
+    var a=defaultAvatarFor(u.name,u.id);
+    if(a!=null){
+      u.avatar=a;DB.set('cache_users',FILES.users);
+      if(ghEnabled())commitFile('users',function(arr){arr.forEach(function(x){if(x.id===u.id&&x.avatar==null)x.avatar=a});return arr},'OWM: avatar default').catch(function(){});
+    }
+  }
+  paint();
+}
 
-/* ذخیره رمز توسط مرورگر */
 function triggerPasswordSave(user,pass){
   try{
     var ifr=document.createElement('iframe');
@@ -825,8 +883,19 @@ function openSettingsModal(){
   };
 }
 
-function addUser(d){requireRole(['admin']);assertWritable();var n=(d.name||'').trim(),un=(d.username||'').trim();if(!n||!un||!d.password||!ROLE_FA[d.role])throw new AppError('اطلاعات ناقص است');if(findUserByUsername(un))throw new AppError('نام کاربری تکراری');return hashPassword(d.password).then(function(h){return mutate('users',function(a){a.push({id:uid(),name:n,username:un,passHash:h,role:d.role,active:true,isRoot:false,createdAt:Date.now()});return a}).then(function(){toast('ایجاد شد')})})}
-function updUser(id,d){requireRole(['admin']);assertWritable();var u=findUserById(id);if(!u)throw new AppError('یافت نشد');var n=(d.name||'').trim(),un=(d.username||'').trim();if(!n||!un)throw new AppError('نام لازم');if(u.isRoot){if(d.role&&d.role!=='admin')throw new AppError('نقش مدیر ثابت');if(un!==u.username)throw new AppError('نام کاربری مدیر ثابت')}var pw=d.password?hashPassword(d.password):Promise.resolve(null);return pw.then(function(h){return mutate('users',function(a){return a.map(function(x){if(x.id!==id)return x;var nx=Object.assign({},x);if(d.role)nx.role=d.role;nx.name=n;nx.username=un;if(d.active!==undefined&&!x.isRoot)nx.active=d.active;if(h)nx.passHash=h;return nx})})}).then(function(){toast('ذخیره شد')})}
+function addUser(d){
+  requireRole(['admin']);assertWritable();
+  var n=(d.name||'').trim(),un=(d.username||'').trim();
+  if(!n||!un||!d.password||!ROLE_FA[d.role])throw new AppError('اطلاعات ناقص است');
+  if(findUserByUsername(un))throw new AppError('نام کاربری تکراری');
+  var ava=d.avatar;
+  if(ava==null)ava=defaultAvatarFor(n,null);
+  if(ava!=null&&takenAvatars(null)[ava])throw new AppError('این آواتار قبلاً انتخاب شده است');
+  return hashPassword(d.password).then(function(h){return mutate('users',function(a){a.push({id:uid(),name:n,username:un,passHash:h,role:d.role,active:true,isRoot:false,avatar:ava,createdAt:Date.now()});return a}).then(function(){toast('ایجاد شد')})});
+}
+function updUser(id,d){requireRole(['admin']);assertWritable();var u=findUserById(id);if(!u)throw new AppError('یافت نشد');var n=(d.name||'').trim(),un=(d.username||'').trim();if(!n||!un)throw new AppError('نام لازم');if(u.isRoot){if(d.role&&d.role!=='admin')throw new AppError('نقش مدیر ثابت');if(un!==u.username)throw new AppError('نام کاربری مدیر ثابت')}
+  if(d.avatar!=null&&d.avatar!==u.avatar&&takenAvatars(id)[d.avatar])throw new AppError('این آواتار قبلاً انتخاب شده است');
+  var pw=d.password?hashPassword(d.password):Promise.resolve(null);return pw.then(function(h){return mutate('users',function(a){return a.map(function(x){if(x.id!==id)return x;var nx=Object.assign({},x);if(d.role)nx.role=d.role;nx.name=n;nx.username=un;if(d.active!==undefined&&!x.isRoot)nx.active=d.active;if(h)nx.passHash=h;if(d.avatar!=null)nx.avatar=d.avatar;return nx})})}).then(function(){toast('ذخیره شد')})}
 function delUser(id){requireRole(['admin']);assertWritable();var u=findUserById(id);if(!u||u.isRoot)throw new AppError('حذف ناممکن');return mutate('users',function(a){return a.filter(function(x){return x.id!==id})}).then(function(){toast('حذف شد');if(session&&session.userId===id)doLogout()})}
 function uploadToCloudinary(file){var fd=new FormData();fd.append('file',file);fd.append('upload_preset',CL.preset);fd.append('folder','owm');return fetch('https://api.cloudinary.com/v1_1/'+CL.cloud+'/image/upload',{method:'POST',body:fd}).then(function(r){if(!r.ok)throw new Error('آپلود ناموفق');return r.json()}).then(function(j){if(!j.secure_url)throw new Error('پاسخ نامعتبر');return{url:j.secure_url,thumb:pdfPageImg(j.secure_url,600),public_id:j.public_id,bytes:j.bytes,name:file.name}})}
 function ev(t,x,u){return{type:t,text:x,user:u.username,userName:u.name,ts:Date.now()}}
@@ -975,7 +1044,6 @@ function downloadPdf(id){
     setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);hideLoading();toast('دانلود شد')},150);
   }).catch(function(){hideLoading();toast('خطا در دانلود فایل','error')});
 }
-
 function legacyImagePrint(o){
   var url=pdfPageImg(o.pdf.url,1600);
   var pre=new Image();
@@ -1140,10 +1208,11 @@ function orderCardHTML(o,i){
   }
   var tags=cardBadges(o);
   var tagsRow=(tags||pinBtn)?'<div class="ocard-tags">'+tags+pinBtn+'</div>':'';
+  var cu=findUserByUsername(o.createdBy);
   return'<article class="ocard glass'+pinnedCls+'" style="'+animStyle+'">'+
     '<div class="ocust">'+esc(o.title)+'</div>'+
     (sub.length?'<div class="osub">'+sub.join(' · ')+'</div>':'')+
-    '<div class="ocard-meta"><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span><span>'+I.user+' '+esc(o.creatorName)+'</span></div>'+
+    '<div class="ocard-meta"><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span><span><img class="mini-ava" src="'+avatarPath(displayAvatar(cu||{name:o.creatorName}))+'" alt=""> '+esc(o.creatorName)+'</span></div>'+
     '<div class="ocard-body">'+prev+cardTimeline(o)+'</div>'+
     checkBanner+
     officerStatusChips(o)+
@@ -1284,33 +1353,115 @@ function renderNewOrder(){
   });
 }
 
-/* --- آواتار --- */
-function myAvatar(){var u=findUserById(session.userId);return(u&&u.avatar)||'🙂'}
+/* --- انتخاب آواتار خود کاربر (در چت) --- */
 function openAvatarModal(){
   var u=findUserById(session.userId);
-  var cur=myAvatar();
-  var can=!u.avatarChangedAt||(Date.now()-u.avatarChangedAt>=86400000);
-  var remain=u.avatarChangedAt?86400000-(Date.now()-u.avatarChangedAt):0;
+  var cur=u.avatar!=null?u.avatar:null;
   var m=openModal('<div class="m-head"><div class="m-title">'+I.user+' نشان من</div><button class="m-x" data-close>✕</button></div>'+
-   (!can?'<div class="rbox warn">'+I.clock+' <b>دگرگونی نشان:</b> '+faNum(Math.ceil(remain/3600000))+' ساعت دیگر</div>':'<div class="fnote">روزی یک‌بار می‌توان نشان را دگرگون کرد.</div>')+
-   '<div class="ava-grid">'+AVATARS.map(function(a){return'<button type="button" class="ava-item'+(a===cur?' on':'')+'" data-ava="'+a+'" '+(!can?'disabled':'')+'>'+a+'</button>'}).join('')+'</div>');
-  m.md.querySelectorAll('[data-ava]').forEach(function(b){
-    b.onclick=function(){var a=b.getAttribute('data-ava');if(a===cur)return;
-      safe(function(){return mutate('users',function(arr){return arr.map(function(x){if(x.id===session.userId){x.avatar=a;x.avatarChangedAt=Date.now()}return x})},'OWM: avatar').then(function(){closeModal();toast('نشان نو شد');if(curPage==='chat'){var cb=$('#chatAva');if(cb)cb.textContent=a;renderChatList()}})});
-    };
+   '<div class="fnote">هر نشان فقط هم‌زمان برای یک کاربر قابل استفاده است. تغییر در هر زمان آزاد است.</div>'+
+   '<div id="avaWrap">'+avatarGridHTML(cur,u.id)+'</div>');
+  m.md.querySelector('#avaWrap').addEventListener('click',function(e){
+    var b=e.target.closest('[data-ava]');if(!b||b.disabled)return;
+    var a=+b.getAttribute('data-ava');
+    if(a===cur)return;
+    safe(function(){return mutate('users',function(arr){return arr.map(function(x){if(x.id===session.userId)x.avatar=a;return x})},'OWM: avatar').then(function(){
+      cur=a;closeModal();toast('نشان تغییر کرد');
+      var el=$('#hdrAva');if(el)el.src=avatarPath(a);
+      if(curPage==='chat'){var cb=$('#chatAva');if(cb)cb.src=avatarPath(a);renderChatList()}
+    })});
   });
 }
 function openRulesModal(){
-  openModal('<div class="m-head"><div class="m-title">'+I.info+' پیمان گفتگو</div><button class="m-x" data-close>✕</button></div>'+
+  openModal('<div class="m-head"><div class="m-title">'+I.info+' قوانین گفتگو</div><button class="m-x" data-close>✕</button></div>'+
   '<ul class="rules-list">'+
-  '<li>'+I.chat+' آنچه در این محفل نگاشته شود، پیشِ چشمان همهٔ همکاران نشسته است؛ پس با حرمت و روشن بنویسید.</li>'+
-  '<li>'+I.eye+' پیامی را که دیده شده است دیگر نتوان برچید؛ پیش از روانه کردن، بیندیشید.</li>'+
-  '<li>'+I.lock+' ویرایشِ پیام پس از ارسال میسّر نیست؛ واژه چون تیر است از کمان رسته.</li>'+
-  '<li>'+I.file+' نگاشتهٔ شما از سه خط نباید فراتر رود؛ کوتاه و گزیده گوی باشید.</li>'+
-  '<li>'+I.crown+' تنها مدیر کل اختیار پاک کردن همهٔ گفتگوها را دارد.</li>'+
-  '<li>'+I.history+' فقط دویست پیامِ پایانی در یادگار می‌ماند؛ کهنه‌ها را باد می‌برد.</li>'+
-  '<li>'+I.user+' هر روز تنها یک‌بار می‌توان نشانِ خویش را دگرگون کرد.</li>'+
+  '<li>'+I.chat+' همه پیام‌ها برای تمام کاربران سیستم قابل مشاهده است.</li>'+
+  '<li>'+I.eye+' پیامی که توسط کاربر دیگری دیده شده باشد، دیگر قابل حذف نیست.</li>'+
+  '<li>'+I.lock+' امکان ویرایش پیام پس از ارسال وجود ندارد.</li>'+
+  '<li>'+I.file+' هر پیام حداکثر می‌تواند ۳ خط باشد.</li>'+
+  '<li>'+I.mic+' پیام صوتی حداکثر ۳ دقیقه است.</li>'+
+  '<li>'+I.crown+' تنها مدیر کل می‌تواند کل گفتگوها را حذف کند.</li>'+
+  '<li>'+I.history+' فقط ۲۰۰ پیام آخر نگهداری می‌شود و پیام‌های قدیمی‌تر به‌صورت خودکار حذف می‌شوند.</li>'+
+  '<li>'+I.user+' هر آواتار فقط هم‌زمان برای یک کاربر قابل استفاده است و تغییر آن در هر زمان آزاد است.</li>'+
   '</ul>');
+}
+
+/* --- ضبط صدا --- */
+var voiceState=null;
+var voiceUrlCache={};
+function voiceUrl(m){
+  if(voiceUrlCache[m.id])return voiceUrlCache[m.id];
+  try{
+    var bin=atob(m.voice.data);var arr=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+    var blob=new Blob([arr],{type:m.voice.mime||'audio/webm'});
+    var u=URL.createObjectURL(blob);voiceUrlCache[m.id]=u;return u;
+  }catch(e){return ''}
+}
+function startVoice(){
+  if(voiceState)return;
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast('ضبط صدا در این مرورگر پشتیبانی نمی‌شود','error');return}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    var mime='';
+    if(window.MediaRecorder){
+      if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported('audio/webm'))mime='audio/webm';
+      else if(MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported('audio/mp4'))mime='audio/mp4';
+    }
+    var rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+    var chunks=[];
+    var st={rec:rec,stream:stream,chunks:chunks,start:Date.now(),timer:null,blob:null,url:null,dur:0};
+    rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
+    rec.onstop=function(){
+      stream.getTracks().forEach(function(t){t.stop()});
+      clearInterval(st.timer);
+      var blob=new Blob(chunks,{type:rec.mimeType||mime||'audio/webm'});
+      var url=URL.createObjectURL(blob);
+      st.blob=blob;st.url=url;st.dur=Math.min(180,(Date.now()-st.start)/1000);
+      voiceState=st;
+      var mb=$('#micBtn');if(mb)mb.classList.remove('rec');
+      var rb=$('#recBar');if(rb)rb.style.display='none';
+      showVoicePanel();
+    };
+    voiceState=st;
+    rec.start();
+    var rb=$('#recBar');if(rb)rb.style.display='flex';
+    var mb=$('#micBtn');if(mb)mb.classList.add('rec');
+    st.timer=setInterval(function(){
+      var el=$('#recTime');if(el)el.textContent=fmtDur((Date.now()-st.start)/1000);
+      if(Date.now()-st.start>=180000)stopVoice();
+    },200);
+  }).catch(function(){toast('دسترسی به میکروفون ممکن نشد','error')});
+}
+function stopVoice(){
+  if(voiceState&&voiceState.rec&&voiceState.rec.state==='recording'){voiceState.rec.stop()}
+  var mb=$('#micBtn');if(mb)mb.classList.remove('rec');
+  var rb=$('#recBar');if(rb)rb.style.display='none';
+}
+function showVoicePanel(){
+  var p=$('#voicePanel');if(!p||!voiceState)return;
+  p.style.display='flex';
+  var a=$('#voicePrev');if(a)a.src=voiceState.url;
+  var d=$('#voiceDur');if(d)d.textContent=fmtDur(voiceState.dur);
+}
+function hideVoicePanel(){
+  var p=$('#voicePanel');if(p)p.style.display='none';
+  if(voiceState&&voiceState.url)URL.revokeObjectURL(voiceState.url);
+  voiceState=null;
+}
+function sendVoice(){
+  if(!voiceState||!voiceState.blob)return;
+  var blob=voiceState.blob,dur=voiceState.dur;
+  if(blob.size>2.5*1024*1024){toast('حجم ویس زیاد است','error');return}
+  var reader=new FileReader();
+  reader.onload=function(){
+    var b64=String(reader.result).split(',')[1];
+    hideVoicePanel();
+    safe(function(){return mutate('chat',function(a){
+      a.push({id:uid(),userId:session.userId,username:session.username,name:session.name,role:session.role,avatar:myAvatar(),text:'',ts:Date.now(),seenBy:[],voice:{data:b64,mime:blob.type||'audio/webm',dur:Math.round(dur)}});
+      if(a.length>200)a=a.slice(a.length-200);
+      return a;
+    },'OWM: chat voice').then(function(){renderChatList();updateChatSendState();toast('ویس ارسال شد')})});
+  };
+  reader.readAsDataURL(blob);
 }
 
 /* --- چت --- */
@@ -1343,11 +1494,16 @@ function renderChatList(){
     var mine=session&&m.userId===session.userId;
     var seen=m.seenBy&&m.seenBy.length>0;
     var del=mine&&!seen?'<button class="cdel" data-delmsg="'+m.id+'" title="حذف پیام">'+I.x+'</button>':'';
+    var mu=findUserByUsername(m.username);
+    var av=m.avatar!=null?m.avatar:displayAvatar(mu||{name:m.name});
+    var body='';
+    if(m.voice){body='<div class="voice-msg"><audio controls preload="metadata" src="'+voiceUrl(m)+'"></audio><span class="v-dur">'+fmtDur(m.voice.dur||0)+'</span></div>'}
+    if(m.text)body+=esc(m.text);
     return '<div class="cmsg'+(mine?' mine':'')+'">'+
-      (mine?'':'<div class="cmsg-ava">'+esc(m.avatar||'🙂')+'</div>')+
+      (mine?'':'<div class="cmsg-ava"><img src="'+avatarPath(av)+'" alt=""></div>')+
       '<div class="cmsg-body">'+
         (mine?'':'<div class="cmsg-top"><b>'+esc(m.name)+'</b><span class="badge r-'+m.role+'">'+(ROLE_FA[m.role]||'')+'</span></div>')+
-        '<div class="cmsg-bubble">'+esc(m.text)+'</div>'+
+        '<div class="cmsg-bubble">'+body+'</div>'+
         '<div class="cmsg-time">'+fmtTsFull(m.ts)+(seen?' · ✓✓':'')+'</div>'+
       '</div>'+del+'</div>';
   }).join(''):'<div class="empty">'+I.chat+'<b>هنوز پیامی نیست</b></div>';
@@ -1360,20 +1516,28 @@ function renderChat(){
   p.innerHTML='<div class="chat-wrap glass">'+
     '<div class="chat-head"><h3>'+I.chat+' گفتگوی گروهی</h3>'+
     '<div class="chat-head-actions">'+
-      '<button class="ava-btn" id="chatAva" title="نشان من">'+esc(myAvatar())+'</button>'+
-      '<button class="tb-out" id="chatRules" title="پیمان گفتگو">'+I.info+'</button>'+
+      '<button class="ava-btn" id="chatAva" title="نشان من"><img src="'+avatarPath(myAvatar())+'" alt=""></button>'+
+      '<button class="tb-out" id="chatRules" title="قوانین گفتگو">'+I.info+'</button>'+
       adminBtns+
       '<span class="chat-count">'+faNum((FILES.users.data||[]).length)+' عضو</span>'+
     '</div></div>'+
     '<div class="chat-list" id="chatList"></div>'+
+    '<div class="rec-bar" id="recBar"><span class="rec-dot"></span><span id="recTime">۰:۰۰</span><span>در حال ضبط… برای پایان، انگشت را رها کنید</span></div>'+
+    '<div class="voice-panel" id="voicePanel"><audio id="voicePrev" controls></audio><span class="v-dur" id="voiceDur"></span><button type="button" class="btn btn-p btn-sm" id="voiceSend">ارسال</button><button type="button" class="btn btn-gh btn-sm" id="voiceCancel">حذف</button></div>'+
     '<form id="chatForm" class="chat-form" autocomplete="off">'+
       '<textarea class="inp" id="chatInput" rows="1" placeholder="پیام خود را بنویسید…" maxlength="300"></textarea>'+
+      '<button type="button" class="mic-btn" id="micBtn" title="ضبط صدا (نگه دارید)">'+I.mic+'</button>'+
       '<button class="btn btn-p chat-send" id="chatSend" type="submit" title="ارسال">'+I.send+'</button>'+
     '</form></div>';
   renderChatList();
   $('#chatRules').onclick=function(){openRulesModal()};
   $('#chatAva').onclick=function(){openAvatarModal()};
-  var ca=$('#chatClearAll');if(ca)ca.onclick=function(){confirmBox({title:'حذف همه گفتگوها',text:'تمام پیام‌های گفتگو برای همه پاک شود؟',okText:'پاک کن',danger:true}).then(function(ok){if(ok)safe(function(){return mutate('chat',function(){return[]},'OWM: chat clear').then(function(){renderChatList();toast('پاک شد')})})})};
+  var ca=$('#chatClearAll');if(ca)ca.onclick=function(){confirmBox({title:'حذف همه گفتگوها',text:'تمام پیام‌های گفتگو برای همه پاک شود؟',okText:'پاک کن',danger:true}).then(function(ok){if(ok)safe(function(){return mutate('chat',function(){return[]},'OWM: chat clear').then(function(){voiceUrlCache={};renderChatList();toast('پاک شد')})})})};
+  var mb=$('#micBtn');
+  mb.addEventListener('contextmenu',function(e){e.preventDefault()});
+  mb.addEventListener('pointerdown',function(e){e.preventDefault();startVoice()});
+  $('#voiceSend').onclick=function(){sendVoice()};
+  $('#voiceCancel').onclick=function(){hideVoicePanel()};
   $('#chatForm').onsubmit=function(e){
     e.preventDefault();
     var inp=$('#chatInput');var txt=inp.value.replace(/\n+$/,'');if(!txt.trim())return;
@@ -1410,7 +1574,7 @@ function openDetail(id){
     }else returnBox='<div class="rbox '+(o.returnRequest.condition==='healthy'?'ok':'bad')+'"><b>مرجوعی:</b> توسط مسئول سفارش تحویل شد '+(o.returnRequest.condition==='healthy'?'(سالم)':'(شکسته)')+'</div>';
   }
   var vers='';
-  if(g.length>1)vers='<div class="sec-title">نسخه‌ها</div><div class="ver-list">'+g.map(function(v){return'<div class="ver-row '+(v.id===o.id?'cur':'')+'"><span>v'+faNum(v.version)+' · '+fmtJDateFa2(v.jdate)+'</span><span>'+statusBadge(v.status)+'</span></div>'}).join('')+'</div>';
+  if(g.length>1)vers='<div class="sec-title">نسخه‌ها</div><div class="ver-list">'+g.map(function(v){return'<div class="ver-row '+(v.id===o.id?'cur':'')+'"><span>v'+faNum(v.version)+' · '+fmtJDateShort(v.jdate)+'</span><span>'+statusBadge(v.status)+'</span></div>'}).join('')+'</div>';
   var timelineHTML='<div class="sec-title">'+I.history+' تاریخچه کامل</div><div class="tline">'+tl.map(function(h){return'<div class="tl-item c-'+h.type+'"><b>'+esc(h.text)+'</b><span>'+esc(h.userName)+' · '+fmtTsFull(h.ts)+'</span></div>'}).join('')+'</div>';
   openModal('<div class="m-head"><div class="m-title">'+I.file+' #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div>'+
     '<div class="ocard-head-left" style="margin-bottom:12px">'+orderBadges(o)+'</div>'+
@@ -1425,7 +1589,6 @@ function openDetail(id){
     reviewBox+returnBox+vers+timelineHTML+
     '<div class="m-actions">'+actionBtns(o)+(o.pdf?'<button class="btn btn-glass" data-act="dlpdf" data-id="'+o.id+'">'+I.download+' دانلود</button>':'')+'</div>',{wide:true});
 }
-function fmtJDateFa2(jd){return fmtJDateShort(jd)}
 function openRejectModal(id){
   var o=findOrder(id);if(!o)return;
   var m=openModal('<div class="m-head"><div class="m-title" style="color:#fda4af">'+I.x+' رد #'+faNum(o.orderNo)+'</div><button class="m-x" data-close>✕</button></div><label class="flbl">دلیل رد *</label><textarea class="inp" id="rejReason" style="margin-top:8px"></textarea><div class="m-actions"><button class="btn btn-dng" id="rejOk">'+I.x+' ثبت</button><button class="btn btn-gh" data-close>انصراف</button></div>');
@@ -1485,11 +1648,10 @@ function renderMembers(){
   head+='<div class="stat-grid" style="grid-template-columns:repeat(2,1fr)">'+statTile(I.users,'#5bc8f5',users.length,'کل کاربران')+statTile(I.check,'#4ade80',activeCount,'کاربران فعال')+'</div>';
   head+='<button class="btn btn-p btn-blk" style="margin:6px 0 16px" data-act="adduser">'+I.plus+' افزودن کاربر جدید</button>';
   var rows=users.map(function(u){
-    var icon=ROLE_ICONS[u.role]||I.user;
     var acts='<button class="ibtn" title="ویرایش" data-act="edituser" data-id="'+u.id+'">'+I.edit+'</button>';
     if(!u.isRoot)acts+='<button class="ibtn" title="'+(u.active?'غیرفعال کردن':'فعال کردن')+'" data-act="toggleuser" data-id="'+u.id+'">'+(u.active?I.lock:I.check)+'</button><button class="ibtn danger" title="حذف" data-act="deluser" data-id="'+u.id+'">'+I.trash+'</button>';
     return'<div class="member-card glass">'+
-      '<div class="role-ava" style="'+roleAvaStyle(u.role)+'">'+icon+'</div>'+
+      '<div class="role-ava"><img src="'+avatarPath(displayAvatar(u))+'" alt=""></div>'+
       '<div class="member-main">'+
         '<div class="mm-top"><b>'+esc(u.name)+(u.isRoot?' 🛡️':'')+'</b><span class="badge r-'+u.role+'">'+ROLE_FA[u.role]+'</span><span class="badge '+(u.active?'r-active':'r-inactive')+'">'+(u.active?'فعال':'غیرفعال')+'</span></div>'+
         '<div class="mm-sub">@'+esc(u.username)+' · 🕒 '+(u.lastLoginTs?fmtTsFull(u.lastLoginTs):'—')+' · 📱 '+esc(u.lastDevice||'—')+'</div>'+
@@ -1501,6 +1663,7 @@ function renderMembers(){
 function openUserModal(u){
   var isEdit=!!u;
   var pickedRole=u?u.role:'sales';
+  var pickedAvatar=u?(u.avatar!=null?u.avatar:null):null;
   var roleFieldHtml='';
   if(!(u&&u.isRoot)){
     roleFieldHtml='<div class="frow"><label>نقش</label><button type="button" class="cs-field" id="roleField">'+ROLE_FA[pickedRole]+'<span class="cs-chev">▾</span></button></div>';
@@ -1509,13 +1672,30 @@ function openUserModal(u){
     (u&&u.isRoot?'<div class="locknote">'+I.lock+'<span>حساب مدیر کل قابل تغییر نیست.</span></div>':'')+
     '<form id="uForm" novalidate><div class="frow"><label>نام *</label><input class="inp" name="uname" value="'+esc(u?u.name:'')+'"></div><div class="frow"><label>نام کاربری *</label><input class="inp" name="uuser" dir="ltr" value="'+esc(u?u.username:'')+'" '+(u&&u.isRoot?'disabled':'')+'></div><div class="frow"><label>رمز '+(isEdit?'(اختیاری)':'*')+'</label><div class="pwd"><input class="inp" name="upass" type="password"><button type="button" class="pu">👁</button></div></div>'+
     roleFieldHtml+
+    '<div class="frow"><label>آواتار</label><div id="uAvaWrap">'+avatarGridHTML(pickedAvatar,u?u.id:null)+'</div></div>'+
     '<label class="switch-row"><span>فعال</span><span class="switch"><input type="checkbox" name="uactive" '+(!u||u.active?'checked':'')+' '+(u&&u.isRoot?'disabled':'')+'><i></i></span></label><div class="m-actions"><button class="btn btn-p" type="submit">'+(isEdit?'ذخیره':'ایجاد')+'</button><button class="btn btn-gh" type="button" data-close>انصراف</button></div></form>');
   var pu=m.md.querySelector('.pu');if(pu)pu.onclick=function(){var i=m.md.querySelector('[name=upass]');i.type=i.type==='password'?'text':'password'};
   var rf=m.md.querySelector('#roleField');
   if(rf)rf.onclick=function(){
     openListDialog({title:'انتخاب نقش',options:Object.keys(ROLE_FA).map(function(k){return{v:k,l:ROLE_FA[k]}}),current:pickedRole,onPick:function(v){pickedRole=v;rf.innerHTML=ROLE_FA[v]+'<span class="cs-chev">▾</span>'}});
   };
-  m.md.querySelector('#uForm').onsubmit=function(e){e.preventDefault();var f=e.target;safe(function(){var data={name:f.uname.value,username:f.uuser.value,password:f.upass.value,role:(u&&u.isRoot)?u.role:pickedRole,active:f.uactive.checked};var p=isEdit?updUser(u.id,data):addUser(data);return p.then(function(){closeModal();renderPage(curPage)})})};
+  var aw=m.md.querySelector('#uAvaWrap');
+  if(aw)aw.addEventListener('click',function(e){
+    var b=e.target.closest('[data-ava]');if(!b||b.disabled)return;
+    pickedAvatar=+b.getAttribute('data-ava');
+    aw.innerHTML=avatarGridHTML(pickedAvatar,u?u.id:null);
+  });
+  m.md.querySelector('#uForm').onsubmit=function(e){
+    e.preventDefault();var f=e.target;
+    var nameV=f.uname.value;
+    var ava=pickedAvatar;
+    if(ava==null)ava=defaultAvatarFor(nameV,u?u.id:null);
+    safe(function(){
+      var data={name:nameV,username:f.uuser.value,password:f.upass.value,role:(u&&u.isRoot)?u.role:pickedRole,active:f.uactive.checked,avatar:ava};
+      var p=isEdit?updUser(u.id,data):addUser(data);
+      return p.then(function(){closeModal();renderPage(curPage)});
+    });
+  };
 }
 function openSyncModal(){
   if(!session||session.role!=='admin'){toast('فقط مدیر کل','error');return}
@@ -1663,6 +1843,9 @@ function renderHeader(){
   $('#btnSettings').style.display=(session.role==='admin')?'grid':'none';
   $('#btnTheme').style.display='grid';
   $('#btnLogout').innerHTML=I.logout;
+  var u=findUserById(session.userId);
+  var el=$('#hdrAva');if(el&&u)el.src=avatarPath(displayAvatar(u));
+  $('#hdrName').textContent=session.name;
   var fab=$('#fabNew');if(fab)fab.style.display=(session.role==='sales'&&curPage!=='newOrder')?'grid':'none';
   $('#syncChip').onclick=function(){if(session.role==='admin')openSyncModal();else toast(ghEnabled()?'اتصال برقرار است':'آفلاین')};
 }
@@ -1671,6 +1854,7 @@ function enterApp(){
   showView('app');renderHeader();setSyncChip();
   if(viewScope===null){var sd=FILES.settings.data||{};viewScope=(sd.salesDefaultScope==='all')?'all':'own'}
   if(!ordersView){var e1=$('#page-orders');if(e1)ordersView=makeOrdersView({mount:'#page-orders',mode:'normal',defaultPreset:'all'})}
+  ensureMyAvatar();
   RENDER_ANIM=true;goTo('dashboard');
   setTimeout(checkOverdueOrders,2000);
   setInterval(checkOverdueOrders,5*60*1000);
@@ -1732,6 +1916,8 @@ document.addEventListener('click',function(e){
   if(!target){toast('یافت نشد','error');return}
   safe(function(){return approveReturn(target.id,c).then(function(){closeAllModals();renderPage(curPage)})});
 });
+/* پایان ضبط با رها کردن انگشت */
+window.addEventListener('pointerup',function(){if(voiceState&&voiceState.rec&&voiceState.rec.state==='recording')stopVoice()});
 
 ['loginUser'].forEach(function(id){
   var inp=$('#'+id);if(!inp)return;
