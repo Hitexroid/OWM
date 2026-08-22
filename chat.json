@@ -1,5 +1,5 @@
 {
- "rev": 37,
+ "rev": 38,
  "chat": [
   {
    "id": "mt34a9livn3tan",
@@ -104,6 +104,17 @@
     "mime": "audio/webm;codecs=opus",
     "dur": 7
    }
+  },
+  {
+   "id": "mt42b98zq0ag5p",
+   "userId": "mt0kfhznjzawtv",
+   "username": "MrsNami",
+   "name": "خانم نامی",
+   "role": "sales",
+   "avatar": 2,
+   "text": "سلام",
+   "ts": 1787384046995,
+   "seenBy": []
   }
  ]
 }
