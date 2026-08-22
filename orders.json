@@ -1,5 +1,5 @@
 {
- "rev": 84,
+ "rev": 85,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1115,8 +1115,8 @@
    "checkReceived": false,
    "checkReceivedAt": null,
    "checkReceivedBy": null,
-   "pinned": false,
-   "pinnedBy": null,
+   "pinned": true,
+   "pinnedBy": "MsMohammadi",
    "downloaded": false,
    "createdAt": 1787384297276,
    "history": [
@@ -1133,6 +1133,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787384297275
+    },
+    {
+     "type": "status",
+     "text": "سنجاق شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787384985582
     }
    ]
   }
