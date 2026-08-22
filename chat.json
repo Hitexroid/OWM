@@ -1,5 +1,5 @@
 {
- "rev": 85,
+ "rev": 86,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -12,7 +12,8 @@
    "text": "سلام",
    "ts": 1787427557853,
    "seenBy": [
-    "mt0kfhznjzawtv"
+    "mt0kfhznjzawtv",
+    "root-mrnami"
    ],
    "reactions": [
     {
@@ -35,7 +36,8 @@
    "text": "",
    "ts": 1787427582033,
    "seenBy": [
-    "mt0kfhznjzawtv"
+    "mt0kfhznjzawtv",
+    "root-mrnami"
    ],
    "reactions": [],
    "reply": null,
