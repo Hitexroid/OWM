@@ -36,6 +36,7 @@ img{content-visibility:auto;-webkit-user-drag:none}
 svg{display:block}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--stroke);border-radius:9px}
 :focus-visible{outline:2px solid rgba(45,212,191,.7);outline-offset:2px}
+.gs{filter:grayscale(1);opacity:.75}
 .load-overlay{position:fixed;inset:0;z-index:200;background:rgba(4,10,20,.55);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s}
 .load-box{display:flex;flex-direction:column;align-items:center;gap:8px;color:#fff;font-weight:800;font-size:13.5px;text-shadow:0 2px 6px rgba(0,0,0,.5);text-align:center;padding:0 20px;max-width:440px}
 .load-box svg{overflow:visible;flex:none}
@@ -378,8 +379,9 @@ html.light .ld-item.on{color:#0e7490}
 .ticks{font-size:10px;color:var(--txt3)}
 .ticks.two{color:var(--teal)}
 .seen-avas{display:flex;align-items:center}
-.seen-avas img{width:16px;height:16px;border-radius:50%;object-fit:cover;margin-right:-5px;border:1px solid var(--stroke)}
-.seen-eye{font-size:11px;margin-right:3px}
+.seen-avas img{width:16px;height:16px;border-radius:50%;object-fit:cover}
+.seen-avas img+img{margin-right:-5px;border:1px solid var(--stroke)}
+.seen-eye{font-size:11px;margin-left:6px}
 .react-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .react-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;background:var(--chip-bg);border:1px solid var(--stroke);font-size:12px;cursor:pointer;transition:.15s}
 .react-chip:active{transform:scale(.92)}
@@ -605,7 +607,7 @@ var STATUS_AFTER_APPROVED=['in_progress','need_production','ready','shipped'];
 var MONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 var WEEKDAYS_FA=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
 var AVATARS=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
-var REACT_EMOJIS=['👍','','👊','👋','😘','❤️','🌹','😄','😐','😂','😑','😔','🤬','💩','💔','👌','🙏',''];
+var REACT_EMOJIS=['👍','','👊','','😘','❤️','🌹','😄','😐','😂','','😔','','💩','💔','👌','🙏',''];
 var PAGE_ACCESS={admin:['dashboard','orders','chat','members','reports'],accountant:['dashboard','orders','chat'],sales:['dashboard','newOrder','orders','chat'],officer:['dashboard','orders','chat']};
 var PAGE_TITLE={dashboard:'داشبورد',orders:'سفارش‌ها',newOrder:'ثبت سفارش',chat:'گفتگو',members:'مدیریت اعضا',reports:'گزارش‌ها'};
 var NAV_ITEMS={
@@ -695,18 +697,23 @@ function defaultAvatarFor(name,excludeId){
   for(var a=0;a<AVATARS.length;a++){if(!taken[a])return a}
   return null;
 }
-/* فقط آواتارهای واقعا انتخاب‌شده قفل می‌شوند؛ جنس مخالف قفل نیست ولی با هشدار مسدود می‌شود */
-function avatarGridHTML(current,excludeId,gender){
-  var taken=takenAvatarsMap(excludeId);
-  return '<div class="ava-grid">'+AVATARS.map(function(a){
-    var isTaken=!!taken[a]&&String(a)!==String(current);
-    return '<button type="button" class="ava-item'+(String(a)===String(current)?' on':'')+(isTaken?' taken':'')+'" data-ava="'+a+'" data-taken="'+(isTaken?'1':'0')+'" data-offg="'+((gender&&avatarGender(a)!==gender)?'1':'0')+'">'+('<img src="'+avatarPath(a,1)+'" alt="" loading="lazy" decoding="async">')+(isTaken?'<span class="ava-lock">'+I.lock+'</span>':'')+'</button>';
-  }).join('')+'</div>';
-}
+/* توابع رفع باگ myAvatar */
+function myAvatar(){var u=findUserById(session.userId);return u&&u.avatar!=null?u.avatar:1}
+function myAvatarV(){var u=findUserById(session.userId);return (u&&u.avatarV)||1}
+function viewerGender(){return session?userGender(session):null}
+function gsClass(a){var g=viewerGender();return (g&&avatarGender(a)!==g)?' gs':''}
+
 function handleAvaPick(b){
   if(b.classList.contains('taken')){toast('این آواتار توسط کاربر دیگری انتخاب شده','warn');return false}
   if(b.getAttribute('data-offg')==='1'){toast('این آواتار قابل انتخاب نیست (مختص جنس مخالف است)','warn');return false}
   return true;
+}
+function avatarGridHTML(current,excludeId,gender){
+  var taken=takenAvatarsMap(excludeId);
+  return '<div class="ava-grid">'+AVATARS.map(function(a){
+    var isTaken=!!taken[a]&&String(a)!==String(current);
+    return '<button type="button" class="ava-item'+(String(a)===String(current)?' on':'')+(isTaken?' taken':'')+'" data-ava="'+a+'" data-taken="'+(isTaken?'1':'0')+'" data-offg="'+((gender&&avatarGender(a)!==gender)?'1':'0')+'">'+('<img class="'+gsClass(a)+'" src="'+avatarPath(a,1)+'" alt="" loading="lazy" decoding="async">')+(isTaken?'<span class="ava-lock">'+I.lock+'</span>':'')+'</button>';
+  }).join('')+'</div>';
 }
 
 function $(s){return document.querySelector(s)}
@@ -716,7 +723,7 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 function faNum(n){return Number(n).toLocaleString('fa-IR')}
 function faPad2(n){n=faNum(n);return n.length<2?'۰'+n:n}
 function fmtJDateShort(jd){var p=jd.split('/');return faNum(+p[0])+'/'+faPad2(+p[1])+'/'+faPad2(+p[2])}
-function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return faNum(j.jy)+'/'+faPad2(j.jm)+'/'+faPad2(j.jd)+' · '+faNum(d.getHours())+':'+faNum(pad2(d.getMinutes()))}
+function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return faNum(j.jy)+'/'+faPad2(j.jm)+'/'+faPad2(j.jd)+' · '+faNum(d.getHours())+':'+faPad2(d.getMinutes())}
 function fmtDur(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),ss=s%60;return faNum(m)+':'+faPad2(ss)}
 function durationText(ms){
   if(ms<0)ms=0;
@@ -1426,6 +1433,7 @@ function orderCardHTML(o,i){
     checkBanner='<div class="check-banner">'+I.creditcard+'<span>نیاز به تحویل چک از راننده</span><button class="btn btn-ok btn-sm" data-act="confirmcheck" data-id="'+o.id+'">تأیید دریافت</button></div>';
   }
   var cu=findUserByUsername(o.createdBy);
+  var cuAvatar=cu&&cu.avatar!=null?cu.avatar:1;
   var durationHTML='';
   if(o.shippedAt){
     durationHTML='<div class="duration-pill">'+I.clock+' زمان ارسال: '+durationText(o.shippedAt-o.ts)+'</div>';
@@ -1435,7 +1443,7 @@ function orderCardHTML(o,i){
   return'<article class="ocard glass'+pinnedCls+'" style="'+animStyle+'">'+
     '<div class="ocard-head"><div class="ocard-head-left"><span class="ocust">'+esc(o.title)+'</span></div><div class="ocard-head-right">'+headBtns+'</div></div>'+
     (sub.length?'<div class="osub">'+sub.join(' · ')+'</div>':'')+
-    '<div class="ocard-meta"><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span><span><img class="mini-ava" src="'+avatarSrcFor(cu||{name:o.creatorName,avatar:null})+'" alt=""> '+esc(o.creatorName)+'</span></div>'+
+    '<div class="ocard-meta"><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span><span>'+esc(o.creatorName)+' <img class="mini-ava'+gsClass(cuAvatar)+'" src="'+avatarSrcFor(cu||{name:o.creatorName,avatar:null})+'" alt=""></span></div>'+
     durationHTML+
     '<div class="ocard-body">'+prev+cardTimeline(o)+'</div>'+
     checkBanner+
@@ -1482,7 +1490,7 @@ function makeOrdersView(opts){
     else if(session.role==='officer'){
       var curUser=officerUser?findUserByUsername(officerUser):null;
       var curName=officerUser?((curUser&&curUser.name)||officerUser):'همه مدیران فروش';
-      var curAva=curUser?('<img src="'+avatarSrcFor(curUser)+'" alt=""> '):'';
+      var curAva=curUser?('<img class="'+gsClass(curUser.avatar!=null?curUser.avatar:1)+'" src="'+avatarSrcFor(curUser)+'" alt=""> '):'';
       roleCtl='<div class="frow" style="margin-top:12px"><label class="flbl">نمایش سفارش‌های:</label><button type="button" class="cs-field" id="officerField">'+curAva+'<span>'+esc(curName)+'</span><span class="cs-chev">▾</span></button></div>';
     }
     tb.innerHTML=row+custom+roleCtl;
@@ -1511,7 +1519,7 @@ function makeOrdersView(opts){
     });
     var of=tb.querySelector('#officerField');
     if(of)of.onclick=function(){
-      var opts=[{v:'',l:'همه مدیران فروش'}].concat(FILES.users.data.filter(function(u){return u.role==='sales'}).map(function(u){return{v:u.username,l:'<img src="'+avatarSrcFor(u)+'" alt=""> '+esc(u.name)}}));
+      var opts=[{v:'',l:'همه مدیران فروش'}].concat(FILES.users.data.filter(function(u){return u.role==='sales'}).map(function(u){return{v:u.username,l:'<img class="'+gsClass(u.avatar!=null?u.avatar:1)+'" src="'+avatarSrcFor(u)+'" alt=""> '+esc(u.name)}}));
       openListDialog({title:'نمایش سفارش‌های',options:opts,current:officerUser,onPick:function(v){officerUser=v;renderToolbar();renderList()}});
     };
     var sc=tb.querySelector('.scopeOwn');if(sc)sc.onchange=function(){viewScope=this.checked?'own':'all';renderList()};
@@ -1646,6 +1654,19 @@ function playVp(vp){
 }
 
 var voiceState=null;
+var voiceUrlCache={};
+function voiceUrl(m){
+  if(voiceUrlCache[m.id])return voiceUrlCache[m.id];
+  try{
+    var bin=atob(m.voice.data);
+    var arr=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+    var blob=new Blob([arr],{type:m.voice.mime||'audio/webm'});
+    var u=URL.createObjectURL(blob);
+    voiceUrlCache[m.id]=u;
+    return u;
+  }catch(e){return ''}
+}
 function micPermModal(){
   var m=openModal('<div class="m-head"><div class="m-title">'+I.mic+' دسترسی میکروفون</div><button class="m-x" data-close>✕</button></div>'+
     '<p style="color:var(--txt2);font-size:13.5px">برای ضبط پیام صوتی، دسترسی به میکروفون لازم است. روی دکمه زیر بزنید تا درخواست دسترسی ارسال شود.</p>'+
@@ -1751,7 +1772,6 @@ function markChatSeen(){
   FILES.chat.pending=true;
   commitFile('chat',function(a){(a||[]).forEach(function(m){if(m.userId!==session.userId){m.seenBy=m.seenBy||[];if(m.seenBy.indexOf(session.userId)===-1)m.seenBy.push(session.userId)}});return a},'OWM: chat seen').then(function(){FILES.chat.pending=false;refreshFile('chat')}).catch(function(){FILES.chat.pending=false});
 }
-/* یک واکنش per کاربر؛ واکنش جدید جایگزین قبلی؛ تکرار همان حذف می‌کند */
 function toggleReaction(mid,emoji){
   safe(function(){return mutate('chat',function(a){
     var m=null;for(var i=0;i<a.length;i++)if(a[i].id===mid){m=a[i];break}
@@ -1768,7 +1788,6 @@ function openReactPicker(mid){
   var m=openModal('<div class="m-head"><div class="m-title">واکنش</div><button class="m-x" data-close>✕</button></div><div class="react-picker">'+REACT_EMOJIS.map(function(e){return '<button data-remoji="'+e+'">'+e+'</button>'}).join('')+'</div>');
   m.md.querySelectorAll('[data-remoji]').forEach(function(b){b.onclick=function(){var e=b.getAttribute('data-remoji');closeModal();toggleReaction(mid,e)}});
 }
-/* واکنش فقط با کلیک طولانی و رها کردن روی حباب (خارج از پلیر) */
 var bubblePress=null;
 document.addEventListener('pointerdown',function(e){
   var bb=e.target.closest('[data-bubble]');
@@ -1809,7 +1828,7 @@ function renderChatList(){
     var avV=m.avatarV||1;
     var body='';
     if(m.reply)body+='<div class="reply-quote" data-openorder="'+m.reply.id+'">#'+faNum(m.reply.orderNo)+' · '+esc(m.reply.title)+'</div>';
-    if(m.voice){body+=buildVoicePlayer(m.id,m.voice.url,m.voice.dur,m.voice.bars)}
+    if(m.voice){body+=buildVoicePlayer(m.id,voiceUrl(m),m.voice.dur,m.voice.bars)}
     if(m.text)body+=esc(m.text);
     var reacts='';
     if(m.reactions&&m.reactions.length){
@@ -1817,13 +1836,13 @@ function renderChatList(){
       m.reactions.forEach(function(r){groups[r.emoji]=groups[r.emoji]||[];groups[r.emoji].push(r)});
       reacts='<div class="react-row">'+Object.keys(groups).map(function(e){
         var rs=groups[e];var mineIn=rs.some(function(r){return r.userId===session.userId});
-        return '<button class="react-chip'+(mineIn?' mine':'')+'" data-react="'+m.id+'" data-remoji="'+e+'">'+e+'<span class="r-avas">'+rs.slice(0,3).map(function(r){return '<img src="'+avatarPath(r.avatar!=null?r.avatar:1,r.avatarV||1)+'" alt="">'}).join('')+'</span></button>';
+        return '<button class="react-chip'+(mineIn?' mine':'')+'" data-react="'+m.id+'" data-remoji="'+e+'">'+e+'<span class="r-avas">'+rs.slice(0,3).map(function(r){return '<img class="'+gsClass(r.avatar!=null?r.avatar:1)+'" src="'+avatarPath(r.avatar!=null?r.avatar:1,r.avatarV||1)+'" alt="">'}).join('')+'</span></button>';
       }).join('')+'</div>';
     }
-    var seenAvas=seen?'<span class="seen-avas"><span class="seen-eye">👀</span>'+m.seenBy.slice(0,4).map(function(uidx){var su=findUserById(uidx);return su?'<img src="'+avatarSrcFor(su)+'" alt="" title="'+esc(su.name)+'">':''}).join('')+'</span>':'';
+    var seenAvas=seen?'<span class="seen-avas"><span class="seen-eye">👀</span>'+m.seenBy.slice(0,4).map(function(uidx){var su=findUserById(uidx);return su?'<img class="'+gsClass(su.avatar!=null?su.avatar:1)+'" src="'+avatarSrcFor(su)+'" alt="" title="'+esc(su.name)+'">':''}).join('')+'</span>':'';
     var ticks=mine?('<span class="ticks'+(seen?' two':'')+'">'+(seen?'✓✓':'✓')+'</span>'):'';
     html+='<div class="cmsg'+(mine?' mine':'')+'">'+
-      '<div class="cmsg-ava"><img src="'+avatarPath(av,avV)+'" alt=""></div>'+
+      '<div class="cmsg-ava"><img class="'+gsClass(av)+'" src="'+avatarPath(av,avV)+'" alt=""></div>'+
       '<div class="cmsg-body">'+
         (mine?'':'<div class="cmsg-top"><b>'+esc(m.name)+'</b><span class="badge r-'+m.role+'">'+(ROLE_FA[m.role]||'')+'</span></div>')+
         '<div class="cmsg-bubble" data-bubble="'+m.id+'">'+body+'</div>'+
@@ -2002,7 +2021,7 @@ function renderMembers(){
     var acts='<button class="ibtn" title="ویرایش" data-act="edituser" data-id="'+u.id+'">'+I.edit+'</button>';
     if(!u.isRoot)acts+='<button class="ibtn" title="'+(u.active?'غیرفعال کردن':'فعال کردن')+'" data-act="toggleuser" data-id="'+u.id+'">'+(u.active?I.lock:I.check)+'</button><button class="ibtn danger" title="حذف" data-act="deluser" data-id="'+u.id+'">'+I.trash+'</button>';
     return'<div class="member-card glass">'+
-      '<div class="role-ava"><img src="'+avatarSrcFor(u)+'" alt=""></div>'+
+      '<div class="role-ava"><img class="'+gsClass(u.avatar!=null?u.avatar:1)+'" src="'+avatarSrcFor(u)+'" alt=""></div>'+
       '<div class="member-main">'+
         '<div class="mm-top"><b>'+esc(u.name)+(u.isRoot?' 🛡️':'')+'</b><span class="badge r-'+u.role+'">'+ROLE_FA[u.role]+'</span><span class="badge '+(u.active?'r-active':'r-inactive')+'">'+(u.active?'فعال':'غیرفعال')+'</span></div>'+
         '<div class="mm-sub">@'+esc(u.username)+' · 🕒 '+(u.lastLoginTs?fmtTsFull(u.lastLoginTs):'—')+' · 📱 '+esc(u.lastDevice||'—')+'</div>'+
@@ -2073,7 +2092,7 @@ function welcomeHTML(){
   var wd=WEEKDAYS_FA[new Date().getDay()];
   var unread=getUnreadChatCount();
   var unreadBadge=unread>0?'<span class="unread-badge">📬 '+faNum(unread)+'</span>':'';
-  return '<div class="welcome glass"><img class="welcome-ava" src="'+avatarSrcFor(me)+'" alt=""><div><h2>سلام، '+esc(session.name)+' <span class="wave-anim" style="cursor:pointer" id="dashHand">👋</span> '+unreadBadge+'</h2><p>'+ROLE_FA[session.role]+' · '+wd+'، '+fmtJDateShort(todayISO)+'</p></div></div>';
+  return '<div class="welcome glass"><img class="welcome-ava '+gsClass(me&&me.avatar!=null?me.avatar:1)+'" src="'+avatarSrcFor(me)+'" alt=""><div><h2>سلام، '+esc(session.name)+' <span class="wave-anim" style="cursor:pointer" id="dashHand">👋</span> '+unreadBadge+'</h2><p>'+ROLE_FA[session.role]+' · '+wd+'، '+fmtJDateShort(todayISO)+'</p></div></div>';
 }
 
 function renderDashboard(){
@@ -2157,7 +2176,7 @@ function renderReports(){
     var cls=i===0?'r1':i===1?'r2':i===2?'r3':'';
     return '<div class="rank-row '+cls+'">'+
       '<span class="rank-num">'+faNum(i+1)+'</span>'+
-      '<img class="rank-ava" src="'+avatarSrcFor(r.user)+'" alt="">'+
+      '<img class="rank-ava '+gsClass(r.user.avatar!=null?r.user.avatar:1)+'" src="'+avatarSrcFor(r.user)+'" alt="">'+
       '<div class="rank-info"><b>'+esc(r.user.name)+'</b><div class="rank-stats">'+faNum(r.total)+' سفارش · '+faNum(r.returns)+' مرجوعی</div></div>'+
       '<span class="rank-score">'+faNum(r.score)+'</span></div>';
   }).join('');
