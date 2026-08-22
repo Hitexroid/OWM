@@ -1,5 +1,5 @@
 {
- "rev": 67,
+ "rev": 68,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -159,6 +159,12 @@
     },
     {
      "emoji": "🌹",
+     "userId": "mt0ls8btxo2d2i",
+     "avatar": 14,
+     "avatarV": 1
+    },
+    {
+     "emoji": "💩",
      "userId": "mt0ls8btxo2d2i",
      "avatar": 14,
      "avatarV": 1
