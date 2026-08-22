@@ -1,11 +1,12 @@
 {
- "rev": 3,
+ "rev": 4,
  "settings": {
   "owner": "",
   "repo": "",
   "branch": "main",
   "token": "",
   "pollSec": 6,
-  "accountantApproval": false
+  "accountantApproval": false,
+  "restrictOfficerHours": true
  }
 }
