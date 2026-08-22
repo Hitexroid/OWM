@@ -1,5 +1,5 @@
 {
- "rev": 87,
+ "rev": 88,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -87,7 +87,9 @@
    "avatarV": 1,
    "text": "درباره این فاکتور",
    "ts": 1787427909849,
-   "seenBy": [],
+   "seenBy": [
+    "mt0ls8btxo2d2i"
+   ],
    "reactions": [],
    "reply": {
     "id": "mt4s1akd7xh103",
