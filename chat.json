@@ -1,5 +1,5 @@
 {
- "rev": 56,
+ "rev": 57,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -36,7 +36,8 @@
    "text": "و علیکم السلام",
    "ts": 1787397683655,
    "seenBy": [
-    "mt0ls8btxo2d2i"
+    "mt0ls8btxo2d2i",
+    "root-mrnami"
    ],
    "reactions": [
     {
@@ -58,7 +59,9 @@
    "avatarV": 1,
    "text": "سلام خوبید",
    "ts": 1787397763363,
-   "seenBy": [],
+   "seenBy": [
+    "root-mrnami"
+   ],
    "reactions": [
     {
      "emoji": "👍",
@@ -79,7 +82,9 @@
    "avatarV": 1,
    "text": "",
    "ts": 1787397848699,
-   "seenBy": [],
+   "seenBy": [
+    "root-mrnami"
+   ],
    "reactions": [],
    "reply": null,
    "voice": {
