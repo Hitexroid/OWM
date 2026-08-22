@@ -1,4 +1,19 @@
 {
- "rev": 45,
- "chat": []
+ "rev": 46,
+ "chat": [
+  {
+   "id": "mt4aeqbd39wcw8",
+   "userId": "root-mrnami",
+   "username": "MrNami",
+   "name": "مدیر کل",
+   "role": "admin",
+   "avatar": 1,
+   "avatarV": 1,
+   "text": "سلام علیکم",
+   "ts": 1787397646009,
+   "seenBy": [],
+   "reactions": [],
+   "reply": null
+  }
+ ]
 }
