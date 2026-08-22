@@ -1,5 +1,5 @@
 {
- "rev": 101,
+ "rev": 102,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1303,6 +1303,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787394381675
+    },
+    {
+     "type": "status",
+     "text": "وضعیت: در حال انجام",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787394384597
     }
    ]
   }
