@@ -1,5 +1,5 @@
 {
- "rev": 112,
+ "rev": 113,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1392,7 +1392,7 @@
    "ts": 1787398903456,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "approved",
+   "status": "seen",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787398900/owm/sszg9agajiibkqapwohd.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787398900/owm/sszg9agajiibkqapwohd.jpg",
@@ -1400,8 +1400,8 @@
     "name": "اقای پرهیزی (1).pdf",
     "size": 153335
    },
-   "seenAt": null,
-   "seenBy": null,
+   "seenAt": 1787418208700,
+   "seenBy": "MsMohammadi",
    "review": null,
    "returnRequest": null,
    "deletedAt": null,
@@ -1415,7 +1415,7 @@
    "checkReceivedBy": null,
    "pinned": false,
    "pinnedBy": null,
-   "downloaded": false,
+   "downloaded": true,
    "createdAt": 1787398903458,
    "history": [
     {
@@ -1431,6 +1431,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787398903457
+    },
+    {
+     "type": "status",
+     "text": "مشاهده شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787418208700
     }
    ]
   }
