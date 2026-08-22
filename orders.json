@@ -1,5 +1,5 @@
 {
- "rev": 114,
+ "rev": 115,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1445,6 +1445,64 @@
      "user": "MrNami",
      "userName": "مدیر کل",
      "ts": 1787427030161
+    }
+   ]
+  },
+  {
+   "id": "mt4s1akd7xh103",
+   "orderNo": "1015",
+   "version": 1,
+   "baseId": "mt4s1akd7xh103",
+   "prevId": null,
+   "title": "اقای پرهیزی (1)",
+   "customer": "",
+   "desc": "",
+   "isSample": false,
+   "hasCheck": true,
+   "jdate": "1405/05/31",
+   "time": "23:03",
+   "ts": 1787427239512,
+   "createdBy": "MrsNami",
+   "creatorName": "خانم نامی",
+   "status": "approved",
+   "pdf": {
+    "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787427251/owm/ol0ndyc89eulnh9gwp04.pdf",
+    "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787427251/owm/ol0ndyc89eulnh9gwp04.jpg",
+    "public_id": "owm/ol0ndyc89eulnh9gwp04",
+    "name": "اقای پرهیزی (1).pdf",
+    "size": 153335
+   },
+   "seenAt": null,
+   "seenBy": null,
+   "review": null,
+   "returnRequest": null,
+   "deletedAt": null,
+   "deletedBy": null,
+   "cancelledAt": null,
+   "cancelledBy": null,
+   "shippedAt": null,
+   "shipMethod": null,
+   "checkReceived": false,
+   "checkReceivedAt": null,
+   "checkReceivedBy": null,
+   "pinned": false,
+   "pinnedBy": null,
+   "downloaded": false,
+   "createdAt": 1787427252158,
+   "history": [
+    {
+     "type": "created",
+     "text": "فاکتور صادر شد",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787427252157
+    },
+    {
+     "type": "approved",
+     "text": "تأیید خودکار",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787427252157
     }
    ]
   }
