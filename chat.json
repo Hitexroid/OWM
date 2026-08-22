@@ -1,5 +1,5 @@
 {
- "rev": 84,
+ "rev": 85,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -14,7 +14,14 @@
    "seenBy": [
     "mt0kfhznjzawtv"
    ],
-   "reactions": [],
+   "reactions": [
+    {
+     "emoji": "👍",
+     "userId": "mt0kfhznjzawtv",
+     "avatar": 2,
+     "avatarV": 1
+    }
+   ],
    "reply": null
   },
   {
