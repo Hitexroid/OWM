@@ -1,5 +1,5 @@
 {
- "rev": 65,
+ "rev": 66,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -135,7 +135,9 @@
    "avatarV": 1,
    "text": "",
    "ts": 1787417180004,
-   "seenBy": [],
+   "seenBy": [
+    "mt0ls8btxo2d2i"
+   ],
    "reactions": [
     {
      "emoji": "🌹",
@@ -203,7 +205,9 @@
    "avatarV": 1,
    "text": "یکککک دووو سههه",
    "ts": 1787417668034,
-   "seenBy": [],
+   "seenBy": [
+    "mt0ls8btxo2d2i"
+   ],
    "reactions": [],
    "reply": null
   }
