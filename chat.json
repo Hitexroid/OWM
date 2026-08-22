@@ -1,5 +1,5 @@
 {
- "rev": 63,
+ "rev": 64,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -145,6 +145,12 @@
     },
     {
      "emoji": "👍",
+     "userId": "root-mrnami",
+     "avatar": 1,
+     "avatarV": 1
+    },
+    {
+     "emoji": "👋",
      "userId": "root-mrnami",
      "avatar": 1,
      "avatarV": 1
