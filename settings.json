@@ -1,5 +1,5 @@
 {
- "rev": 4,
+ "rev": 5,
  "settings": {
   "owner": "",
   "repo": "",
@@ -7,6 +7,6 @@
   "token": "",
   "pollSec": 6,
   "accountantApproval": false,
-  "restrictOfficerHours": true
+  "restrictOfficerHours": false
  }
 }
