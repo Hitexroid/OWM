@@ -1,5 +1,5 @@
 {
- "rev": 107,
+ "rev": 108,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1243,7 +1243,7 @@
    "ts": 1787393895140,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "ready",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787393951/owm/a7gyqe7dyj3amjkc6fcl.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787393951/owm/a7gyqe7dyj3amjkc6fcl.jpg",
@@ -1259,8 +1259,8 @@
    "deletedBy": null,
    "cancelledAt": null,
    "cancelledBy": null,
-   "shippedAt": null,
-   "shipMethod": null,
+   "shippedAt": 1787398450625,
+   "shipMethod": "خاور باربری",
    "checkReceived": true,
    "checkReceivedAt": 1787394137857,
    "checkReceivedBy": "MsMohammadi",
@@ -1345,6 +1345,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787398435776
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · خاور باربری",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787398450625
     }
    ]
   }
