@@ -1,5 +1,5 @@
 {
- "rev": 122,
+ "rev": 123,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1564,7 +1564,7 @@
    "ts": 1787430781469,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "approved",
+   "status": "seen",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787430772/owm/vd6tavdthb0ix5bt99vr.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787430772/owm/vd6tavdthb0ix5bt99vr.jpg",
@@ -1572,8 +1572,8 @@
     "name": "فروشگاه عرشیا.pdf",
     "size": 204628
    },
-   "seenAt": null,
-   "seenBy": null,
+   "seenAt": 1787430817527,
+   "seenBy": "MsMohammadi",
    "review": null,
    "returnRequest": null,
    "deletedAt": null,
@@ -1587,7 +1587,7 @@
    "checkReceivedBy": null,
    "pinned": false,
    "pinnedBy": null,
-   "downloaded": false,
+   "downloaded": true,
    "createdAt": 1787430781471,
    "history": [
     {
@@ -1603,6 +1603,13 @@
      "user": "MrsNami",
      "userName": "خانم نامی",
      "ts": 1787430781470
+    },
+    {
+     "type": "status",
+     "text": "مشاهده شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787430817527
     }
    ]
   }
