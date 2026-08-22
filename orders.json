@@ -1,5 +1,5 @@
 {
- "rev": 85,
+ "rev": 86,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1115,8 +1115,8 @@
    "checkReceived": false,
    "checkReceivedAt": null,
    "checkReceivedBy": null,
-   "pinned": true,
-   "pinnedBy": "MsMohammadi",
+   "pinned": false,
+   "pinnedBy": null,
    "downloaded": false,
    "createdAt": 1787384297276,
    "history": [
@@ -1140,6 +1140,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787384985582
+    },
+    {
+     "type": "status",
+     "text": "سنجاق برداشته شد",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787384990133
     }
    ]
   }
