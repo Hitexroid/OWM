@@ -1,5 +1,5 @@
 {
- "rev": 83,
+ "rev": 84,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -11,7 +11,9 @@
    "avatarV": 3,
    "text": "سلام",
    "ts": 1787427557853,
-   "seenBy": [],
+   "seenBy": [
+    "mt0kfhznjzawtv"
+   ],
    "reactions": [],
    "reply": null
   },
@@ -25,7 +27,9 @@
    "avatarV": 3,
    "text": "",
    "ts": 1787427582033,
-   "seenBy": [],
+   "seenBy": [
+    "mt0kfhznjzawtv"
+   ],
    "reactions": [],
    "reply": null,
    "voice": {
