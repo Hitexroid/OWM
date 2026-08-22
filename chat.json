@@ -1,5 +1,5 @@
 {
- "rev": 47,
+ "rev": 48,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -14,6 +14,20 @@
    "seenBy": [
     "mt0kfhznjzawtv"
    ],
+   "reactions": [],
+   "reply": null
+  },
+  {
+   "id": "mt4afjd333pkd0",
+   "userId": "mt0kfhznjzawtv",
+   "username": "MrsNami",
+   "name": "خانم نامی",
+   "role": "sales",
+   "avatar": 2,
+   "avatarV": 1,
+   "text": "و علیکم السلام",
+   "ts": 1787397683655,
+   "seenBy": [],
    "reactions": [],
    "reply": null
   }
