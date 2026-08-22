@@ -1,5 +1,5 @@
 {
- "rev": 81,
+ "rev": 82,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1010,6 +1010,64 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787349414038
+    }
+   ]
+  },
+  {
+   "id": "mt42cy6uzwm2sx",
+   "orderNo": "1011",
+   "version": 1,
+   "baseId": "mt42cy6uzwm2sx",
+   "prevId": null,
+   "title": "فروشگاه عرشیا",
+   "customer": "",
+   "desc": "",
+   "isSample": true,
+   "hasCheck": true,
+   "jdate": "1405/05/31",
+   "time": "11:05",
+   "ts": 1787384107120,
+   "createdBy": "MrsNami",
+   "creatorName": "خانم نامی",
+   "status": "approved",
+   "pdf": {
+    "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787384125/owm/wzy4fz00mwj01o4lehia.pdf",
+    "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787384125/owm/wzy4fz00mwj01o4lehia.jpg",
+    "public_id": "owm/wzy4fz00mwj01o4lehia",
+    "name": "فروشگاه عرشیا.pdf",
+    "size": 204628
+   },
+   "seenAt": null,
+   "seenBy": null,
+   "review": null,
+   "returnRequest": null,
+   "deletedAt": null,
+   "deletedBy": null,
+   "cancelledAt": null,
+   "cancelledBy": null,
+   "shippedAt": null,
+   "shipMethod": null,
+   "checkReceived": false,
+   "checkReceivedAt": null,
+   "checkReceivedBy": null,
+   "pinned": false,
+   "pinnedBy": null,
+   "downloaded": false,
+   "createdAt": 1787384125974,
+   "history": [
+    {
+     "type": "created",
+     "text": "فاکتور صادر شد",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787384125974
+    },
+    {
+     "type": "approved",
+     "text": "تأیید خودکار",
+     "user": "MrsNami",
+     "userName": "خانم نامی",
+     "ts": 1787384125974
     }
    ]
   }
