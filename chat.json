@@ -1,5 +1,5 @@
 {
- "rev": 58,
+ "rev": 59,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -123,6 +123,24 @@
      28,
      20
     ]
+   }
+  },
+  {
+   "id": "mt4b6cjzc0j3h1",
+   "userId": "mt0kfhznjzawtv",
+   "username": "MrsNami",
+   "name": "خانم نامی",
+   "role": "sales",
+   "avatar": 2,
+   "avatarV": 1,
+   "text": "چرییی",
+   "ts": 1787398934543,
+   "seenBy": [],
+   "reactions": [],
+   "reply": {
+    "id": "mt4b5okihqc9rw",
+    "orderNo": "1014",
+    "title": "اقای پرهیزی"
    }
   }
  ]
