@@ -1,5 +1,5 @@
 {
- "rev": 30,
+ "rev": 31,
  "users": [
   {
    "id": "root-mrnami",
@@ -59,7 +59,7 @@
    "createdAt": 1787174886953,
    "lastLoginTs": 1787375764317,
    "lastDevice": "اندروید · Chrome",
-   "avatar": 8,
+   "avatar": 0,
    "avatarChangedAt": 1787330889149
   }
  ]
