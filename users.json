@@ -1,5 +1,5 @@
 {
- "rev": 27,
+ "rev": 28,
  "users": [
   {
    "id": "root-mrnami",
@@ -45,7 +45,8 @@
    "role": "sales",
    "active": true,
    "isRoot": false,
-   "createdAt": 1787174775596
+   "createdAt": 1787174775596,
+   "avatar": 6
   },
   {
    "id": "mt0ls8btxo2d2i",
