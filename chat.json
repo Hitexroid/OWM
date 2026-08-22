@@ -1,5 +1,5 @@
 {
- "rev": 70,
+ "rev": 71,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -136,7 +136,8 @@
    "text": "",
    "ts": 1787417180004,
    "seenBy": [
-    "mt0ls8btxo2d2i"
+    "mt0ls8btxo2d2i",
+    "mt0kfhznjzawtv"
    ],
    "reactions": [
     {
@@ -224,7 +225,8 @@
    "text": "یکککک دووو سههه",
    "ts": 1787417668034,
    "seenBy": [
-    "mt0ls8btxo2d2i"
+    "mt0ls8btxo2d2i",
+    "mt0kfhznjzawtv"
    ],
    "reactions": [],
    "reply": null
@@ -239,7 +241,9 @@
    "avatarV": 1,
    "text": "کیف",
    "ts": 1787418425446,
-   "seenBy": [],
+   "seenBy": [
+    "mt0kfhznjzawtv"
+   ],
    "reactions": [],
    "reply": {
     "id": "mt4b5okihqc9rw",
