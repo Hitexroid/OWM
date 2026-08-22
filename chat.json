@@ -1,5 +1,5 @@
 {
- "rev": 64,
+ "rev": 65,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -192,6 +192,20 @@
      18
     ]
    }
+  },
+  {
+   "id": "mt4mbveqdrhey8",
+   "userId": "root-mrnami",
+   "username": "MrNami",
+   "name": "مدیر کل",
+   "role": "admin",
+   "avatar": 1,
+   "avatarV": 1,
+   "text": "یکککک دووو سههه",
+   "ts": 1787417668034,
+   "seenBy": [],
+   "reactions": [],
+   "reply": null
   }
  ]
 }
