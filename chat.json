@@ -1,5 +1,5 @@
 {
- "rev": 54,
+ "rev": 55,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -59,7 +59,14 @@
    "text": "سلام خوبید",
    "ts": 1787397763363,
    "seenBy": [],
-   "reactions": [],
+   "reactions": [
+    {
+     "emoji": "👍",
+     "userId": "mt0ls8btxo2d2i",
+     "avatar": 14,
+     "avatarV": 1
+    }
+   ],
    "reply": null
   }
  ]
