@@ -1,5 +1,5 @@
 {
- "rev": 93,
+ "rev": 94,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -950,7 +950,7 @@
    "ts": 1787327649939,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "ready",
+   "status": "shipped",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787327643/owm/jf1bigkew1shnhdfjbrg.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787327643/owm/jf1bigkew1shnhdfjbrg.jpg",
@@ -966,8 +966,8 @@
    "deletedBy": null,
    "cancelledAt": null,
    "cancelledBy": null,
-   "shippedAt": null,
-   "shipMethod": null,
+   "shippedAt": 1787392658462,
+   "shipMethod": "وانت تلفنی",
    "checkReceived": false,
    "checkReceivedAt": null,
    "checkReceivedBy": null,
@@ -1038,6 +1038,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787392637194
+    },
+    {
+     "type": "status",
+     "text": "ارسال شد · وانت تلفنی",
+     "user": "MsMohammadi",
+     "userName": "خانم محمدی",
+     "ts": 1787392658462
     }
    ]
   },
