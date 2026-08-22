@@ -617,7 +617,7 @@ var ROLE_GRADS={admin:['#f6b73c','#b45309'],accountant:['#5bc8f5','#0369a1'],sal
 function roleAvaStyle(r){var g=ROLE_GRADS[r]||['#5bc8f5','#0369a1'];return 'background:linear-gradient(135deg,'+g[0]+','+g[1]+')'}
 
 /* --- آواتارها --- */
-function avatarPath(a){return 'assets/logo/'+a+'.jpg'}
+function avatarPath(a){return 'assets/'+a+'.jpg'}
 function isFemaleName(n){return n&&String(n).trim().indexOf('خانم')===0}
 function takenAvatars(excludeId){var s={};(FILES.users.data||[]).forEach(function(u){if(u.avatar!=null&&u.id!==excludeId)s[u.avatar]=true});return s}
 function defaultAvatarFor(name,excludeId){
