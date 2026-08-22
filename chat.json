@@ -1,5 +1,5 @@
 {
- "rev": 79,
+ "rev": 80,
  "chat": [
   {
    "id": "mt4aeqbd39wcw8",
@@ -249,7 +249,8 @@
    "text": "کیف",
    "ts": 1787418425446,
    "seenBy": [
-    "mt0kfhznjzawtv"
+    "mt0kfhznjzawtv",
+    "root-mrnami"
    ],
    "reactions": [],
    "reply": {
@@ -269,7 +270,8 @@
    "text": "پسر پسر داریم ما",
    "ts": 1787423645884,
    "seenBy": [
-    "mt0ls8btxo2d2i"
+    "mt0ls8btxo2d2i",
+    "root-mrnami"
    ],
    "reactions": [],
    "reply": null
@@ -284,7 +286,9 @@
    "avatarV": 2,
    "text": "Hiii",
    "ts": 1787426665894,
-   "seenBy": [],
+   "seenBy": [
+    "root-mrnami"
+   ],
    "reactions": [
     {
      "emoji": "😄",
