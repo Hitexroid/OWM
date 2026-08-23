@@ -1,5 +1,5 @@
 {
- "rev": 100,
+ "rev": 101,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -170,6 +170,20 @@
     "mt0ls8btxo2d2i",
     "mt0kfhznjzawtv"
    ],
+   "reactions": [],
+   "reply": null
+  },
+  {
+   "id": "mt68kysfbx5tmr",
+   "userId": "root-mrnami",
+   "username": "MrNami",
+   "name": "مدیر کل",
+   "role": "admin",
+   "avatar": 1,
+   "avatarV": 1,
+   "text": "خوووووبید؟",
+   "ts": 1787515510047,
+   "seenBy": [],
    "reactions": [],
    "reply": null
   }
