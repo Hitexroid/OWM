@@ -13,22 +13,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
-:root{
-  --bg:#0b1220;--panel:rgba(255,255,255,.05);--panel2:rgba(255,255,255,.08);
-  --stroke:rgba(255,255,255,.14);--stroke-soft:rgba(255,255,255,.08);
-  --txt:#eef4fb;--txt2:rgba(228,238,248,.75);--txt3:rgba(228,238,248,.5);
-  --teal:#2dd4bf;--teal-soft:rgba(45,212,191,.14);
-  --gold:#f6b73c;--sky:#5bc8f5;--green:#4ade80;--amber:#fbbf24;--red:#fb7185;
-  --purple:#a78bfa;--r:16px;--chip-bg:rgba(255,255,255,.07);--overlay:rgba(4,10,20,.62);
-  --glass-shadow:0 16px 40px rgba(2,8,23,.25),inset 0 1px 0 rgba(255,255,255,.08);
-}
-html.light{
-  --bg:#dfe9f3;--panel:rgba(255,255,255,.5);--panel2:rgba(255,255,255,.65);
-  --stroke:rgba(255,255,255,.85);--stroke-soft:rgba(15,23,42,.08);
-  --txt:#0a1526;--txt2:#1e293b;--txt3:#475569;
-  --chip-bg:rgba(255,255,255,.6);--overlay:rgba(15,23,42,.45);
-  --glass-shadow:0 16px 40px rgba(15,23,42,.12),inset 0 1px 0 rgba(255,255,255,.95);
-}
+:root{--bg:#0b1220;--panel:rgba(255,255,255,.05);--panel2:rgba(255,255,255,.08);--stroke:rgba(255,255,255,.14);--stroke-soft:rgba(255,255,255,.08);--txt:#eef4fb;--txt2:rgba(228,238,248,.75);--txt3:rgba(228,238,248,.5);--teal:#2dd4bf;--teal-soft:rgba(45,212,191,.14);--gold:#f6b73c;--sky:#5bc8f5;--green:#4ade80;--amber:#fbbf24;--red:#fb7185;--purple:#a78bfa;--r:16px;--chip-bg:rgba(255,255,255,.07);--overlay:rgba(4,10,20,.62);--glass-shadow:0 16px 40px rgba(2,8,23,.25),inset 0 1px 0 rgba(255,255,255,.08)}
+html.light{--bg:#dfe9f3;--panel:rgba(255,255,255,.5);--panel2:rgba(255,255,255,.65);--stroke:rgba(255,255,255,.85);--stroke-soft:rgba(15,23,42,.08);--txt:#0a1526;--txt2:#1e293b;--txt3:#475569;--chip-bg:rgba(255,255,255,.6);--overlay:rgba(15,23,42,.45);--glass-shadow:0 16px 40px rgba(15,23,42,.12),inset 0 1px 0 rgba(255,255,255,.95)}
 body{font-family:Vazirmatn,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.8;font-size:14.5px;transition:background .3s,color .3s;overflow-x:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
@@ -193,11 +179,11 @@ main{padding:16px 14px 140px;max-width:1100px;margin:0 auto}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 .sidenav{display:none}
 @media(min-width:920px){
-  .bottomnav{display:none!important}
-  .sidenav{display:flex;flex-direction:column;gap:6px;position:fixed;top:82px;right:18px;width:216px;padding:12px;z-index:30}
-  main{margin-right:250px}
-  .topbar{margin:12px 18px 0}
-  .fab{bottom:26px!important;right:26px!important}
+.bottomnav{display:none!important}
+.sidenav{display:flex;flex-direction:column;gap:6px;position:fixed;top:82px;right:18px;width:216px;padding:12px;z-index:30}
+main{margin-right:250px}
+.topbar{margin:12px 18px 0}
+.fab{bottom:26px!important;right:26px!important}
 }
 .bn-btn,.sn-btn{display:flex;align-items:center;gap:10px;border:none;background:none;color:var(--txt3);font-weight:800;font-size:12px;border-radius:14px;transition:.22s}
 .bn-btn{flex:1;flex-direction:column;gap:2px;padding:7px 6px;font-size:9.5px;justify-content:center;align-self:center;border-radius:18px;min-width:0}
@@ -247,15 +233,11 @@ html.light .chip.on{color:#0e7490}
 .custom-range .cr-row{display:grid;grid-template-columns:56px 1fr;gap:8px;align-items:center}
 .custom-range .cr-row>span{font-size:12.5px;font-weight:800;color:var(--txt2)}
 .cr-cells{display:grid;grid-template-columns:1fr;gap:6px}
-.search{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--stroke);border-radius:13px;padding:0 14px;min-height:48px;margin-top:12px}
-.search:focus-within{border-color:rgba(45,212,191,.6)}
-.search svg{color:var(--txt3);flex:none;width:18px;height:18px}
-.search input{flex:1;background:none;border:none;outline:none;color:var(--txt);min-height:46px;font-size:14px}
-.ocount{font-size:12px;color:var(--txt3);margin:12px 2px 8px}
-.olist{display:flex;flex-direction:column;gap:12px}
 .cs-field{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--stroke);border-radius:12px;padding:11px 14px;min-height:48px;font-size:15px;font-weight:700;color:var(--txt);transition:.2s;text-align:right}
 .cs-field:active{background:var(--panel);transform:scale(.99)}
 .cs-field img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--stroke);flex:none}
+.cs-left{display:flex;align-items:center;gap:8px;min-width:0}
+.cs-left img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--stroke);flex:none}
 .cs-chev{color:var(--txt3);font-size:11px;flex:none}
 .list-dialog{display:flex;flex-direction:column;gap:6px;max-height:55vh;overflow-y:auto;padding:2px;-webkit-overflow-scrolling:touch}
 .ld-item{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--chip-bg);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;font-size:14px;font-weight:700;color:var(--txt2);transition:.15s;text-align:right;animation:popIn .28s both}
@@ -264,6 +246,12 @@ html.light .chip.on{color:#0e7490}
 html.light .ld-item.on{color:#0e7490}
 .ld-item svg{width:16px;height:16px;flex:none}
 .ld-item img{width:24px;height:24px;border-radius:50%;object-fit:cover;border:1px solid var(--stroke);flex:none}
+.search{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--stroke);border-radius:13px;padding:0 14px;min-height:48px;margin-top:12px}
+.search:focus-within{border-color:rgba(45,212,191,.6)}
+.search svg{color:var(--txt3);flex:none;width:18px;height:18px}
+.search input{flex:1;background:none;border:none;outline:none;color:var(--txt);min-height:46px;font-size:14px}
+.ocount{font-size:12px;color:var(--txt3);margin:12px 2px 8px}
+.olist{display:flex;flex-direction:column;gap:12px}
 .ocard{padding:16px;transition:.25s;position:relative;display:flex;flex-direction:column;gap:10px}
 .ocard.pinned{border-color:rgba(251,191,36,.55);background:linear-gradient(135deg,rgba(251,191,36,.06),transparent)}
 .ocard-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -353,6 +341,8 @@ html.light .ld-item.on{color:#0e7490}
 .chat-head-actions .tb-out{width:36px;height:36px}
 .chat-hint{font-size:10.5px;color:var(--txt3);padding:6px 14px 0;display:flex;align-items:center;gap:5px}
 .chat-hint svg{width:12px;height:12px;flex:none}
+.hint-x{margin-inline-start:auto;border:none;background:var(--chip-bg);border:1px solid var(--stroke);color:var(--txt3);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;flex:none}
+.hint-x:active{color:var(--red)}
 .chat-list{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
 .reply-bar{display:flex;align-items:center;gap:8px;margin:0 12px 8px;padding:8px 12px;border-radius:12px;background:var(--panel2);border:1px solid var(--stroke);border-right:3px solid var(--teal);animation:popIn .25s both}
 .reply-bar .rb-txt{flex:1;min-width:0;cursor:pointer;text-align:right}
@@ -517,6 +507,8 @@ html.light .report-tile b{color:#0e7490}
 .file-upload-box svg{width:32px;height:32px;margin:0 auto 8px}
 .file-upload-box .fmeta b{display:block;font-size:14px;color:var(--txt);margin-top:4px}
 .file-upload-box .fmeta span{font-size:11.5px;color:var(--txt3)}
+.file-upload-box .fmeta .up-prev{max-height:150px;width:100%;object-fit:contain;border-radius:8px;margin:0 auto 6px}
+.file-upload-box .fmeta .up-loading svg{animation:pk2roll 1s linear infinite;margin:0 auto 6px}
 .unread-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:10px;background:var(--red);color:#fff;font-size:10px;font-weight:900;padding:0 6px;animation:popIn .25s}
 .ranking-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
 .rank-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:var(--panel2);border:1px solid var(--stroke);position:relative}
@@ -553,7 +545,7 @@ html.light .report-tile b{color:#0e7490}
         <div class="clr-wrap"><input class="inp" id="loginUser" autocomplete="username" placeholder="نام کاربری"><button type="button" class="clr-btn" data-clear="loginUser" style="display:none" aria-label="پاک کردن">✕</button></div>
       </div>
       <div class="frow"><label for="loginPass">رمز عبور</label>
-        <div class="pwd"><input class="inp" id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-left:52px"><button type="button" data-pwd="loginPass" aria-label="نمایش رمز">👁</button></div>
+        <div class="pwd"><input class="inp" id="loginPass" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-left:92px"><button type="button" class="clr-btn" data-clear="loginPass" style="display:none;left:48px" aria-label="پاک کردن">✕</button><button type="button" data-pwd="loginPass" aria-label="نمایش رمز">👁</button></div>
       </div>
       <div class="frow"><button class="btn btn-p btn-blk" type="submit" id="loginBtn">ورود به سیستم</button></div>
       <div id="loginErr" class="ferr"></div>
@@ -607,7 +599,7 @@ var STATUS_AFTER_APPROVED=['in_progress','need_production','ready','shipped'];
 var MONTHS_FA=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
 var WEEKDAYS_FA=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
 var AVATARS=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
-var REACT_EMOJIS=['👍','','👊','','😘','❤️','🌹','😄','😐','😂','','😔','','💩','💔','👌','🙏',''];
+var REACT_EMOJIS=['👍','','👊','','😘','❤️','🌹','😄','😐','😂','','😔','','','💔','👌','',''];
 var PAGE_ACCESS={admin:['dashboard','orders','chat','members','reports'],accountant:['dashboard','orders','chat'],sales:['dashboard','newOrder','orders','chat'],officer:['dashboard','orders','chat']};
 var PAGE_TITLE={dashboard:'داشبورد',orders:'سفارش‌ها',newOrder:'ثبت سفارش',chat:'گفتگو',members:'مدیریت اعضا',reports:'گزارش‌ها'};
 var NAV_ITEMS={
@@ -697,12 +689,10 @@ function defaultAvatarFor(name,excludeId){
   for(var a=0;a<AVATARS.length;a++){if(!taken[a])return a}
   return null;
 }
-/* توابع رفع باگ myAvatar */
 function myAvatar(){var u=findUserById(session.userId);return u&&u.avatar!=null?u.avatar:1}
 function myAvatarV(){var u=findUserById(session.userId);return (u&&u.avatarV)||1}
 function viewerGender(){return session?userGender(session):null}
 function gsClass(a){var g=viewerGender();return (g&&avatarGender(a)!==g)?' gs':''}
-
 function handleAvaPick(b){
   if(b.classList.contains('taken')){toast('این آواتار توسط کاربر دیگری انتخاب شده','warn');return false}
   if(b.getAttribute('data-offg')==='1'){toast('این آواتار قابل انتخاب نیست (مختص جنس مخالف است)','warn');return false}
@@ -723,7 +713,7 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 function faNum(n){return Number(n).toLocaleString('fa-IR')}
 function faPad2(n){n=faNum(n);return n.length<2?'۰'+n:n}
 function fmtJDateShort(jd){var p=jd.split('/');return faNum(+p[0])+'/'+faPad2(+p[1])+'/'+faPad2(+p[2])}
-function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return faNum(j.jy)+'/'+faPad2(j.jm)+'/'+faPad2(j.jd)+' · '+faNum(d.getHours())+':'+faPad2(d.getMinutes())}
+function fmtTsFull(ts){var d=new Date(ts),j=toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return faNum(j.jy)+'/'+faPad2(j.jm)+'/'+faPad2(j.jd)+' · '+faNum(d.getHours())+':'+faNum(pad2(d.getMinutes()))}
 function fmtDur(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),ss=s%60;return faNum(m)+':'+faPad2(ss)}
 function durationText(ms){
   if(ms<0)ms=0;
@@ -1318,10 +1308,7 @@ function cardTimeline(o){
     if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'todo'});
     return finishTl(items);
   }
-  if(st==='rejected'){
-    items.push({icon:I.x,text:'رد شد',cls:'c-bad',state:'cur'});
-    return finishTl(items);
-  }
+  if(st==='rejected'){items.push({icon:I.x,text:'رد شد',cls:'c-bad',state:'cur'});return finishTl(items)}
   items.push({icon:I.check,text:'تأیید شد',cls:'c-approved',state:'done'});
   if(!seen){
     items.push({icon:I.clock,text:'در انتظار بررسی',cls:'c-seen',state:'cur'});
@@ -1336,28 +1323,25 @@ function cardTimeline(o){
     items.push({icon:I.refresh,text:'در حال انجام',cls:'c-work',state:'cur'});
     items.push({icon:I.box,text:'آماده شد',cls:'c-ready',state:'todo'});
     items.push({icon:I.truck,text:'ارسال شد',cls:'c-shipped',state:'todo'});
-    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'todo'});
+    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:o.checkReceived?'done':'todo'});
     return finishTl(items);
   }
   if(st==='need_production'){
     items.push({icon:I.flask,text:'نیازمند تولید',cls:'c-work',state:'cur'});
     items.push({icon:I.box,text:'آماده شد',cls:'c-ready',state:'todo'});
     items.push({icon:I.truck,text:'ارسال شد',cls:'c-shipped',state:'todo'});
-    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'todo'});
+    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:o.checkReceived?'done':'todo'});
     return finishTl(items);
   }
   if(st==='ready'){
     items.push({icon:I.box,text:'آماده شد',cls:'c-ready',state:'done'});
     items.push({icon:I.truck,text:'ارسال شد',cls:'c-shipped',state:'todo'});
-    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'cur'});
+    if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:o.checkReceived?'done':'todo'});
     return finishTl(items);
   }
   items.push({icon:I.box,text:'آماده شد',cls:'c-ready',state:'done'});
   items.push({icon:shipIcon(o.shipMethod),text:'ارسال شد'+(o.shipMethod?' با '+o.shipMethod:''),cls:'c-shipped',state:'done'});
-  if(o.hasCheck){
-    if(o.checkReceived)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'done'});
-    else items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:'cur'});
-  }
+  if(o.hasCheck)items.push({icon:I.creditcard,text:'چک تحویل گرفته شد',cls:'c-check',state:o.checkReceived?'done':'todo'});
   if(st==='return_requested')items.push({icon:I.back,text:'درخواست مرجوعی',cls:'c-return',state:'cur'});
   if(st==='returned_healthy')items.push({icon:I.check,text:'مرجوعی توسط مسئول سفارش تحویل شد (سالم)',cls:'c-approved',state:'done'});
   if(st==='returned_broken')items.push({icon:I.x,text:'مرجوعی توسط مسئول سفارش تحویل شد (شکسته)',cls:'c-bad',state:'done'});
@@ -1433,7 +1417,6 @@ function orderCardHTML(o,i){
     checkBanner='<div class="check-banner">'+I.creditcard+'<span>نیاز به تحویل چک از راننده</span><button class="btn btn-ok btn-sm" data-act="confirmcheck" data-id="'+o.id+'">تأیید دریافت</button></div>';
   }
   var cu=findUserByUsername(o.createdBy);
-  var cuAvatar=cu&&cu.avatar!=null?cu.avatar:1;
   var durationHTML='';
   if(o.shippedAt){
     durationHTML='<div class="duration-pill">'+I.clock+' زمان ارسال: '+durationText(o.shippedAt-o.ts)+'</div>';
@@ -1443,7 +1426,7 @@ function orderCardHTML(o,i){
   return'<article class="ocard glass'+pinnedCls+'" style="'+animStyle+'">'+
     '<div class="ocard-head"><div class="ocard-head-left"><span class="ocust">'+esc(o.title)+'</span></div><div class="ocard-head-right">'+headBtns+'</div></div>'+
     (sub.length?'<div class="osub">'+sub.join(' · ')+'</div>':'')+
-    '<div class="ocard-meta"><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span><span>'+esc(o.creatorName)+' <img class="mini-ava'+gsClass(cuAvatar)+'" src="'+avatarSrcFor(cu||{name:o.creatorName,avatar:null})+'" alt=""></span></div>'+
+    '<div class="ocard-meta"><span><img class="mini-ava" src="'+avatarSrcFor(cu||{name:o.creatorName,avatar:null})+'" alt=""> '+esc(o.creatorName)+'</span><span>'+I.calendar+' '+fmtJDateShort(o.jdate)+' · '+relTime(o.ts)+'</span></div>'+
     durationHTML+
     '<div class="ocard-body">'+prev+cardTimeline(o)+'</div>'+
     checkBanner+
@@ -1490,8 +1473,8 @@ function makeOrdersView(opts){
     else if(session.role==='officer'){
       var curUser=officerUser?findUserByUsername(officerUser):null;
       var curName=officerUser?((curUser&&curUser.name)||officerUser):'همه مدیران فروش';
-      var curAva=curUser?('<img class="'+gsClass(curUser.avatar!=null?curUser.avatar:1)+'" src="'+avatarSrcFor(curUser)+'" alt=""> '):'';
-      roleCtl='<div class="frow" style="margin-top:12px"><label class="flbl">نمایش سفارش‌های:</label><button type="button" class="cs-field" id="officerField">'+curAva+'<span>'+esc(curName)+'</span><span class="cs-chev">▾</span></button></div>';
+      var curAva=curUser?('<img src="'+avatarSrcFor(curUser)+'" alt=""> '):'';
+      roleCtl='<div class="frow" style="margin-top:12px"><label class="flbl">نمایش سفارش‌های:</label><button type="button" class="cs-field" id="officerField"><span class="cs-left">'+curAva+'<span>'+esc(curName)+'</span></span><span class="cs-chev">▾</span></button></div>';
     }
     tb.innerHTML=row+custom+roleCtl;
     tb.querySelectorAll('[data-preset]').forEach(function(b){b.onclick=function(){st.preset=b.getAttribute('data-preset');renderToolbar();renderList()}});
@@ -1519,7 +1502,7 @@ function makeOrdersView(opts){
     });
     var of=tb.querySelector('#officerField');
     if(of)of.onclick=function(){
-      var opts=[{v:'',l:'همه مدیران فروش'}].concat(FILES.users.data.filter(function(u){return u.role==='sales'}).map(function(u){return{v:u.username,l:'<img class="'+gsClass(u.avatar!=null?u.avatar:1)+'" src="'+avatarSrcFor(u)+'" alt=""> '+esc(u.name)}}));
+      var opts=[{v:'',l:'همه مدیران فروش'}].concat(FILES.users.data.filter(function(u){return u.role==='sales'}).map(function(u){return{v:u.username,l:'<img src="'+avatarSrcFor(u)+'" alt=""> '+esc(u.name)}}));
       openListDialog({title:'نمایش سفارش‌های',options:opts,current:officerUser,onPick:function(v){officerUser=v;renderToolbar();renderList()}});
     };
     var sc=tb.querySelector('.scopeOwn');if(sc)sc.onchange=function(){viewScope=this.checked?'own':'all';renderList()};
@@ -1555,17 +1538,19 @@ function bindOrderForm(mount,onSubmit){
   box.onclick=function(e){if(e.target.tagName!=='INPUT')fileInp.click()};
   function startUpload(f){
     abandoned=false;
+    meta.innerHTML='<div class="up-loading">'+I.refresh+'</div><div><b>'+esc(f.name)+'</b></div><span>در حال آپلود و آماده‌سازی پیش‌نمایش…</span>';
     pendingUpload=uploadToCloudinary(f).then(function(c){
       if(abandoned){destroyCloudinary(c.public_id);pendingUpload=null;return null}
-      uploadedInfo=c;return c;
-    }).catch(function(){pendingUpload=null;return null});
+      uploadedInfo=c;
+      meta.innerHTML='<img class="up-prev" src="'+pdfPageImg(c.url,400)+'" alt=""><div><b>'+esc(f.name)+'</b></div><span>آمادهٔ ثبت</span>';
+      return c;
+    }).catch(function(){pendingUpload=null;meta.innerHTML='<div><b>خطا در آپلود</b></div><span>دوباره تلاش کنید</span>';return null});
   }
   function acceptFile(f){
     if(!f)return;
     if(!(f.type==='application/pdf'||/\.pdf$/i.test(f.name))){toast('فقط PDF','error');return}
     if(f.size>MAX_PDF){toast('بیش از ۳ مگابایت','error');return}
     picked=f;box.classList.add('has');
-    meta.innerHTML=I.check+'<div><b>'+esc(f.name)+'</b></div><span>آمادهٔ ثبت</span>';
     if(ti&&(at||!ti.value))ti.value=f.name.replace(/\.pdf$/i,'');
     startUpload(f);
   }
@@ -1800,6 +1785,12 @@ document.addEventListener('pointermove',function(e){
   if(Math.abs(e.clientX-bubblePress.x)>10||Math.abs(e.clientY-bubblePress.y)>10)bubblePress.moved=true;
 });
 document.addEventListener('pointerup',function(e){
+  if(micPress){
+    micPress=false;clearTimeout(holdTimer);
+    if(!holdActive){toast('برای ضبط صدا، دکمه را نگه دارید','warn')}
+    holdActive=false;
+  }
+  if(voiceState&&voiceState.rec&&voiceState.rec.state==='recording')stopVoice();
   if(!bubblePress)return;
   var held=Date.now()-bubblePress.start;
   var id=bubblePress.id;var moved=bubblePress.moved;
@@ -1836,13 +1827,13 @@ function renderChatList(){
       m.reactions.forEach(function(r){groups[r.emoji]=groups[r.emoji]||[];groups[r.emoji].push(r)});
       reacts='<div class="react-row">'+Object.keys(groups).map(function(e){
         var rs=groups[e];var mineIn=rs.some(function(r){return r.userId===session.userId});
-        return '<button class="react-chip'+(mineIn?' mine':'')+'" data-react="'+m.id+'" data-remoji="'+e+'">'+e+'<span class="r-avas">'+rs.slice(0,3).map(function(r){return '<img class="'+gsClass(r.avatar!=null?r.avatar:1)+'" src="'+avatarPath(r.avatar!=null?r.avatar:1,r.avatarV||1)+'" alt="">'}).join('')+'</span></button>';
+        return '<button class="react-chip'+(mineIn?' mine':'')+'" data-react="'+m.id+'" data-remoji="'+e+'">'+e+'<span class="r-avas">'+rs.slice(0,3).map(function(r){return '<img src="'+avatarPath(r.avatar!=null?r.avatar:1,r.avatarV||1)+'" alt="">'}).join('')+'</span></button>';
       }).join('')+'</div>';
     }
-    var seenAvas=seen?'<span class="seen-avas"><span class="seen-eye">👀</span>'+m.seenBy.slice(0,4).map(function(uidx){var su=findUserById(uidx);return su?'<img class="'+gsClass(su.avatar!=null?su.avatar:1)+'" src="'+avatarSrcFor(su)+'" alt="" title="'+esc(su.name)+'">':''}).join('')+'</span>':'';
+    var seenAvas=seen?'<span class="seen-avas"><span class="seen-eye">👀</span>'+m.seenBy.slice(0,4).map(function(uidx){var su=findUserById(uidx);return su?'<img src="'+avatarSrcFor(su)+'" alt="" title="'+esc(su.name)+'">':''}).join('')+'</span>':'';
     var ticks=mine?('<span class="ticks'+(seen?' two':'')+'">'+(seen?'✓✓':'✓')+'</span>'):'';
     html+='<div class="cmsg'+(mine?' mine':'')+'">'+
-      '<div class="cmsg-ava"><img class="'+gsClass(av)+'" src="'+avatarPath(av,avV)+'" alt=""></div>'+
+      '<div class="cmsg-ava"><img src="'+avatarPath(av,avV)+'" alt=""></div>'+
       '<div class="cmsg-body">'+
         (mine?'':'<div class="cmsg-top"><b>'+esc(m.name)+'</b><span class="badge r-'+m.role+'">'+(ROLE_FA[m.role]||'')+'</span></div>')+
         '<div class="cmsg-bubble" data-bubble="'+m.id+'">'+body+'</div>'+
@@ -1865,14 +1856,6 @@ function bindMicHold(btn){
     holdTimer=setTimeout(function(){holdActive=true;startVoice()},350);
   });
 }
-window.addEventListener('pointerup',function(){
-  if(micPress){
-    micPress=false;clearTimeout(holdTimer);
-    if(!holdActive){toast('برای ضبط صدا، دکمه را نگه دارید','warn')}
-    holdActive=false;
-  }
-  if(voiceState&&voiceState.rec&&voiceState.rec.state==='recording')stopVoice();
-});
 function renderChat(){
   var p=$('#page-chat');
   var adminBtns=session.role==='admin'?'<button class="tb-out" id="chatClearAll" title="حذف همه گفتگوها">'+I.trash+'</button>':'';
@@ -1880,13 +1863,19 @@ function renderChat(){
   if(chatReply){
     replyBar='<div class="reply-bar" id="replyBar"><div class="rb-txt" id="replyOpen"><b>#'+faNum(chatReply.orderNo)+' · '+esc(chatReply.title)+'</b><span>در حال پاسخ به این سفارش</span></div><button class="rb-x" id="replyClear" title="حذف پاسخ">'+I.x+'</button></div>';
   }
+  var hintCount=DB.get('hintShown',0);
+  var hintHTML='';
+  if(hintCount<2){
+    hintHTML='<div class="chat-hint" id="chatHint">'+I.user+'<span>برای تغییر نشان (آواتار) خود به تنظیمات ⚙️ بالای صفحه مراجعه کنید.</span><button type="button" class="hint-x" id="hintX" title="بستن">✕</button></div>';
+    DB.set('hintShown',hintCount+1);
+  }
   p.innerHTML='<div class="chat-wrap glass">'+
     '<div class="chat-head"><h3>'+I.chat+' گفتگوی گروهی <span class="chat-count">'+faNum((FILES.users.data||[]).length)+' عضو</span></h3>'+
     '<div class="chat-head-actions">'+
       '<button class="tb-out" id="chatRules" title="قوانین گفتگو">'+I.info+'</button>'+
       adminBtns+
     '</div></div>'+
-    '<div class="chat-hint">'+I.user+' برای تغییر نشان (آواتار) خود به تنظیمات ⚙️ بالای صفحه مراجعه کنید.</div>'+
+    hintHTML+
     '<div class="chat-list" id="chatList"></div>'+
     replyBar+
     '<div class="rec-bar" id="recBar"><span class="rec-dot"></span><span id="recTime">۰:۰۰</span></div>'+
@@ -1896,8 +1885,10 @@ function renderChat(){
       '<textarea id="chatInput" rows="1" placeholder="پیام خود را بنویسید…" maxlength="300"></textarea>'+
     '</form></div>';
   renderChatList();
+  var hx=$('#hintX');
+  if(hx)hx.onclick=function(){DB.set('hintShown',999);var h2=$('#chatHint');if(h2)h2.remove()};
   $('#chatRules').onclick=function(){openRulesModal()};
-  var ca=$('#chatClearAll');if(ca)ca.onclick=function(){confirmBox({title:'حذف همه گفتگوها',text:'تمام پیام‌های گفتگو برای همه پاک شود؟',okText:'پاک کن',danger:true}).then(function(ok){if(ok)safe(function(){return mutate('chat',function(){return[]},'OWM: chat clear').then(function(){renderChatList();toast('پاک شد')})})})};
+  var ca=$('#chatClearAll');if(ca)ca.onclick=function(){confirmBox({title:'حذف همه گفتگوها',text:'تمام پیام‌های گفتگو برای همه پاک شود؟',okText:'پاک کن',danger:true}).then(function(ok){if(ok)safe(function(){return mutate('chat',function(){return[]},'OWM: chat clear').then(function(){voiceUrlCache={};renderChatList();toast('پاک شد')})})})};
   var ro=$('#replyOpen');if(ro)ro.onclick=function(){if(chatReply)openPdfModal(chatReply.id,true)};
   var rc=$('#replyClear');if(rc)rc.onclick=function(){chatReply=null;renderChat()};
   var sb=$('#chatSendBtn');
@@ -1923,7 +1914,6 @@ function renderChat(){
   chatTimerInt=setInterval(function(){updateChatSendState()},1000);
   updateChatSendState();
 }
-
 function openDetail(id){
   var o=findOrder(id);if(!o){toast('یافت نشد','error');return}
   var g=groupVersions(o),tl=[];g.forEach(function(v){v.history.forEach(function(h){tl.push(h)})});tl.sort(function(a,b){return a.ts-b.ts});
@@ -2021,7 +2011,7 @@ function renderMembers(){
     var acts='<button class="ibtn" title="ویرایش" data-act="edituser" data-id="'+u.id+'">'+I.edit+'</button>';
     if(!u.isRoot)acts+='<button class="ibtn" title="'+(u.active?'غیرفعال کردن':'فعال کردن')+'" data-act="toggleuser" data-id="'+u.id+'">'+(u.active?I.lock:I.check)+'</button><button class="ibtn danger" title="حذف" data-act="deluser" data-id="'+u.id+'">'+I.trash+'</button>';
     return'<div class="member-card glass">'+
-      '<div class="role-ava"><img class="'+gsClass(u.avatar!=null?u.avatar:1)+'" src="'+avatarSrcFor(u)+'" alt=""></div>'+
+      '<div class="role-ava"><img src="'+avatarSrcFor(u)+'" alt=""></div>'+
       '<div class="member-main">'+
         '<div class="mm-top"><b>'+esc(u.name)+(u.isRoot?' 🛡️':'')+'</b><span class="badge r-'+u.role+'">'+ROLE_FA[u.role]+'</span><span class="badge '+(u.active?'r-active':'r-inactive')+'">'+(u.active?'فعال':'غیرفعال')+'</span></div>'+
         '<div class="mm-sub">@'+esc(u.username)+' · 🕒 '+(u.lastLoginTs?fmtTsFull(u.lastLoginTs):'—')+' · 📱 '+esc(u.lastDevice||'—')+'</div>'+
@@ -2092,7 +2082,7 @@ function welcomeHTML(){
   var wd=WEEKDAYS_FA[new Date().getDay()];
   var unread=getUnreadChatCount();
   var unreadBadge=unread>0?'<span class="unread-badge">📬 '+faNum(unread)+'</span>':'';
-  return '<div class="welcome glass"><img class="welcome-ava '+gsClass(me&&me.avatar!=null?me.avatar:1)+'" src="'+avatarSrcFor(me)+'" alt=""><div><h2>سلام، '+esc(session.name)+' <span class="wave-anim" style="cursor:pointer" id="dashHand">👋</span> '+unreadBadge+'</h2><p>'+ROLE_FA[session.role]+' · '+wd+'، '+fmtJDateShort(todayISO)+'</p></div></div>';
+  return '<div class="welcome glass"><img class="welcome-ava" src="'+avatarSrcFor(me)+'" alt=""><div><h2>سلام، '+esc(session.name)+' <span class="wave-anim" style="cursor:pointer" id="dashHand">👋</span> '+unreadBadge+'</h2><p>'+ROLE_FA[session.role]+' · '+wd+'، '+fmtJDateShort(todayISO)+'</p></div></div>';
 }
 
 function renderDashboard(){
@@ -2176,7 +2166,7 @@ function renderReports(){
     var cls=i===0?'r1':i===1?'r2':i===2?'r3':'';
     return '<div class="rank-row '+cls+'">'+
       '<span class="rank-num">'+faNum(i+1)+'</span>'+
-      '<img class="rank-ava '+gsClass(r.user.avatar!=null?r.user.avatar:1)+'" src="'+avatarSrcFor(r.user)+'" alt="">'+
+      '<img class="rank-ava" src="'+avatarSrcFor(r.user)+'" alt="">'+
       '<div class="rank-info"><b>'+esc(r.user.name)+'</b><div class="rank-stats">'+faNum(r.total)+' سفارش · '+faNum(r.returns)+' مرجوعی</div></div>'+
       '<span class="rank-score">'+faNum(r.score)+'</span></div>';
   }).join('');
@@ -2365,7 +2355,7 @@ document.addEventListener('click',function(e){
   safe(function(){return approveReturn(target.id,c).then(function(){closeAllModals();renderPage(curPage)})});
 });
 
-['loginUser'].forEach(function(id){
+['loginUser','loginPass'].forEach(function(id){
   var inp=$('#'+id);if(!inp)return;
   var btn=document.querySelector('[data-clear="'+id+'"]');
   function upd(){if(btn)btn.style.display=inp.value?'grid':'none'}
