@@ -1,5 +1,5 @@
 {
- "rev": 98,
+ "rev": 99,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -166,20 +166,6 @@
    "seenBy": [
     "mt0ls8btxo2d2i"
    ],
-   "reactions": [],
-   "reply": null
-  },
-  {
-   "id": "mt60kawpk92a86",
-   "userId": "mt0ls8btxo2d2i",
-   "username": "MsMohammadi",
-   "name": "خانم محمدی",
-   "role": "officer",
-   "avatar": 14,
-   "avatarV": 3,
-   "text": "کون",
-   "ts": 1787502042169,
-   "seenBy": [],
    "reactions": [],
    "reply": null
   }
