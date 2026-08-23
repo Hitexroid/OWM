@@ -1,5 +1,5 @@
 {
- "rev": 91,
+ "rev": 92,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -127,6 +127,20 @@
    "seenBy": [
     "root-mrnami"
    ],
+   "reactions": [],
+   "reply": null
+  },
+  {
+   "id": "mt60em36vsxwtm",
+   "userId": "root-mrnami",
+   "username": "MrNami",
+   "name": "مدیر کل",
+   "role": "admin",
+   "avatar": 1,
+   "avatarV": 1,
+   "text": "سلامممم",
+   "ts": 1787501776722,
+   "seenBy": [],
    "reactions": [],
    "reply": null
   }
