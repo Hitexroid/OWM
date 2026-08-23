@@ -1,5 +1,5 @@
 {
- "rev": 94,
+ "rev": 95,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -147,7 +147,9 @@
    "avatarV": 1,
    "text": "سلامممم",
    "ts": 1787501776722,
-   "seenBy": [],
+   "seenBy": [
+    "mt0ls8btxo2d2i"
+   ],
    "reactions": [],
    "reply": null
   },
@@ -161,7 +163,9 @@
    "avatarV": 1,
    "text": "من قیفی اممم",
    "ts": 1787501784881,
-   "seenBy": [],
+   "seenBy": [
+    "mt0ls8btxo2d2i"
+   ],
    "reactions": [],
    "reply": null
   }
