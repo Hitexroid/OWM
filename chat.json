@@ -1,5 +1,5 @@
 {
- "rev": 90,
+ "rev": 91,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -88,7 +88,8 @@
    "text": "درباره این فاکتور",
    "ts": 1787427909849,
    "seenBy": [
-    "mt0ls8btxo2d2i"
+    "mt0ls8btxo2d2i",
+    "root-mrnami"
    ],
    "reactions": [],
    "reply": {
@@ -107,7 +108,9 @@
    "avatarV": 3,
    "text": "ککککککک",
    "ts": 1787501537965,
-   "seenBy": [],
+   "seenBy": [
+    "root-mrnami"
+   ],
    "reactions": [],
    "reply": null
   },
@@ -121,7 +124,9 @@
    "avatarV": 3,
    "text": "❤️🌹 ",
    "ts": 1787501590080,
-   "seenBy": [],
+   "seenBy": [
+    "root-mrnami"
+   ],
    "reactions": [],
    "reply": null
   }
