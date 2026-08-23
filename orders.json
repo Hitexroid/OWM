@@ -1,5 +1,5 @@
 {
- "rev": 130,
+ "rev": 131,
  "orders": [
   {
    "id": "mt0kq57p2xl4o6",
@@ -1571,7 +1571,7 @@
    "ts": 1787430781469,
    "createdBy": "MrsNami",
    "creatorName": "خانم نامی",
-   "status": "shipped",
+   "status": "seen",
    "pdf": {
     "url": "https://res.cloudinary.com/ffi2p3eq/image/upload/v1787430772/owm/vd6tavdthb0ix5bt99vr.pdf",
     "thumb": "https://res.cloudinary.com/ffi2p3eq/image/upload/a_90,w_600,q_auto/v1787430772/owm/vd6tavdthb0ix5bt99vr.jpg",
@@ -1659,6 +1659,13 @@
      "user": "MsMohammadi",
      "userName": "خانم محمدی",
      "ts": 1787501680875
+    },
+    {
+     "type": "status",
+     "text": "تغییر توسط مدیرکل: مشاهده شد",
+     "user": "MrNami",
+     "userName": "مدیر کل",
+     "ts": 1787501956181
     }
    ]
   }
