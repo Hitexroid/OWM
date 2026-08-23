@@ -1,5 +1,5 @@
 {
- "rev": 93,
+ "rev": 94,
  "chat": [
   {
    "id": "mt4s7ufw1dyoco",
@@ -127,7 +127,14 @@
    "seenBy": [
     "root-mrnami"
    ],
-   "reactions": [],
+   "reactions": [
+    {
+     "emoji": "😘",
+     "userId": "root-mrnami",
+     "avatar": 1,
+     "avatarV": 1
+    }
+   ],
    "reply": null
   },
   {
