@@ -368,6 +368,9 @@ html.light .ld-item.on{color:#0e7490}
 .cmsg-time{font-size:9.5px;color:var(--txt3)}
 .ticks{font-size:10px;color:var(--txt3)}
 .ticks.two{color:var(--teal)}
+.msg-spinner{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px}
+.msg-spinner svg{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 .seen-avas{display:flex;align-items:center}
 .seen-avas img{width:16px;height:16px;border-radius:50%;object-fit:cover}
 .seen-avas img+img{margin-right:-5px;border:1px solid var(--stroke)}
@@ -1718,12 +1721,13 @@ function sendVoice(){
   var blob=voiceState.blob,dur=voiceState.dur,bars=voiceState.bars;
   if(blob.size>2.5*1024*1024){toast('حجم ویس زیاد است','error');return}
   var reply=chatReply?{id:chatReply.id,orderNo:chatReply.orderNo,title:chatReply.title}:null;
+  var tempId='temp-'+Date.now()+'-'+Math.random().toString(36).slice(2);
   var reader=new FileReader();
   reader.onload=function(){
     var b64=String(reader.result).split(',')[1];
     hideVoicePanel();
     safe(function(){return mutate('chat',function(a){
-      a.push({id:uid(),userId:session.userId,username:session.username,name:session.name,role:session.role,avatar:myAvatar(),avatarV:myAvatarV(),text:'',ts:Date.now(),seenBy:[],reactions:[],reply:reply,voice:{data:b64,mime:blob.type||'audio/webm',dur:Math.round(dur),bars:bars}});
+      a.push({id:tempId,userId:session.userId,username:session.username,name:session.name,role:session.role,avatar:myAvatar(),avatarV:myAvatarV(),text:'',ts:Date.now(),seenBy:[],reactions:[],reply:reply,sending:true,voice:{data:b64,mime:blob.type||'audio/webm',dur:Math.round(dur),bars:bars}});
       if(a.length>200)a=a.slice(a.length-200);
       return a;
     },'OWM: chat voice').then(function(){chatReply=null;renderChat();updateChatSendState();toast('ویس ارسال شد')})});
@@ -1813,7 +1817,8 @@ function renderChatList(){
     }
     var mine=session&&m.userId===session.userId;
     var seen=m.seenBy&&m.seenBy.length>0;
-    var del=mine&&!seen?'<button class="cdel" data-delmsg="'+m.id+'" title="حذف پیام">'+I.x+'</button>':'';
+    var sending=m.sending===true;
+    var del=mine&&!seen&&!sending?'<button class="cdel" data-delmsg="'+m.id+'" title="حذف پیام">'+I.x+'</button>':'';
     var mu=findUserByUsername(m.username);
     var av=m.avatar!=null?m.avatar:1;
     var avV=m.avatarV||1;
@@ -1831,7 +1836,7 @@ function renderChatList(){
       }).join('')+'</div>';
     }
     var seenAvas=seen?'<span class="seen-avas"><span class="seen-eye">👀</span>'+m.seenBy.slice(0,4).map(function(uidx){var su=findUserById(uidx);return su?'<img src="'+avatarSrcFor(su)+'" alt="" title="'+esc(su.name)+'">':''}).join('')+'</span>':'';
-    var ticks=mine?('<span class="ticks'+(seen?' two':'')+'">'+(seen?'✓✓':'✓')+'</span>'):'';
+    var ticks=mine?('<span class="ticks'+(seen?' two':'')+'">'+(seen?'✓✓':'✓')+'</span>'):'<span class="msg-spinner"><svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg></span>';
     html+='<div class="cmsg'+(mine?' mine':'')+'">'+
       '<div class="cmsg-ava"><img src="'+avatarPath(av,avV)+'" alt=""></div>'+
       '<div class="cmsg-body">'+
@@ -1901,9 +1906,10 @@ function renderChat(){
     if(until){toast('کمی صبر کنید؛ '+faNum(Math.ceil((until-Date.now())/1000))+' ثانیه','warn');return}
     inp.value='';inp.focus();
     var reply=chatReply?{id:chatReply.id,orderNo:chatReply.orderNo,title:chatReply.title}:null;
+    var tempId='temp-'+Date.now()+'-'+Math.random().toString(36).slice(2);
     safe(function(){
       return mutate('chat',function(a){
-        a.push({id:uid(),userId:session.userId,username:session.username,name:session.name,role:session.role,avatar:myAvatar(),avatarV:myAvatarV(),text:txt,ts:Date.now(),seenBy:[],reactions:[],reply:reply});
+        a.push({id:tempId,userId:session.userId,username:session.username,name:session.name,role:session.role,avatar:myAvatar(),avatarV:myAvatarV(),text:txt,ts:Date.now(),seenBy:[],reactions:[],reply:reply,sending:true});
         if(a.length>200)a=a.slice(a.length-200);
         return a;
       },'OWM: chat').then(function(){chatReply=null;renderChat();updateChatSendState()}).catch(function(err){inp.value=txt;throw err});
